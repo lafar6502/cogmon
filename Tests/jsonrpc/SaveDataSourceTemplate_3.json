@@ -1,0 +1,35 @@
+﻿{
+	"Template" : {
+  "Name" : "Licznik zdarzen",
+  "Description" : "Licznik po prostu...",
+  "Variables" : [],
+  "StartTime" : null,
+  "Step" : "300",
+  "Series" : [{
+      "Name" : "events",
+      "Description" : "Otwarte CRQ",
+      "Heartbeat" : "3600",
+      "SeriesType" : "ABSOLUTE",
+      "Min" : "0,0",
+      "Max" : "NaN",
+      "Expression" : null
+    }],
+  "Aggregates" : [{
+      "ConsolidationFunction" : "AVERAGE",
+      "XFilesFactor" : "0.5",
+      "AggregateSteps" : "1",
+      "StoredRows" : "864"
+    }, {
+      "ConsolidationFunction" : "AVERAGE",
+      "XFilesFactor" : "0.5",
+      "AggregateSteps" : "12",
+      "StoredRows" : "744"
+    }, {
+      "ConsolidationFunction" : "AVERAGE",
+      "XFilesFactor" : "0.5",
+      "AggregateSteps" : "288",
+      "StoredRows" : "750"
+    }],
+  "CreateSchedule" : false
+}
+}

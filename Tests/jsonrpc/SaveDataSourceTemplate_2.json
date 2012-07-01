@@ -1,0 +1,53 @@
+﻿{
+	"Template" : {
+	  "Name" : "Monitorowanie Indeksowania solr",
+	  "Description" : "Służy do monitorowania indeksacji w SOLR",
+	  "Variables" : [{
+		  "Name" : "indexer_url",
+		  "Description" : "URL serwisu indeksujacego",
+		  "Required" : true,
+		  "DefaultValue" : "http://co:9011"
+		}],
+	  "StartTime" : null,
+	  "Step" : "60",
+	  "Series" : [{
+		  "Name" : "co_latency",
+		  "Description" : "CO opoznienie",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, {
+		  "Name" : "no_latency",
+		  "Description" : "NO opoznienie",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}],
+	  "Aggregates" : [{
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "1",
+		  "StoredRows" : "1440"
+		}, {
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "10",
+		  "StoredRows" : "800"
+		}, {
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "60",
+		  "StoredRows" : "1200"
+		}],
+	  "CreateSchedule" : true,
+	  "IntervalSecs" : "60",
+	  "Query" : 1,
+	  "ScriptOrUrl" : "${indexer_url}/health?httpstatus=1",
+	  "Arguments" : "",
+      "VariableValueRegex" : ["latency\\.CO_indexer=(\\d+)", "latency\\.NO_indexer=(\\d+)" ]
+	}
+}

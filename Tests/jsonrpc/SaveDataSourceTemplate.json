@@ -1,0 +1,52 @@
+﻿{
+	"Template" : {
+	  "Name" : "Szablon testowy 3",
+	  "Description" : "To jest test, tylko test",
+	  "Variables" : [{
+		  "Name" : "GroupId",
+		  "Description" : "Id grupy",
+		  "Required" : true,
+		  "DefaultValue" : null
+		}],
+	  "StartTime" : null,
+	  "Step" : "60",
+	  "Series" : [{
+		  "Name" : "opencrq",
+		  "Description" : "Otwarte zgłoszenia",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, {
+		  "Name" : "activeusers",
+		  "Description" : "Zalogowani użytkownicy",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}],
+	  "Aggregates" : [{
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "1",
+		  "StoredRows" : "1440"
+		}, {
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "10",
+		  "StoredRows" : "800"
+		}, {
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "60",
+		  "StoredRows" : "1200"
+		}],
+	  "CreateSchedule" : true,
+	  "IntervalSecs" : "60",
+	  "Query" : 2,
+	  "ScriptOrUrl" : "c:/tools/boo/bin/booi.exe",
+	  "Arguments" : "c:/dev/CogMon/test.boo ${GroupId}"
+	}
+}

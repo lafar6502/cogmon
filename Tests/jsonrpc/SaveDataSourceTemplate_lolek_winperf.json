@@ -1,0 +1,82 @@
+﻿{
+	"Template" : {
+	  "Name" : "Windows basic perf counters",
+	  "Description" : "Basic perf counter values",
+	  "Variables" : [],
+	  "StartTime" : null,
+	  "Step" : "300",
+	  "Series" : [{
+		  "Name" : "cpu",
+		  "Description" : "CPU",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, {
+		  "Name" : "avg_disk_q",
+		  "Description" : "Avg disk queue",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, 
+        {
+		  "Name" : "batt_v",
+		  "Description" : "Battery Voltage",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, 
+        {
+		  "Name" : "batt_remaining",
+		  "Description" : "Battery remaining",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, 
+        {
+		  "Name" : "disk_ops_",
+		  "Description" : "Disk ops/sec",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}
+        ],
+	  "Aggregates" : [{
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "1",
+		  "StoredRows" : "2016"
+		}, {
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "12",
+		  "StoredRows" : "1500"
+		}, {
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "144",
+		  "StoredRows" : "1200"
+		}],
+	  "CreateSchedule" : true,
+	  "IntervalSecs" : "300",
+	  "Query" : "WinPerf",
+	  "ScriptOrUrl" : null,
+	  "Arguments" : null,
+	  VariableValueRegex: [
+		"category=Processor;counter=% Processor Time;instance=_Total",
+		"category=PhysicalDisk;counter=Avg. Disk Queue Length;instance=_Total",
+		"category=Battery Status;counter=Voltage;instance=ACPI\\PNP0C0A\\0_0",
+		"category=Battery Status;counter=Remaining Capacity;instance=ACPI\\PNP0C0A\\0_0",
+		"category=PhysicalDisk;counter=Disk Transfers/sec;instance=_Total",
+	  ]
+	}
+}

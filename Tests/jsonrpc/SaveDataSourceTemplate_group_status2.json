@@ -1,0 +1,97 @@
+﻿{
+	"Template" : {
+	  "Name" : "Statystyki grupy CO",
+	  "Description" : "Statystyki grupy CO - group_status2",
+	  "Variables" : [{
+		  "Name" : "groupId",
+		  "Description" : "Id grupy",
+		  "Required" : true
+		}],
+	  "StartTime" : null,
+	  "Step" : "300",
+	  "Series" : [{
+		  "Name" : "opencrq",
+		  "Description" : "Otwarte CRQ",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, {
+		  "Name" : "qlen",
+		  "Description" : "W kolejce",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, 
+        {
+		  "Name" : "actusers",
+		  "Description" : "Zalogowani",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, 
+        {
+		  "Name" : "handling",
+		  "Description" : "Sr. czas obslugi",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, 
+        {
+		  "Name" : "pickup",
+		  "Description" : "Sr. czas oczekiwania",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, 
+        {
+		  "Name" : "working",
+		  "Description" : "Godz robocze",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, 
+        {
+		  "Name" : "overdue",
+		  "Description" : "Przekrocz SLA",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}
+        ],
+	  "Aggregates" : [{
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "1",
+		  "StoredRows" : "2016"
+		}, {
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "12",
+		  "StoredRows" : "1500"
+		}, {
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "144",
+		  "StoredRows" : "1200"
+		}],
+	  "CreateSchedule" : true,
+	  "IntervalSecs" : "300",
+	  "Query" : 1,
+	  "ScriptOrUrl" : "http://co/ws/webboo.aspx?h=group_status2&group=${groupId}",
+	  "Arguments" : ""
+	}
+}

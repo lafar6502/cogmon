@@ -1,0 +1,9 @@
+﻿{
+	Title: "Grupa XYZ sie odslania",
+	PortletClass: "CogMon.ui.EventStatGraphPortlet",
+	Config: {
+		height: 500,
+		seriesId: "X",
+		theme: "Category6"
+	}
+}

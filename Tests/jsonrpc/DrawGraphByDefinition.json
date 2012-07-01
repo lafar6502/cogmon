@@ -1,0 +1,53 @@
+{
+	Definition: {
+		Id: "123454",
+		Title: "Testowy obrazek",
+		Defs: [
+			{
+				Variable: "ocrq",
+				DataSourceId: "4f5e33489f94211cc4d2fe11",
+				Field: "opencrq",
+				CF: "AVERAGE"
+			},
+			{
+				Variable: "actu",
+				DataSourceId: "4f5e33489f94211cc4d2fe11",
+				Field: "activeusers",
+				CF: "AVERAGE"
+			}
+		],
+		CVDefs: [
+			{
+				CDEF: true,
+				Variable: "ocrq1",
+				Expression: "ocrq"
+			},
+			{
+				CDEF: false,
+				Variable: "ocrqm",
+				Expression: "ocrq,AVERAGE"
+			}
+		],
+		Elements: [
+			{
+				Op: "LINE1",
+				Value: "ocrq",
+				Color: "FF0000",
+				Legend: "OCRQ"
+			},
+			{
+				Op: "LINE2",
+				Value: "actu",
+				Color: "00FF00",
+				Legend: "Actu"
+			},
+			{
+				Op: "GPRINT",
+				Value: "ocrqm",
+				Params: "%1.1lf"
+			}
+		],
+		AdditionalCmdParams: ""
+	},
+	DestinationFile: "c:\\dev\\cogmon\\grap2.png"
+}

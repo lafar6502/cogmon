@@ -1,0 +1,98 @@
+﻿{
+	"Template" : {
+	  "Name" : "Windows basic perf counters",
+	  "Description" : "Basic perf counter values",
+	  "Variables" : [],
+	  "StartTime" : null,
+	  "Step" : "300",
+	  "Series" : [{
+		  "Name" : "cpu",
+		  "Description" : "CPU",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, {
+		  "Name" : "avg_read_q",
+		  "Description" : "Avg disk read queue",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, {
+		  "Name" : "avg_write_q",
+		  "Description" : "Avg disk write queue",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, 
+        {
+		  "Name" : "disk_ops_s",
+		  "Description" : "Disk ops/sec",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, {
+		  "Name" : "perc_disk_time",
+		  "Description" : "Disk time %",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, {
+		  "Name" : "mem_faults",
+		  "Description" : "Page faults",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}, {
+		  "Name" : "mem_avail",
+		  "Description" : "Mem available mb",
+		  "Heartbeat" : "3600",
+		  "SeriesType" : "GAUGE",
+		  "Min" : "0,0",
+		  "Max" : "NaN",
+		  "Expression" : null
+		}
+        ],
+	  "Aggregates" : [{
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "1",
+		  "StoredRows" : "4032"
+		}, {
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "12",
+		  "StoredRows" : "3000"
+		}, {
+		  "ConsolidationFunction" : "AVERAGE",
+		  "XFilesFactor" : "0.5",
+		  "AggregateSteps" : "144",
+		  "StoredRows" : "2400"
+		}],
+	  "CreateSchedule" : true,
+	  "IntervalSecs" : "300",
+	  "Query" : "WinPerf",
+	  "ScriptOrUrl" : null,
+	  "Arguments" : null,
+	  VariableValueRegex: [
+		"category=Processor;counter=% Processor Time;instance=_Total",
+		"category=PhysicalDisk;counter=Avg. Disk Read Queue Length;instance=_Total",
+		"category=PhysicalDisk;counter=Avg. Disk Write Queue Length;instance=_Total",
+		"category=PhysicalDisk;counter=Disk Transfers/sec;instance=_Total",
+		"category=PhysicalDisk;counter=% Disk Time;instance=_Total",
+		"category=Memory;counter=Page Faults/sec;instance=",
+		"category=Memory;counter=Available MBytes;instance="
+	  ]
+	}
+}
