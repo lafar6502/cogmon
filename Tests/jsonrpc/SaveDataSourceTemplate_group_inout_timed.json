@@ -1,0 +1,32 @@
+﻿{
+	"Template" : {
+	  "Name" : "Statystyki przetwarzania zgłoszeń (CRQ) w grupie CO (${groupName}/${groupId})",
+	  "Description" : "Statystyki przetwarzania zgłoszeń (CRQ) w grupie CO (${groupName}/${groupId})",
+	  "Variables" : [
+		{"Name" : "groupId","Description" : "Id grupy","Required" : true},
+		{"Name" : "groupName","Description" : "Nazwa grupy","Required" : true}
+	  ],
+	  "StartTime" : null,
+	  "Step" : "300",
+	  "Series" : [
+		{"Name" : "incoming_cnt", "Description" : "CRQ Wchodzące", "Heartbeat" : "3600", "SeriesType" : "ABSOLUTE"}, 
+		{"Name" : "all_out_cnt", "Description" : "Zamknięte/Przesłane", "Heartbeat" : "3600", "SeriesType" : "ABSOLUTE"}, 
+		{"Name" : "closed_cnt", "Description" : "Zamknięte", "Heartbeat" : "3600", "SeriesType" : "ABSOLUTE"}, 
+		{"Name" : "fwd_cnt", "Description" : "Przesłane dalej", "Heartbeat" : "3600", "SeriesType" : "ABSOLUTE"}, 
+		{"Name" : "avg_lifetime_work", "Description" : "Śr czas obsługi roboczy", "Heartbeat" : "3600", "SeriesType" : "GAUGE"}, 
+		{"Name" : "avg_lifetime_24", "Description" : "Śr czas obsługi 24h", "Heartbeat" : "3600", "SeriesType" : "GAUGE"} 
+        ],
+	  "Aggregates" : [
+		{"ConsolidationFunction" : "AVERAGE","XFilesFactor" : "0.5","AggregateSteps" : "1","StoredRows" : "288"}, 
+		{"ConsolidationFunction" : "AVERAGE","XFilesFactor" : "0.5","AggregateSteps" : "12","StoredRows" : "168"}, 
+		{"ConsolidationFunction" : "AVERAGE","XFilesFactor" : "0.5","AggregateSteps" : "72","StoredRows" : "186"}, 
+		{"ConsolidationFunction" : "AVERAGE","XFilesFactor" : "0.5","AggregateSteps" : "288","StoredRows" : "1100"} 
+		],
+	  "CreateSchedule" : true,
+	  "IntervalSecs" : "300",
+	  "Query" : "BooScript",
+	  "ScriptOrUrl" : "group_in_out_timed.boo",
+	  "Arguments" : "${groupId}",
+	  "Group" : "SOLR"
+	}
+}

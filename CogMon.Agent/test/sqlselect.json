@@ -1,0 +1,28 @@
+{
+    Id: "1239",
+    IntervalSeconds: 60,
+    DataSeries: "1242342",
+    Variables: [],
+    QueryMethod: "SqlSelect",
+    ScriptName: "
+        select COUNT(*) as opencrq, 
+        SUM(in_queue) as qlen, 
+        AVG(queue_time_secs) / (3600.0) as avgproctimeh, 
+        SUM(overdue) as overdue
+        from
+        (
+        select 
+        case when assignee = assignee_group then 1 else 0 end as in_queue,
+        DATEDIFF(ss, cl_resume_date, GETDATE()) as queue_time_secs,
+        case when ext.group_deadline1 < GETDATE() then 1 else 0 end as overdue
+        from CRQIncident crq
+        left join CRQIncidentExtension ext on crq.category2 = ext.id
+        where assignee_group=19 and status != 2011
+        ) t
+    ",
+    Arguments: "atmodb",
+    Options: {
+    },
+    VersionTag: "1",
+    Group: null
+}

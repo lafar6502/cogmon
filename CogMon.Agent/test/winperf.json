@@ -1,0 +1,16 @@
+﻿{
+    Id: "1239",
+    IntervalSeconds: 60,
+    DataSeries: "1242342",
+    Variables: [],
+    QueryMethod: "WinPerf",
+	VariableRegex: [
+		"category=Battery Status;counter=Voltage;instance=ACPI\\PNP0C0A\\1_0",
+		"category=Battery Status;counter=Remaining Capacity;instance=ACPI\\PNP0C0A\\1_0",
+		"category=Procesor;counter=Czas procesora (%);instance=_Total",
+		"category=Informacje o procesorze;counter=Częstotliwość procesora;instance=_Total",
+		"category=Informacje o procesorze;counter=% maksymalnej częstotliwości;instance=_Total"
+	],
+    VersionTag: "1",
+    Group: null
+}

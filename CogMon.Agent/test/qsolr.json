@@ -1,0 +1,12 @@
+{
+    Id: "qsolr",
+    IntervalSeconds: 60,
+    DataSeries: "4fd825729f942127984ff2e4",
+    Variables: [],
+    QueryMethod: "BooScript",
+    ScriptName: "qsolr1.boo",
+    Options: {
+    },
+    VersionTag: "1",
+    Group: null
+}

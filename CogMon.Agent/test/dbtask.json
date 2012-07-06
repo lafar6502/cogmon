@@ -1,0 +1,13 @@
+{
+    Id: "1234",
+    IntervalSeconds: 60,
+    DataSeries: "1242342",
+    Variables: [],
+    QueryMethod: "BooScript",
+    ScriptName: "Test1.boo",
+    Options: {
+        "T1": 3892
+    },
+    VersionTag: "1",
+    Group: null
+}

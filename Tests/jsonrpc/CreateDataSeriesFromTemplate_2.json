@@ -1,5 +1,5 @@
 {
-	"TemplateId" : "4fbe94029f942111f0586529",
-	"Parameters" : {"cstring" : "atmodb", "groupId": "123818"},
+	"TemplateId" : "20120521gstat2",
+	"Parameters" : {"groupId" : "100105", "groupName": "I linia elektroniczne Transcom", "cstring" : "atmodb"},
 	"OverwriteRRD" : false
 }

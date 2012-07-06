@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Diagnostics;
+using System.Text;
+using NLog;
+
+namespace CogMon.Services.RRD
+{
+    public class RrdTool : IRrdTool
+    {
+        public string RrdExe { get; set; }
+        private Logger log = LogManager.GetCurrentClassLogger();
+
+        public void AppendData(string rrdFile, DateTime? timestamp, double[] values)
+        {
+            StringBuilder sb = new StringBuilder();
+            DateTime dt = timestamp.HasValue ? timestamp.Value : DateTime.Now;
+            int t = ToUnixTime(dt);
+            sb.AppendFormat(" update {0} {1}", rrdFile, t);
+            foreach (double v in values)
+            {
+                sb.AppendFormat(":{0}", (float)v);
+            }
+
+            RunRrdWithCommandline(sb.ToString());
+        }
+
+        private static int ToUnixTime(DateTime dt)
+        {
+            TimeSpan ts = (dt.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0));
+            return (int) ts.TotalSeconds;
+        }
+
+        private void RunRrdWithCommandline(string cmdline)
+        {
+            log.Info("Running {0} {1}", RrdExe, cmdline);
+            var psi = new ProcessStartInfo(RrdExe, cmdline);
+            psi.UseShellExecute = false;
+            psi.RedirectStandardError = true;
+            psi.RedirectStandardOutput = true;
+	         
+            using (var p = Process.Start(psi))
+            {
+                log.Debug("Process started. waiting for finish");
+                if (!p.WaitForExit(3000))
+                {
+                    log.Error("Process did not terminate: {0} {1}", RrdExe, cmdline);
+                }
+                else
+                {
+                    log.Debug("Process exited with code {0}", p.ExitCode);
+                    if (p.ExitCode != 0)
+                    {
+                        string msg = "";
+                        if (!p.StandardError.EndOfStream)
+                            msg = p.StandardError.ReadToEnd();
+                        throw new Exception("Error executing RRDTool with " + cmdline + ": " + msg);
+                    }
+                }
+            }
+        }
+
+        public void CreateRRDFile(RrdInfo config, string fileName)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat("create \"{0}\" --step {1}", fileName, config.BaseInterval);
+            foreach (var df in config.DataFields)
+            {
+                sb.AppendFormat(" DS:{0}:{1}:{2}:{3}:{4}", df.Name, df.SeriesType.ToString(), df.HeartbeatSeconds.HasValue ? df.HeartbeatSeconds.Value : config.BaseInterval * 10, df.Min.HasValue ? df.Min.Value.ToString() : "U", df.Max.HasValue ? df.Max.Value.ToString() : "U");
+            }
+            foreach (var ag in config.Aggregates)
+            {
+                sb.AppendFormat(" RRA:{0}:{1}:{2}:{3}", ag.Function, ag.XFilesFactor, ag.AggregateSteps, ag.StoredRows);
+            }
+            RunRrdWithCommandline(sb.ToString());
+        }
+
+
+        public void SaveGraphFile(RRDGraphInfo graphConfig, string outputFile)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

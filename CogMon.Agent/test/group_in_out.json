@@ -1,0 +1,13 @@
+{
+    Id: "group_in_out",
+    IntervalSeconds: 60,
+    DataSeries: "group_in_out_1",
+    Variables: [],
+    QueryMethod: "BooScript",
+    ScriptName: "group_in_out_timed.boo",
+    Options: {
+    },
+	Arguments: "100105",
+    VersionTag: "1",
+    Group: null
+}

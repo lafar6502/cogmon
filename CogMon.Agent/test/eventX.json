@@ -1,0 +1,12 @@
+{
+    Id: "eventX",
+    IntervalSeconds: 60,
+    DataSeries: "#X",
+    Variables: [],
+    QueryMethod: "BooScript",
+    ScriptName: "eventsX.boo",
+    Options: {
+    },
+    VersionTag: "1",
+    Group: null
+}

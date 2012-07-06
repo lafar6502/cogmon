@@ -1,0 +1,51 @@
+﻿@model CogMon.WWW.Models.LogOn
+
+@{
+	Layout = "../Shared/_Logon.cshtml";
+    ViewBag.Title = "Log On";
+}
+
+
+
+
+
+	
+@using (Html.BeginForm()) {
+    <div class="logonpanel">
+        @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
+
+		<fieldset>
+            <legend>Log on to CogMon</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.UserName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Password)
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+
+            <div class="editor-label">
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+            </div>
+
+            <p>
+                <input type="submit" class="abutton" value="Log On" />
+                <a class="abutton" href="Account/Register">Register</a>
+		        
+            </p>
+            <p>
+            <a class="bbutton" href="../winauth/">or log on with your windows account</a>
+            </p>
+        </fieldset>
+    </div>
+}

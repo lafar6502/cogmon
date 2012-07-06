@@ -1,0 +1,57 @@
+<project name="CogMon" default="build" basedir=".">
+	<target name="build">
+		<echo message="not ready yet" />
+	</target>
+	
+	<target name="dist">
+		<mkdir dir="dist" />
+		<mkdir dir="dist/www" />
+		<copy todir="dist/www">
+			<fileset basedir="CogMon.WWW">
+				<exclude name="obj/**" />
+				<include name="**" />
+			</fileset>
+		</copy>
+		<copy todir="dist/www/bin">
+			<fileset basedir="extlib">
+				<include name="Mongo*.dll" />
+			</fileset>
+		</copy>
+		<copy todir="dist/www/Content">
+			<fileset basedir="extlib">
+				<include name="ext.zip" />
+			</fileset>
+		</copy>
+		<mkdir dir="dist/www/winauth" />
+		<copy todir="dist/www/winauth">
+			<fileset basedir="CogMon.WinAuth.WWW">
+				<include name="bin/*.dll" />
+				<include name="*.aspx" />
+				<include name="*.asax" />
+				<include name="web.config" />
+				<include name="web.nlog" />
+			</fileset>	
+		</copy>
+		<copy todir="dist/www/winauth/bin">
+			<fileset basedir="extlib">
+				<include name="Mongo*.dll" />
+			</fileset>
+		</copy>
+			
+		
+		<mkdir dir="dist/tools" />
+		<copy todir="dist/tools">
+			<fileset basedir="tools">
+				<include name="**" />
+			</fileset>
+		</copy>
+		
+		<mkdir dir="dist/agent" />
+		<copy todir="dist/agent">
+			<fileset basedir="CogMon.Agent/bin/Debug">
+				<include name="**" />
+			</fileset>
+		</copy>
+	
+	</target>
+</project>

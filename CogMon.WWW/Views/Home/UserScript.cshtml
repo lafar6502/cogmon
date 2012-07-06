@@ -1,0 +1,6 @@
+﻿@{
+    Layout = null;
+    Response.ContentType = "text/javascript";
+}
+Ext.ns('CogMon');
+CogMon.User = @Html.Raw(ViewBag.UserInfoJson);
