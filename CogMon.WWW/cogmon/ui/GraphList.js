@@ -39,8 +39,7 @@
             },
             proxy: {
                 type: 'direct',
-                directFn: RPC.UserGui.GetUserNavMenu2,
-                paramOrder: ['node']
+                directFn: RPC.UserGui.GetUserNavigationMenu
             }
         });
         var me = this;

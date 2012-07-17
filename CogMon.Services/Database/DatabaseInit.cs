@@ -32,6 +32,7 @@ namespace CogMon.Services.Database
             DefaultWithIntIdAssigned<MEvent>(null);
             DefaultWithStringId<EventMapReduce>();
             DefaultWithStringId<GraphDefinition>();
+            DefaultWithStringId<NavNode>();
             //DefaultWithStringId<AuthToken>();
         }
 

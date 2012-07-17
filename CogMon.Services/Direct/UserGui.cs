@@ -581,30 +581,30 @@ namespace CogMon.Services.Direct
             Db.GetCollection<UserInfo>().Save(usr);
         }
 
-        protected treenode ToTreeNode(NavNode nn, IEnumerable<string> filterAcl)
+        protected treenode ToTreeNode(NavNode nn)
         {
             var tn = new treenode
             {
                 id = nn.Id,
                 text = nn.Name,
                 cls = nn.NodeClass,
-                children = null,
-                leaf = true
+                children = new List<treenode>(),
+                leaf = false,
+                expanded = true
             };
-            if (nn.Children == null) return tn;
-            
-            List<treenode> cld = new List<treenode>();
-            foreach (var cn in nn.Children)
+            if (nn.Items != null && nn.Items.Count > 0)
             {
-                if (cn.ACL == null || cn.ACL.Any(x => filterAcl.Contains(x)))
-                {
-                    cld.Add(ToTreeNode(cn, filterAcl));
-                }
-            }
-            if (cld.Count > 0)
-            {
-                tn.children = cld;
                 tn.leaf = false;
+                foreach(var r in nn.Items)
+                {
+                    tn.children.Add(new treenode
+                    {
+                        leaf = true,
+                        id = r.Id,
+                        text = r.Label,
+                        ntype = r.Reftype
+                    });
+                }
             }
             return tn;
         }
@@ -613,12 +613,39 @@ namespace CogMon.Services.Direct
         public List<treenode> GetUserNavigationMenu()
         {
             var nns = Db.Find<NavNode>(x => x.ACL.In(UserSessionContext.CurrentUserInfo.GetUserACL())).OrderBy(x => x.Name);
-            List<treenode> r = new List<treenode>();
-            foreach (NavNode nn in nns)
+            Dictionary<string, treenode> d = new Dictionary<string, treenode>();
+            Dictionary<string, List<treenode>> childs = new Dictionary<string, List<treenode>>();
+            string rootid = ".root";
+            ///now build a tree from flat node list
+            foreach (var nn in nns)
             {
-                r.Add(ToTreeNode(nn, UserSessionContext.CurrentUserInfo.GetUserACL()));
+                var tn = ToTreeNode(nn);
+                d[tn.id] = tn;
+                string rid = string.IsNullOrEmpty(nn.ParentId) ? rootid : nn.ParentId;
+                List<treenode> chl;
+                if (!childs.TryGetValue(rid, out chl)) 
+                {
+                    chl = new List<treenode>();
+                    childs[rid] = chl;
+                }
+                chl.Add(tn);
             }
-            return r;
+            List<string> rmv = new List<string>();
+            foreach (var k in childs.Keys)
+            {
+                if (k == rootid) continue;
+                treenode tn;
+                if (!d.TryGetValue(k, out tn))
+                {
+                    rmv.Add(k);
+                }
+                else
+                {
+                    tn.children.AddRange(childs[k]);
+                    tn.leaf = false;
+                }
+            }
+            return childs.ContainsKey(rootid) ? childs[rootid] : new List<treenode>();
         }
 
         /// <summary>
@@ -629,6 +656,27 @@ namespace CogMon.Services.Direct
         [DirectMethod]
         public void CreateNavigationFolder(string parentId, string name)
         {
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("name cannot be empty");
+            var nn = new NavNode();
+            nn.ParentId = parentId;
+            nn.Name = name;
+            nn.OwnerId = UserSessionContext.CurrentUserRecordId;
+            nn.ACL = new List<string>();
+            nn.ACL.Add("ALL");
+            nn.Items = new List<NavNode.Ref>();
+            nn.NodeClass = "folder";
+            Db.GetCollection<NavNode>().Save(nn);
+        }
+
+        [DirectMethod]
+        public void DeleteNavigationFolder(string id)
+        {
+            var nn = Db.GetCollection<NavNode>().FindOneById(id);
+            if (nn == null) throw new ArgumentException("folder not found");
+            if (nn.OwnerId != UserSessionContext.CurrentUserRecordId) throw new Exception("Not allowed to delete this folder");
+            if (Db.Find<NavNode>(x => x.ParentId == id).Count() > 0)
+                throw new Exception("This folder has child folders and cannot be deleted");
+            Db.GetCollection<NavNode>().Remove(Query.EQ("_id", id));
         }
 
         [DirectMethod]

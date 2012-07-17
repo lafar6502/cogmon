@@ -24,6 +24,10 @@ namespace CogMon.Lib.Gui
         public List<PortalPageColumn> Columns { get; set; }
         public int IdGen { get; set; }
         public bool Editable { get; set; }
+        /// <summary>
+        /// page folder Id
+        /// </summary>
+        public string FolderId { get; set; }
 
         public PortalPage()
         {

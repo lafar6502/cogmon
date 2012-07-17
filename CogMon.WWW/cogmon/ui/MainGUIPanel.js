@@ -120,8 +120,39 @@ Ext.define('CogMon.ui.MainGUIPanel', {
 								{
 									text: 'Navigation',
 									menu: [
-										{text: 'Add folder'},
-										{text: 'Delete folder'}
+										{
+											text: 'Add folder',
+											handler: function() { 
+												var p = me.down('#navpanel');
+												var sn = p.getSelectedNode();
+												Ext.Msg.prompt('Create folder', 'Folder name', function(b, name) {
+													var pid = null;
+													if (!Ext.isEmpty(sn)) {
+														alert('sth sel' + b + ' ' + sn.ntype);
+														pid = sn.id;
+													}
+													RPC.UserGui.CreateNavigationFolder(pid, name, {
+														success: function(e, ret) {
+															p.refresh();
+														}
+													});
+												});
+												
+											}
+										},
+										{
+											text: 'Delete folder',
+											handler: function() {
+												var p = me.down('#navpanel');
+												var sn = p.getSelectedNode();
+												if (Ext.isEmpty(sn)) return;
+												RPC.UserGui.DeleteNavigationFolder(sn.id, {
+													success: function(e, ret) {
+														p.refresh();
+													}
+												});
+											}
+										}
 									]
 								},
 								{
