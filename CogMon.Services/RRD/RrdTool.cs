@@ -7,6 +7,8 @@ using NLog;
 using System.IO;
 using Newtonsoft.Json;
 using CogMon.Lib.Graph;
+using System.Xml;
+
 
 namespace CogMon.Services.RRD
 {
@@ -94,6 +96,12 @@ namespace CogMon.Services.RRD
             return RunExeWithCommandline(RrdExe, cmdline);
         }
 
+        /// <summary>
+        /// Runs external command and returns its output text
+        /// </summary>
+        /// <param name="exe"></param>
+        /// <param name="cmdline"></param>
+        /// <returns></returns>
         private string RunExeWithCommandline(string exe, string cmdline)
         {
             log.Info("Running {0} {1}", exe, cmdline);
@@ -169,7 +177,7 @@ namespace CogMon.Services.RRD
         private static object ParseRrdValue(string val)
         {
             if (val.StartsWith("\"")) return val.Substring(1, val.Length - 2);
-            if (char.IsDigit(val[0]))
+            if (char.IsDigit(val[0]) || (val.Length > 1 && val[0] == '-' && char.IsDigit(val[1])))
             {
                 var cult = System.Globalization.CultureInfo.InvariantCulture;
                 int d;
@@ -182,6 +190,15 @@ namespace CogMon.Services.RRD
             }
             if (val == "NaN") return Double.NaN;
             throw new Exception("Unrecognized value: " + val);
+        }
+
+        private static double ParseDouble(string val)
+        {
+            var cult = System.Globalization.CultureInfo.InvariantCulture;
+            double dv;
+            if (Double.TryParse(val, System.Globalization.NumberStyles.Any, cult, out dv)) return dv;
+            if (val == "NaN") return Double.NaN;
+            throw new Exception("Can't parse value: " + val);
         }
 
         private Dictionary<string, object> ParseRRDInfo(string txt, bool dynAsArray)
@@ -272,28 +289,32 @@ namespace CogMon.Services.RRD
             return DrawGraph(gd, opts, null, destinationFile);
         }
 
-        public RrdImageInfo DrawGraph(GraphDefinition gd, DrawOptions opts, IEnumerable<RrdEventInfo> addEvents, string destinationFile)
+        protected string BuildRrdGraphCmdline(GraphDefinition gd, DrawOptions opts, IEnumerable<RrdEventInfo> addEvents, string destinationFile, bool asXport)
         {
-            /*Dictionary<string, object> d = new Dictionary<string, object>();
-            d["h"] = opts.Height.HasValue ? opts.Height.Value : 300;
-            d["w"] = opts.Width.HasValue ? opts.Width.Value : 500;
-            d["startTime"] = string.IsNullOrEmpty(opts.StartTime) ? "-1d" : opts.StartTime;
-            d["endTime"] = string.IsNullOrEmpty(opts.EndTime) ? "N" : opts.EndTime;
-            */
             StringWriter cmd = new StringWriter();
-            cmd.Write("graphv \"{0}\" {1}", destinationFile, gd.AdditionalCmdParams);
+            if (asXport)
+            {
+                cmd.Write("xport ");
+                if (opts.Width.HasValue) cmd.Write(" -m {0}", opts.Width.Value);
+            }
+            else
+            {
+                if (destinationFile != null) cmd.Write("graphv \"{0}\"", destinationFile);
+                if (!string.IsNullOrEmpty(gd.AdditionalCmdParams)) cmd.Write(" " + gd.AdditionalCmdParams);
+                if (opts.Width.HasValue) cmd.Write(" -w {0}", opts.Width.Value);
+                if (opts.Height.HasValue) cmd.Write(" -h {0}", opts.Height.Value);
+            }
             if (!string.IsNullOrEmpty(opts.StartTime)) cmd.Write(" -s \"{0}\"", opts.StartTime);
             if (!string.IsNullOrEmpty(opts.EndTime)) cmd.Write(" -e \"{0}\"", opts.EndTime);
             if (opts.Step.HasValue) cmd.Write(" --step {0}", opts.Step.Value);
-            if (opts.Width.HasValue) cmd.Write(" -w {0}", opts.Width.Value);
-            if (opts.Height.HasValue) cmd.Write(" -h {0}", opts.Height.Value);
-            if (gd.Defs == null) throw new Exception("DEFs are required");
             
+            if (gd.Defs == null) throw new Exception("DEFs are required");
+
             foreach (var d in gd.Defs)
             {
                 cmd.Write(" " + d.ToRRDString());
             }
-            
+
             if (gd.CVDefs != null)
             {
                 foreach (var cvd in gd.CVDefs)
@@ -301,20 +322,28 @@ namespace CogMon.Services.RRD
                     cmd.Write(" " + cvd.ToRRDString());
                 }
             }
-            if (destinationFile != null)
+            for (int i = 0; i < gd.Elements.Count; i++)
             {
-                for (int i = 0; i < gd.Elements.Count; i++)
+                if (opts.SkipElements != null && opts.SkipElements.Contains(i)) continue;
+                var el = gd.Elements[i];
+                if (asXport)
                 {
-                    if (opts.SkipElements != null && opts.SkipElements.Contains(i)) continue;
-                    cmd.Write(" " + gd.Elements[i].ToRRDString());
-                }
-                if (addEvents != null)
-                {
-                    addEvents = addEvents.OrderBy(x => x.Time);
-                    foreach (var ev in addEvents)
+                    if (el.Op == GraphOperation.AREA || el.Op == GraphOperation.LINE1 || el.Op == GraphOperation.LINE2
+                        || el.Op == GraphOperation.LINE3 || el.Op == GraphOperation.TICK)
                     {
-                        cmd.Write(" " + ev.ToRRDString());
+                        cmd.Write(" XPORT:{0}{1}", el.Value, string.IsNullOrEmpty(el.Legend) ? "" : string.Format(":\"{0}\"", el.Legend));
                     }
+                }
+                else if (destinationFile != null) cmd.Write(" " + el.ToRRDString());
+            }
+
+            
+            if (addEvents != null && destinationFile != null)
+            {
+                addEvents = addEvents.OrderBy(x => x.Time);
+                foreach (var ev in addEvents)
+                {
+                    cmd.Write(" " + ev.ToRRDString());
                 }
             }
             var cmdtext = cmd.ToString();
@@ -323,7 +352,19 @@ namespace CogMon.Services.RRD
             dic["width"] = opts.Width.HasValue ? opts.Width : 0;
             dic["height"] = opts.Height.HasValue ? opts.Height : 0;
             dic["graphDefinitionId"] = gd.Id;
-            cmdtext = Utils.SubstValue(cmdtext, dic);
+            return Utils.SubstValue(cmdtext, dic);
+        }
+
+        public RrdImageInfo DrawGraph(GraphDefinition gd, DrawOptions opts, IEnumerable<RrdEventInfo> addEvents, string destinationFile)
+        {
+            /*Dictionary<string, object> d = new Dictionary<string, object>();
+            d["h"] = opts.Height.HasValue ? opts.Height.Value : 300;
+            d["w"] = opts.Width.HasValue ? opts.Width.Value : 500;
+            d["startTime"] = string.IsNullOrEmpty(opts.StartTime) ? "-1d" : opts.StartTime;
+            d["endTime"] = string.IsNullOrEmpty(opts.EndTime) ? "N" : opts.EndTime;
+            */
+            var cmdtext = BuildRrdGraphCmdline(gd, opts, addEvents, destinationFile, false);
+            
             string ret = RunRrdWithCommandline(cmdtext);
             var ii = new RrdImageInfo();
             ii.FileName = destinationFile;
@@ -378,6 +419,37 @@ namespace CogMon.Services.RRD
         }
 
 
-        
+
+
+
+        public RrdDataXport ExportGraphData(GraphDefinition gd, DrawOptions opts)
+        {
+            var cmdtext = BuildRrdGraphCmdline(gd, opts, null, null, true);
+            string ret = RunRrdWithCommandline(cmdtext);
+            var doc = new XmlDocument();
+            doc.LoadXml(ret);
+            var x = new RrdDataXport();
+            x.Columns = new List<string>();
+            x.Rows = new List<RrdDataXport.Row>();
+            x.Start = int.Parse(doc.DocumentElement.SelectSingleNode("meta/start").InnerText);
+            x.End = int.Parse(doc.DocumentElement.SelectSingleNode("meta/end").InnerText);
+            x.Step = int.Parse(doc.DocumentElement.SelectSingleNode("meta/step").InnerText);
+            foreach (XmlElement el in doc.DocumentElement.SelectNodes("meta/legend/entry"))
+            {
+                x.Columns.Add(el.InnerText);
+            }
+            foreach (XmlElement el in doc.DocumentElement.SelectNodes("data/row"))
+            {
+                var r = new RrdDataXport.Row();
+                r.T = Int32.Parse(el.SelectSingleNode("t").InnerText);
+                r.V = new List<double>();
+                foreach (XmlElement v in el.SelectNodes("v"))
+                {
+                    r.V.Add(ParseDouble(v.InnerText));
+                }
+                x.Rows.Add(r);
+            }
+            return x;
+        }
     }
 }

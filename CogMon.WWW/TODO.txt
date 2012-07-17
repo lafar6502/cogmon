@@ -1,0 +1,32 @@
+﻿1. Logowanie user+hasło
+2. Rejestracja nowego usera
+#done 3. Zakres dat na stronie portalu
+#done 4. Pin-owanie stron albo zrobienie czegoś z tabami
+#done 5. Edytor do parametrów wykresu (samodzielne tworzenie wykresu z szablonu)
+#done 6. Domyślny zakres dat (1 day?) niech sie wypelnia po otwarciu strony
+#done 7. Ustalić dlaczego 1-month nie działa
+8. Zrobić zapamiętywanie ustawień (zakresu dat) dla stron
+#done 9. Widok 'zoom' dla pojedynczego wykresu
+10. Wybór graphu z listy - scroll oraz search
+#done 11. Dodawanie nowej strony
+#done 12. Kasowanie strony
+#done 13. Zmiana tytułu
+#done 14. Zmiana wielkości wykresu (portletu)
+#done 15. Klonowanie wykresu
+16. Zapamiętywanie ostatniej daty uruchomienia job-u i przekazywanie odpowiedniego offsetu do Agenta 
+17. Wykresy ExtJS z RRDXPORT
+18. Eksport danych z wykresu RRD (xml, csv)
+19. Automatyczne kasowanie starych danych zagregowanych w mongodb
+20. Auto-monitorowanie statusu jobów (odpowiedni portlet do tego celu)
+21. Alerty (do ustalenia jak to zrobić)
+22. Prognozy miesięczne (wpisane ręcznie/umieszczone na wykresie?)
+23. HWPREDICT dla wykresów
+24!. Organizacja raportów w zarządzalne drzewo
+25. LINKI do stron i pojedynczych wykresów
+26. Tytuł strony / nawigacja
+#done 27. Dokonczyc konfigurowanie rozdzielczosci dla wykresow RRD
+#done 28. Edytor RRD - klonowanie wpisow (def/cdef/graph element)
+#done 29. Widok 'raw json' dla definicji graphu
+30!. Uprawnienia
+31. download obrazków png z wykresem
+32. Auto-konfiguracja rozdzielczości obrazka na podstawie data-source

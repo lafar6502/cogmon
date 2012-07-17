@@ -76,7 +76,7 @@ var st = Ext.create('Ext.data.DirectStore', {
 
 Ext.define('CogMon.model.RrdGraphListEntry', {
 	extend: 'Ext.data.Model',
-	fields: ['Id', 'Title', 'OwnerId', 'TemplateId', 'IsMine'], idProperty: 'Id'
+	fields: ['Id', 'Title', 'OwnerId', 'OwnerName', 'TemplateId', 'IsMine'], idProperty: 'Id'
 });
 
 var st = Ext.create('Ext.data.DirectStore', {

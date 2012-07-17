@@ -499,5 +499,49 @@ namespace CogMon.Services.RRD
             }
             return ret;
         }
+
+
+        public RrdDataXport ExportGraphData(string graphDefinitionId, DrawOptions opts)
+        {
+            var gd = Db.GetCollection<GraphDefinition>().FindOneById(graphDefinitionId);
+            if (gd == null) throw new Exception("Invalid graph definition Id");
+            return ExportGraphData(gd, opts);
+        }
+
+        public RrdDataXport ExportGraphData(GraphDefinition gd, DrawOptions opts)
+        {
+            foreach (var d in gd.Defs)
+            {
+                var p = Path.Combine(BaseDirectory, d.DataSourceId + ".rrd");
+                d.DataSourceId = p.Replace(":\\", "\\:\\");
+            }
+            DateTime s, e;
+            if (!RrdUtil.ParseRrdDateRange(opts.StartTime, opts.EndTime, out s, out e)) throw new Exception("Unparsable graph date range");
+            int actualStep = 1;
+            if (opts.Step.HasValue) actualStep = opts.Step.Value;
+            if (actualStep == 0)
+            {
+                actualStep = SelectReasonableStep(s, e);
+            }
+            if (gd.Resolution != null && actualStep > 0)
+            {
+                for (int i = 0; i < gd.Resolution.Count; i++)
+                {
+                    var ri = gd.Resolution[i];
+                    var dl = DateTime.Now.AddSeconds(-ri.SpanSec - 1);
+                    log.Debug("res: {0}, l1: {1}, s: {2}, lt: {3}, t1: {4}, t2: {5}", ri.ResSec, dl, s, dl < s, dl.Ticks, s.Ticks);
+                    if (i == gd.Resolution.Count - 1 || dl < s)
+                    {
+                        if (actualStep < ri.ResSec) actualStep = ri.ResSec;
+                        log.Debug("Selected resolution {0}", ri.ResSec);
+                        break;
+                    }
+                }
+            }
+            log.Debug("Setting step size to {0}", actualStep);
+            opts.Step = actualStep > 0 ? actualStep : (int?)null;
+            
+            return this.RRDTool.ExportGraphData(gd, opts);
+        }
     }
 }

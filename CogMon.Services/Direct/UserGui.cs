@@ -580,5 +580,62 @@ namespace CogMon.Services.Direct
             }
             Db.GetCollection<UserInfo>().Save(usr);
         }
+
+        protected treenode ToTreeNode(NavNode nn, IEnumerable<string> filterAcl)
+        {
+            var tn = new treenode
+            {
+                id = nn.Id,
+                text = nn.Name,
+                cls = nn.NodeClass,
+                children = null,
+                leaf = true
+            };
+            if (nn.Children == null) return tn;
+            
+            List<treenode> cld = new List<treenode>();
+            foreach (var cn in nn.Children)
+            {
+                if (cn.ACL == null || cn.ACL.Any(x => filterAcl.Contains(x)))
+                {
+                    cld.Add(ToTreeNode(cn, filterAcl));
+                }
+            }
+            if (cld.Count > 0)
+            {
+                tn.children = cld;
+                tn.leaf = false;
+            }
+            return tn;
+        }
+
+        [DirectMethod]
+        public List<treenode> GetUserNavigationMenu()
+        {
+            var nns = Db.Find<NavNode>(x => x.ACL.In(UserSessionContext.CurrentUserInfo.GetUserACL())).OrderBy(x => x.Name);
+            List<treenode> r = new List<treenode>();
+            foreach (NavNode nn in nns)
+            {
+                r.Add(ToTreeNode(nn, UserSessionContext.CurrentUserInfo.GetUserACL()));
+            }
+            return r;
+        }
+
+        /// <summary>
+        /// Create navigation folder assigned to current user
+        /// </summary>
+        /// <param name="parentId"></param>
+        /// <param name="name"></param>
+        [DirectMethod]
+        public void CreateNavigationFolder(string parentId, string name)
+        {
+        }
+
+        [DirectMethod]
+        public void MoveNavigationFolder(string id, string newParentId)
+        {
+        }
+
+        
     }
 }

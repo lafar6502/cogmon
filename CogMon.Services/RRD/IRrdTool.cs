@@ -59,6 +59,10 @@ namespace CogMon.Services.RRD
 
         RrdImageInfo DrawGraph(GraphDefinition gd, DrawOptions opts, string destinationFile);
 
+
         void DrawGraph(GraphDefinition gd, DrawOptions opts, Stream writeImageTo);
+
+        RrdDataXport ExportGraphData(GraphDefinition gd, DrawOptions opts);
+
     }
 }

@@ -137,6 +137,30 @@ namespace CogMon.WWW.Controllers
             return Json(ii, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Export RRD graph data as xml
+        /// </summary>
+        /// <param name="definitionId"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="w"></param>
+        /// <param name="step"></param>
+        /// <returns></returns>
+        public ActionResult XportGraphData(string definitionId, string startTime, string endTime, int? maxRows, int? step)
+        {
+            DrawOptions opts = new DrawOptions 
+            {
+                StartTime = startTime,
+                EndTime = endTime,
+                Width = maxRows,
+                Height = 0,
+                Step = step
+            };
+
+            var res = this.DataSeriesRepo.ExportGraphData(definitionId, opts);
+            return Json(res, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GraphInfo(string definitionId, string startTime, string endTime, int? w, int? h, string eventCategories, string skipElements, int? step)
         {
             string key = GraphInfoKey(definitionId, startTime, endTime, w, h, eventCategories, skipElements, step);

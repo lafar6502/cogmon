@@ -65,6 +65,7 @@
     <Compile Include="GroupInfo.cs" />
     <Compile Include="Gui\ApplicationSettings.cs" />
     <Compile Include="Gui\NavDirectory.cs" />
+    <Compile Include="Gui\NavNode.cs" />
     <Compile Include="Gui\PortalPage.cs" />
     <Compile Include="Gui\PortletDef.cs" />
     <Compile Include="IdLabel.cs" />

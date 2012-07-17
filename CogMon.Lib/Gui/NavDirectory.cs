@@ -9,6 +9,7 @@ namespace CogMon.Lib.Gui
     {
         public string Id { get; set; }
         public string OwnerId { get; set; }
+        public List<string> ACL { get; set; }
         public Node Root { get;set;}
 
         public class Node

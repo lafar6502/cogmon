@@ -103,3 +103,33 @@ textarea
 	position:relative;
 	top:1px;
 }
+
+.btn-add 
+{
+    background-image: url('img/add.png');
+}
+
+.btn-delete
+{
+    background-image: url('img/delete.png');
+}
+
+.btn-clone
+{
+    background-image: url('img/clone.png');
+}
+
+.btn-edit
+{
+    background-image: url('img/edit.png');
+}
+
+.btn-up
+{
+    background-image: url('img/up.png');
+}
+
+.btn-down
+{
+    background-image: url('img/down.png');
+}

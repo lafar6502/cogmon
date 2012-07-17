@@ -70,4 +70,18 @@ namespace CogMon.Lib.Graph
         /// </summary>
         public List<ImgEventInfo> Events { get; set; }
     }
+
+    public class RrdDataXport
+    {
+        public int Start { get; set; }
+        public int End { get; set; }
+        public int Step { get; set; }
+        public List<string> Columns { get; set; }
+        public class Row
+        {
+            public int T { get; set; }
+            public List<double> V { get; set; }
+        }
+        public List<Row> Rows { get; set; }
+    }
 }

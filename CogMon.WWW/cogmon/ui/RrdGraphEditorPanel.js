@@ -14,19 +14,24 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 			var pnl = Ext.create('CogMon.ui.RrdGraphEditorPanel', pcfg);
 			var w = Ext.create('Ext.window.Window', {
 				modal: true,
-				width: 750,
+				width: 800,
 				title: 'RRD Graph Editor',
 				items: pnl,
 				layout: 'fit',
 				minHeight: 400,
-				height: 500,
+				height: 600,
 				buttons: [
 					{
-						text: 'Cancel',
-						handler: function() { w.close(); }
+						text: 'Clone graph', iconCls: 'btn-clone',
+						handler: function() {
+							var v = pnl.getCurrentGraphDefinition();
+							Ext.apply(v, {Id: null, ACL: [], Title: ''});
+							pnl.loadGraphDefinition(v);
+							Ext.Msg.alert('Success', 'Graph definition has been cloned but not saved yet');
+						}
 					},
 					{
-						text: 'Ok',
+						text: 'Save',
 						handler: function() {
 							var v = pnl.getCurrentGraphDefinition();
 							console.log("graph: " + Ext.encode(v));
@@ -34,6 +39,7 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 								success: function(ret, e) {
 									if (e.status) {
 										pnl.loadGraphDefinition(ret);
+										Ext.Msg.alert('Success', 'Graph saved');
 									}
 									else {
 										alert('error');
@@ -41,6 +47,10 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 								}
 							});
 						}
+					},
+					{
+						text: 'Cancel',
+						handler: function() { w.close(); }
 					}
 				]
 			});
@@ -61,11 +71,12 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 			return;
 		}
 		else if (Ext.isObject(gd)) {
-			console.log('loading: ' + Ext.encode(gd));
+			//console.log('loading: ' + Ext.encode(gd));
 			me.graphDefinitionId = gd.Id;
 			me.defStore.loadData(gd.Defs);
 			me.cdefStore.loadData(gd.CVDefs);
 			me.elementStore.loadData(gd.Elements);
+			me.resolutionStore.loadData(Ext.isEmpty(gd.Resolution) ? {} : gd.Resolution);
 			me.getForm().setValues(gd);
 		}
 		else throw "invalid graph definition"
@@ -73,9 +84,10 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 	getCurrentGraphDefinition: function() {
 		var v = this.getForm().getValues();
 		v.Id = this.graphDefinitionId;
-		v.Defs = this.defStore.getRange().map(function(x) { return x.data; });
-		v.CVDefs = this.cdefStore.getRange().map(function(x) { return x.data; });
-		v.Elements = this.elementStore.getRange().map(function(x) { return x.data; });
+		v.Defs = Ext.Array.map(this.defStore.getRange(), function(x) { return x.data; });
+		v.CVDefs = Ext.Array.map(this.cdefStore.getRange(), function(x) { return x.data; });
+		v.Elements = Ext.Array.map(this.elementStore.getRange(), function(x) { return x.data; });
+		v.Resolution = Ext.Array.map(this.resolutionStore.getRange(), function(x) { return x.data; });
 		return v;
 	},
 	validate: function() {
@@ -118,6 +130,9 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 			fields: ['Id', 'Name'], idProperty: 'Id',
 			paramOrder: ['dataSourceId'], autoDestroy: true
 		});
+		var resSt = Ext.create('Ext.data.JsonStore', {
+			fields: [{name: 'ResSec', type: 'int'}, {name:'SpanSec', type: 'int'}], autoDestroy: true
+		});
 		var defCdefSt = Ext.create('Ext.data.ArrayStore', {fields: [{name:'v', type: 'boolean'}, 'name'], data: [[true, 'CDEF'], [false, 'VDEF']], idProperty: 'v'});
 		var cfst = Ext.StoreManager.get('rrdConsolidationFunctions');
 		var cfst2 = Ext.create('Ext.data.Store', {fields:['Id', 'Name'], data: CogMon.ConstDictionaries.RrdConsolidationFunction, autoDestroy: true});
@@ -141,6 +156,7 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 			defStore: defSt,
 			cdefStore: cdefSt,
 			elementStore: elemSt,
+			resolutionStore: resSt,
 			layout: 'fit',
 			items: {
 				xtype: 'tabpanel', defaults: {xtype: 'panel', border: false}, border: false,
@@ -198,17 +214,27 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 									xtype: 'toolbar',
 									items: [
 										{
-											iconCls: 'icon-add',text: 'Add',scope: this, 
+											iconCls: 'btn-add',text: 'Add',scope: this, 
 											handler: function() {
 												me.defStore.add({});
 											}
 										}, 
 										{
-											iconCls: 'icon-delete', text: 'Delete', itemId: 'delete',  scope: this,
+											iconCls: 'btn-delete', text: 'Delete', itemId: 'delete',  scope: this,
 											handler: function() {
 												var sm = me.down('#defsGrid').getSelectionModel();
 												if (sm.hasSelection()) {
 													me.defStore.remove(sm.getSelection());
+												}
+											}
+										},
+										{
+											text: 'Clone', itemId: 'clone_btn', scope: this, iconCls: 'btn-clone',
+											handler: function() {
+												var sm = me.down('#defsGrid').getSelectionModel();
+												if (sm.hasSelection()) {
+													var v = sm.getSelection();
+													me.defStore.add(Ext.decode(Ext.encode(v[0].data)));
 												}
 											}
 										}
@@ -256,17 +282,27 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 							xtype: 'toolbar',
 							items: [
 								{
-									iconCls: 'icon-add',text: 'Add',scope: this, 
+									iconCls: 'btn-add',text: 'Add',scope: this, 
 									handler: function() {
 										me.cdefStore.add({});
 									}
 								}, 
 								{
-									iconCls: 'icon-delete', text: 'Delete', itemId: 'delete',  scope: this,
+									iconCls: 'btn-delete', text: 'Delete', itemId: 'delete',  scope: this,
 									handler: function() {
 										var sm = me.down('#cdefsGrid').getSelectionModel();
 										if (sm.hasSelection()) {
 											me.cdefStore.remove(sm.getSelection());
+										}
+									}
+								},
+								{
+									text: 'Clone', itemId: 'clone_btn', iconCls: 'btn-clone', scope: this,
+									handler: function() {
+										var sm = me.down('#cdefsGrid').getSelectionModel();
+										if (sm.hasSelection()) {
+											var v = sm.getSelection();
+											me.cdefStore.add(Ext.decode(Ext.encode(v[0].data)));
 										}
 									}
 								}
@@ -278,7 +314,7 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 						xtype: 'gridpanel', itemId: 'elementsGrid', autoScroll: true,
 						columns: [
 							{
-								dataIndex: 'Op', header: 'Element type', 
+								dataIndex: 'Op', header: 'Element type', sortable: false, 
 								editor: {xtype: 'combobox', store: 'rrdGraphOperations', valueField: 'Id', displayField: 'Name', allowBlank: false},
 								renderer: function(v, m) {
 									var v2 = v;
@@ -289,9 +325,9 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 									return v2;
 								}
 							},
-							{dataIndex: 'Value', header: 'Value', editor: 'textfield'},
+							{dataIndex: 'Value', header: 'Value', editor: 'textfield', sortable: false},
 							{
-								dataIndex: 'Color', header: 'Color', editor: 'textfield',
+								dataIndex: 'Color', header: 'Color', editor: 'textfield', sortable: false,
 								renderer: function(v, m) {
 									if (Ext.isString(v) && v.length >= 6)
 									{
@@ -301,8 +337,8 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 									return v;
 								}
 							},
-							{dataIndex: 'Legend', header: 'Legend', flex: .5, editor: 'textfield'},
-							{dataIndex: 'Params', header: 'Parameters', flex: .5, editor: 'textfield'}
+							{dataIndex: 'Legend', header: 'Legend', flex: .5, sortable: false, editor: 'textfield'},
+							{dataIndex: 'Params', header: 'Parameters', flex: .5, sortable: false, editor: 'textfield'}
 						],
 						store: elemSt,
 						plugins: [
@@ -323,13 +359,13 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 							xtype: 'toolbar',
 							items: [
 								{
-									iconCls: 'icon-add',text: 'Add',scope: this, 
+									iconCls: 'btn-add',text: 'Add',scope: this, 
 									handler: function() {
 										me.elementStore.add({});
 									}
 								}, 
 								{
-									iconCls: 'icon-delete', text: 'Delete', itemId: 'delete',  scope: this,
+									iconCls: 'btn-delete', text: 'Delete', itemId: 'delete',  scope: this,
 									handler: function() {
 										var sm = me.down('#elementsGrid').getSelectionModel();
 										if (sm.hasSelection()) {
@@ -338,13 +374,47 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 									}
 								},
 								{
-									iconCls: 'icon-up', text: 'Move up', scope: me, 
+									text: 'Clone', itemId: 'clone_btn', iconCls: 'btn-clone', scope: this,
 									handler: function() {
+										var sm = me.down('#elementsGrid').getSelectionModel();
+										if (sm.hasSelection()) {
+											var v = sm.getSelection();
+											me.elementStore.add(Ext.decode(Ext.encode(v[0].data)));
+										}
 									}
 								},
 								{
-									iconCls: 'icon-down', text: 'Move down', scope: me, 
+									iconCls: 'btn-up', text: 'Move up', scope: me, 
 									handler: function() {
+										var sm = me.down('#elementsGrid').getSelectionModel();
+										if (sm.hasSelection()) {
+											var v = sm.getSelection()[0];
+											var rowIndex = me.elementStore.indexOf(v);
+											if (rowIndex > 0)
+											{
+												me.elementStore.removeAt(rowIndex);
+												me.elementStore.insert(rowIndex - 1, v);
+												sm.select(rowIndex - 1);
+											}
+											
+										}
+									}
+								},
+								{
+									iconCls: 'btn-down', text: 'Move down', scope: me, 
+									handler: function() {
+										var sm = me.down('#elementsGrid').getSelectionModel();
+										if (sm.hasSelection()) {
+											var v = sm.getSelection()[0];
+											var rowIndex = me.elementStore.indexOf(v);
+											if (rowIndex < me.elementStore.getCount())
+											{
+												me.elementStore.removeAt(rowIndex);
+												me.elementStore.insert(rowIndex + 1, v);
+												sm.select(rowIndex + 1);
+											}
+											console.log('row index is ' + rowIndex);
+										}
 									}
 								}
 							]
@@ -355,8 +425,64 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 						items: [
 							{xtype: 'textfield', name: 'AdditionalCmdParams', fieldLabel: 'Additional rrdtool cmdline', anchor: '100%'},
 							{xtype: 'combobox', name: 'EventCategories', fieldLabel: 'Event categories', anchor: '100%', store: 'eventCategories', valueField: 'Id', displayField: 'Name', multiSelect: true},
-							{xtype: 'combobox', name: 'ACL', fieldLabel: 'Group permissions', anchor: '100%', store: 'userGroups', valueField: 'Id', displayField: 'Name', multiSelect: true}
+							{xtype: 'combobox', name: 'ACL', fieldLabel: 'Group permissions', anchor: '100%', store: 'userGroups', valueField: 'Id', displayField: 'Name', multiSelect: true},
+							{
+								xtype: 'fieldcontainer', fieldLabel: 'Resolution limits', anchor: '100% 100%',
+								items: {
+									xtype: 'gridpanel', store: resSt, itemId: 'resolutionGrid', 
+									columns: [
+										{header: 'Resolution (s)', dataIndex: 'ResSec', sortable: false, editor: {xtype: 'numberfield', allowBlank: false}},
+										{header: 'Time span (s)', dataIndex: 'SpanSec', sortable: false, editor: {xtype: 'numberfield', allowBlank: false}}
+									],
+									dockedItems: {
+										xtype: 'toolbar',
+										items: [
+											{
+												iconCls: 'btn-add',text: 'Add',scope: this, 
+												handler: function() {
+													me.resolutionStore.add({});
+												}
+											}, 
+											{
+												iconCls: 'btn-delete', text: 'Delete', itemId: 'delete',  scope: this,
+												handler: function() {
+													var sm = me.down('#resolutionGrid').getSelectionModel();
+													if (sm.hasSelection()) {
+														me.resolutionStore.remove(sm.getSelection());
+													}
+												}
+											}
+										]
+									},
+									plugins: [
+										Ext.create('Ext.grid.plugin.CellEditing', {clicksToEdit: 1})
+									]
+								}
+							}
 						]
+					},
+					{
+						title: 'Raw data edit', itemId: 'jsonTab',
+						xtype: 'form',
+						items: [
+							{xtype: 'textareafield', name: 'json', anchor: '100% 100%'}
+						],
+						dockedItems: {
+							xtype: 'toolbar', items: [
+								{text: 'Update graph',
+									handler: function() {
+									}
+								}
+							]
+						},
+						listeners: {
+							activate: function() {
+								this.getForm().reset();
+								this.getForm().setValues({'json': Ext.encode(me.getCurrentGraphDefinition())});
+								console.log('json tab activated');
+							}
+						}
+						
 					},
 					{
 						title: 'Preview', itemId: 'previewTab',
@@ -369,7 +495,7 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 		if (!Ext.isEmpty(this.graphDefinitionId)) {
 			this.loadGraphDefinition(this.graphDefinitionId);
 		} else {
-			this.loadGraphDefinition({Defs: [], CVDefs: [], Elements: [], ACL: [], EventCategories: []});
+			this.loadGraphDefinition({Defs: [], CVDefs: [], Elements: [], ACL: [], EventCategories: [], Resolution: [], AdditionalCmdParams: '--full-size-mode'});
 		}
 	}
 });

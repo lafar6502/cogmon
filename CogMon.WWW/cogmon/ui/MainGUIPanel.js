@@ -118,6 +118,13 @@ Ext.define('CogMon.ui.MainGUIPanel', {
 									}
 								},
 								{
+									text: 'Navigation',
+									menu: [
+										{text: 'Add folder'},
+										{text: 'Delete folder'}
+									]
+								},
+								{
 									text: 'Graphs',
 									menu: [
 										{
