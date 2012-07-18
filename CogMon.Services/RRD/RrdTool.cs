@@ -347,22 +347,23 @@ namespace CogMon.Services.RRD
                 }
             }
             var cmdtext = cmd.ToString();
+            var dic = PrepareGraphParams(gd, opts);
+            return Utils.SubstValue(cmdtext, dic);
+        }
+
+        private Dictionary<string, object> PrepareGraphParams(GraphDefinition gd, DrawOptions opts)
+        {
             var dic = new Dictionary<string, object>();
             dic["step"] = opts.Step.HasValue ? opts.Step.Value : 0;
             dic["width"] = opts.Width.HasValue ? opts.Width : 0;
             dic["height"] = opts.Height.HasValue ? opts.Height : 0;
             dic["graphDefinitionId"] = gd.Id;
-            return Utils.SubstValue(cmdtext, dic);
+            dic["graphTitle"] = gd.Title.Replace("\"", "\\\"");
+            return dic;
         }
 
         public RrdImageInfo DrawGraph(GraphDefinition gd, DrawOptions opts, IEnumerable<RrdEventInfo> addEvents, string destinationFile)
         {
-            /*Dictionary<string, object> d = new Dictionary<string, object>();
-            d["h"] = opts.Height.HasValue ? opts.Height.Value : 300;
-            d["w"] = opts.Width.HasValue ? opts.Width.Value : 500;
-            d["startTime"] = string.IsNullOrEmpty(opts.StartTime) ? "-1d" : opts.StartTime;
-            d["endTime"] = string.IsNullOrEmpty(opts.EndTime) ? "N" : opts.EndTime;
-            */
             var cmdtext = BuildRrdGraphCmdline(gd, opts, addEvents, destinationFile, false);
             
             string ret = RunRrdWithCommandline(cmdtext);
