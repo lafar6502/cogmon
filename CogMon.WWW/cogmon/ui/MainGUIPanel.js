@@ -90,13 +90,11 @@ Ext.define('CogMon.ui.MainGUIPanel', {
 									handler: function() {
 										var mp = me.getComponent('navpanel');
 										CogMon.ui.NewPortalPagePanel.showNewPageWindow(function(pconfig) {
-											RPC.UserGui.AddNewUserPortalPage(pconfig, {
-												success: function(ret, e) {
-													if (e.status)
-													{
-														mp.refresh();
-														me.openPortalPage(ret.Id);
-													}
+											RPC.UserGui.AddNewUserPortalPage(pconfig, function(ret, e) {
+												if (e.status)
+												{
+													mp.refresh();
+													me.openPortalPage(ret.Id);
 												}
 											});
 										});
@@ -127,15 +125,14 @@ Ext.define('CogMon.ui.MainGUIPanel', {
 												var sn = p.getSelectedNode();
 												Ext.Msg.prompt('Create folder', 'Folder name', function(b, name) {
 													var pid = null;
+													if (b != 'ok') return;
 													if (!Ext.isEmpty(sn)) {
-														alert('sth sel' + b + ' ' + sn.ntype);
 														pid = sn.id;
 													}
-													RPC.UserGui.CreateNavigationFolder(pid, name, {
-														success: function(e, ret) {
-															p.refresh();
+													RPC.UserGui.CreateNavigationFolder(pid, name, function(ret, e) {
+															if (e.status) p.refresh();
 														}
-													});
+													);
 												});
 												
 											}
@@ -146,11 +143,19 @@ Ext.define('CogMon.ui.MainGUIPanel', {
 												var p = me.down('#navpanel');
 												var sn = p.getSelectedNode();
 												if (Ext.isEmpty(sn)) return;
-												RPC.UserGui.DeleteNavigationFolder(sn.id, {
-													success: function(e, ret) {
-														p.refresh();
+												Ext.Msg.confirm("Delete folder", "Are you sure you want to delete '" + sn.text + "' folder?", function(b) {
+													if (b == 'yes')
+													{
+														RPC.UserGui.DeleteNavigationFolder(sn.id, function(ret, e) {
+																if (!e.status) {
+																	Ext.Msg.alert("Error", e.message);
+																}
+																else p.refresh();
+															}
+														);
 													}
 												});
+												
 											}
 										}
 									]

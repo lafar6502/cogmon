@@ -678,6 +678,12 @@ namespace CogMon.Services.Direct
         public void CreateNavigationFolder(string parentId, string name)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("name cannot be empty");
+            if (!string.IsNullOrEmpty(parentId))
+            {
+                var pn = Db.GetCollection<NavNode>().FindOneById(parentId);
+                if (pn == null) throw new Exception("Invalid parent Id");
+                if (pn.OwnerId != UserSessionContext.CurrentUserRecordId) throw new Exception("You have no permission to create folders here");
+            }
             var nn = new NavNode();
             nn.ParentId = parentId;
             nn.Name = name;
@@ -695,8 +701,9 @@ namespace CogMon.Services.Direct
             var nn = Db.GetCollection<NavNode>().FindOneById(id);
             if (nn == null) throw new ArgumentException("folder not found");
             if (nn.OwnerId != UserSessionContext.CurrentUserRecordId) throw new Exception("Not allowed to delete this folder");
-            if (Db.Find<NavNode>(x => x.ParentId == id).Count() > 0)
-                throw new Exception("This folder has child folders and cannot be deleted");
+            if (Db.Find<NavNode>(x => x.ParentId == id).Count() > 0 ||
+                Db.Find<PortalPage>(x => x.FolderId == id).Count() > 0)
+                throw new Exception("This folder contains child folders or portal pages and cannot be deleted");
             Db.GetCollection<NavNode>().Remove(Query.EQ("_id", id));
         }
 
@@ -712,7 +719,7 @@ namespace CogMon.Services.Direct
         {
             var df = Db.GetCollection<NavNode>().FindOneById(newParentFolderId);
             if (df == null) throw new Exception("Destination folder not found");
-
+            
             if (itemType == "folder")
             {
                 var nn = Db.GetCollection<NavNode>().FindOneById(itemId);

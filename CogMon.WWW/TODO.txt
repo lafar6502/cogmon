@@ -21,7 +21,7 @@
 21. Alerty (do ustalenia jak to zrobić)
 22. Prognozy miesięczne (wpisane ręcznie/umieszczone na wykresie?)
 23. HWPREDICT dla wykresów
-24!. Organizacja raportów w zarządzalne drzewo
+#done 24!. Organizacja raportów w zarządzalne drzewo
 25. LINKI do stron i pojedynczych wykresów
 26. Tytuł strony / nawigacja
 #done 27. Dokonczyc konfigurowanie rozdzielczosci dla wykresow RRD
