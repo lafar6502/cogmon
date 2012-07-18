@@ -32,6 +32,12 @@
 		var sel = sm.getLastSelected();
 		return sel.raw;
 	},
+	validateDrop: function(node,newParent) {
+		if (node.ntype != 'page') return false;
+	},
+	onDrop: function(node, newParent) {
+		console.log('dropped ' + node.id + ' to ' + newParent.id);
+	},
 	initComponent: function() {
 		 var st = Ext.create('Ext.data.TreeStore', {
             root: {
@@ -48,7 +54,20 @@
             rootVisible: false,
             hideHeaders: true,
 			viewConfig: {
-				//plugins: { ptype: 'treeviewdragdrop', enableDrop: false }
+				plugins: { ptype: 'treeviewdragdrop', enableDrop: true },
+				listeners: {
+					beforedrop: function(node, data, overModel, dropPosition, dropHandler, eOpts) {
+						console.log('before tree drop ' + data.records.length);
+						if (data.records.length != 1) return false;
+						var dr = data.records[0];
+						console.log('n: ' + dr.raw.ntype);
+						return me.validateDrop(dr.raw, overModel.raw);
+					},
+					drop: function(node, data, overModel, dropPosition, eOpts) {
+						var dr = data.records[0];
+						return me.onDrop(dr.raw, overModel.raw);
+					}
+				}
 			}
 		});
         if (Ext.isEmpty(me.listeners)) me.listeners= {};

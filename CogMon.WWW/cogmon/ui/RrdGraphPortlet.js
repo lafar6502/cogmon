@@ -31,17 +31,24 @@ Ext.define('CogMon.ui.RrdGraphPortlet', {
 		return prm;
 	},
     setupContentLoader : function() {
-        if (this.isVisible(true))
-		{
-			var img = this.down('#theImg');
-			if (Ext.isEmpty(img)) return;
-			var osrc = img.getEl().getAttribute('src');
-			var prm = this.getImageParams();
-			var nsrc = 'Graph/DrawGraph?' + Ext.urlEncode(prm);
-			//if (osrc == nsrc) alert('same src: ' + nsrc);
-			img.setSrc(nsrc);
-			img.show();
-		}
+		var me = this;
+		if (me.reloadScheduled) return;
+		var refn = function() {
+			me.reloadScheduled = false;
+			if (me.isVisible(true))
+			{
+				var img = me.down('#theImg');
+				if (Ext.isEmpty(img)) return;
+				var osrc = img.getEl().getAttribute('src');
+				var prm = me.getImageParams();
+				var nsrc = 'Graph/DrawGraph?' + Ext.urlEncode(prm);
+				//if (osrc == nsrc) alert('same src: ' + nsrc);
+				img.setSrc(nsrc);
+				img.show();
+			}
+		};
+		Ext.defer(refn, 500, me);
+		me.reloadScheduled = true;
     },
     refreshRepeat: function() {
         var d = this.getEndTime();

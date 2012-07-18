@@ -645,7 +645,27 @@ namespace CogMon.Services.Direct
                     tn.leaf = false;
                 }
             }
-            return childs.ContainsKey(rootid) ? childs[rootid] : new List<treenode>();
+            var rtl = childs.ContainsKey(rootid) ? childs[rootid] : new List<treenode>();
+            if (rtl.Count > 0)
+            {
+                var pl = Db.Find<PortalPage>(x => x.ACL.In(UserSessionContext.CurrentUserInfo.GetUserACL())).SetFields("_id", "Title", "OwnerId", "FolderId");
+                foreach (var pp in pl)
+                {
+                    treenode tn;
+                    if (string.IsNullOrEmpty(pp.FolderId))
+                        tn = rtl.Last();
+                    else 
+                        if (!d.TryGetValue(pp.FolderId, out tn)) continue;
+                    tn.children.Add(new treenode
+                    {
+                        id = pp.Id,
+                        text = pp.Title,
+                        leaf = true,
+                        ntype = "page"
+                    });
+                }
+            }
+            return rtl;
         }
 
         /// <summary>
@@ -679,9 +699,35 @@ namespace CogMon.Services.Direct
             Db.GetCollection<NavNode>().Remove(Query.EQ("_id", id));
         }
 
+        /// <summary>
+        /// Moves a folder or a folder item
+        /// TODO: add permission control
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="parentFolderId"></param>
+        /// <param name="newParentFolderId"></param>
         [DirectMethod]
-        public void MoveNavigationFolder(string id, string newParentId)
+        public void MoveNavigationItem(string itemId, string itemType, string parentFolderId, string newParentFolderId)
         {
+            var df = Db.GetCollection<NavNode>().FindOneById(newParentFolderId);
+            if (df == null) throw new Exception("Destination folder not found");
+
+            if (itemType == "folder")
+            {
+                var nn = Db.GetCollection<NavNode>().FindOneById(itemId);
+                if (nn == null) throw new Exception("Folder not found");
+                if (nn.OwnerId != UserSessionContext.CurrentUserRecordId) throw new Exception("Not allowed");
+                nn.ParentId = df.Id;
+                Db.GetCollection<NavNode>().Save(nn);
+            }
+            else if (itemType == "page")
+            {
+                var pp = Db.GetCollection<PortalPage>().FindOneById(itemId);
+                if (pp == null) throw new Exception("Page not found");
+                pp.FolderId = df.Id;
+                Db.GetCollection<PortalPage>().Save(pp);
+            }
+            else throw new Exception("item type");
         }
 
         
