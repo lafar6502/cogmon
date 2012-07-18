@@ -30,3 +30,4 @@
 30!. Uprawnienia
 31. download obrazków png z wykresem
 32. Auto-konfiguracja rozdzielczości obrazka na podstawie data-source
+33. Model uprawnień uwzględniający prawo do odczytu i do modyfikacji (moze cos wiecej niz ownerId)

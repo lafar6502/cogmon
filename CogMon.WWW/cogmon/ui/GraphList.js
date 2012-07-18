@@ -32,11 +32,26 @@
 		var sel = sm.getLastSelected();
 		return sel.raw;
 	},
-	validateDrop: function(node,newParent) {
-		if (node.ntype != 'page') return false;
+	validateDrop: function(node, nodeParent, newParent) {
+		console.log('d: ' + node.ntype + ', p: ' + newParent.ntype);
+		if (node.ntype != 'page' && node.ntype != 'folder') return false;
+		if (newParent.ntype != 'folder') return false;
+		
 	},
-	onDrop: function(node, newParent) {
-		console.log('dropped ' + node.id + ' to ' + newParent.id);
+	onDrop: function(node, nodeParent, newParent) {
+		console.log('dropped ' + node.id + ' to ' + newParent.id + ', p: ' + nodeParent.id);
+		RPC.UserGui.MoveNavigationItem(node.id, node.ntype, null, newParent.id, {
+			success: function(ret, e) {
+				if (e.status)
+				{
+				}
+				else
+				{
+					Ext.MessageBox.alert("Error", e.message);
+					me.refresh();
+				}
+			}
+		});
 	},
 	initComponent: function() {
 		 var st = Ext.create('Ext.data.TreeStore', {
@@ -61,11 +76,11 @@
 						if (data.records.length != 1) return false;
 						var dr = data.records[0];
 						console.log('n: ' + dr.raw.ntype);
-						return me.validateDrop(dr.raw, overModel.raw);
+						return me.validateDrop(dr.raw, dr.parentNode.raw, overModel.raw);
 					},
 					drop: function(node, data, overModel, dropPosition, eOpts) {
 						var dr = data.records[0];
-						return me.onDrop(dr.raw, overModel.raw);
+						return me.onDrop(dr.raw, dr.parentNode.raw, overModel.raw);
 					}
 				}
 			}

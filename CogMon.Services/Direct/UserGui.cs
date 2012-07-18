@@ -590,6 +590,7 @@ namespace CogMon.Services.Direct
                 cls = nn.NodeClass,
                 children = new List<treenode>(),
                 leaf = false,
+                ntype = "folder",
                 expanded = true
             };
             if (nn.Items != null && nn.Items.Count > 0)
@@ -724,6 +725,7 @@ namespace CogMon.Services.Direct
             {
                 var pp = Db.GetCollection<PortalPage>().FindOneById(itemId);
                 if (pp == null) throw new Exception("Page not found");
+                if (pp.OwnerId != UserSessionContext.CurrentUserRecordId) throw new Exception("Not allowed");
                 pp.FolderId = df.Id;
                 Db.GetCollection<PortalPage>().Save(pp);
             }
