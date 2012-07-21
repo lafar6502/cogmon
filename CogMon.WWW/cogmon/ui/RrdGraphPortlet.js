@@ -65,12 +65,14 @@ Ext.define('CogMon.ui.RrdGraphPortlet', {
 			height: this.getHeight(),
 			graphDefinitionId: this.graphDefinitionId,
 			step: this.step,
-			hideElements: Ext.isEmpty(this.hideElements) ? "" : this.hideElements
+			hideElements: Ext.isEmpty(this.hideElements) ? "" : this.hideElements,
+			title: this.title
 		};
 	},
 	applyUpdatedConfig: function(cfg) {
 		this.setHeight(cfg.height);
 		this.step = cfg.step;
+		this.setTitle(cfg.title);
 		if (Ext.isArray(cfg.hideElements)) {
 			cfg.hideElements = cfg.hideElements.join();
 		}
@@ -315,9 +317,27 @@ Ext.define('CogMon.ui.RrdGraphPortlet', {
                 },
 				{
                     type:'help',
-                    tooltip: 'Graph information',
-                    handler: function(event, toolEl, panel){
-                    }
+                    tooltip: {
+						text: 'Graph information',
+						listeners: {
+							beforerender: function() {
+								console.log('before render');
+								/*
+								RPC.UserGui.GetGraphDescription(me.graphDefinitionId, function(ret, e) {
+									if (e.status) {
+									}
+								});
+							*/
+							},
+							beforeshow: function() {
+								console.log('before show');
+							},
+							show:function() {
+								console.log('show');
+							}
+						}
+					}
+                    
                 }
             ],
 			items: {

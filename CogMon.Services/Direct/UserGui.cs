@@ -653,10 +653,8 @@ namespace CogMon.Services.Direct
                 foreach (var pp in pl)
                 {
                     treenode tn;
-                    if (string.IsNullOrEmpty(pp.FolderId))
+                    if (string.IsNullOrEmpty(pp.FolderId) || !d.TryGetValue(pp.FolderId, out tn))
                         tn = rtl.Last();
-                    else 
-                        if (!d.TryGetValue(pp.FolderId, out tn)) continue;
                     tn.children.Add(new treenode
                     {
                         id = pp.Id,
@@ -739,6 +737,17 @@ namespace CogMon.Services.Direct
             else throw new Exception("item type");
         }
 
-        
+        /// <summary>
+        /// Return graph's description html
+        /// </summary>
+        /// <param name="definitionId"></param>
+        /// <returns></returns>
+        [DirectMethod]
+        string GetGraphDescription(string definitionId)
+        {
+            var gd = Db.GetCollection<GraphDefinition>().FindOneById(definitionId);
+            if (gd == null) throw new Exception("Graph not found");
+            return string.IsNullOrEmpty(gd.Description) ? gd.Title : gd.Description;
+        }
     }
 }

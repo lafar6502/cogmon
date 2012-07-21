@@ -69,5 +69,9 @@ namespace CogMon.Services.Dao
         /// Job group
         /// </summary>
         public string Group { get; set; }
+        /// <summary>
+        /// Last execution time
+        /// </summary>
+        public DateTime LastRun { get; set; }
     }
 }

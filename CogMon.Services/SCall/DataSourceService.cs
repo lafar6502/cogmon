@@ -11,6 +11,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using CogMon.Lib.Graph;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace CogMon.Services.SCall
 {
@@ -32,6 +33,7 @@ namespace CogMon.Services.SCall
         public IDataSeriesRepository DSRepo { get; set; }
         public IEventAggregator EventAggregator { get; set; }
         public MongoDatabase Db { get; set; }
+        private Logger log = LogManager.GetCurrentClassLogger();
 
         public object Handle(GetDataSeriesInfo message)
         {
@@ -77,8 +79,23 @@ namespace CogMon.Services.SCall
 
         public object Handle(UpdateData message)
         {
+            if (!string.IsNullOrEmpty(message.JobId)) ReportJobExecuted(message.JobId);
             Handle(message.Data);
             return "OK";
+        }
+
+        protected void ReportJobExecuted(string jobid)
+        {
+            ThreadPool.QueueUserWorkItem(new WaitCallback(x=> {
+                try
+                {
+                    Db.GetCollection<ScheduledJob>().Update(Query.EQ("_id", jobid), Update.Set("LastRun", DateTime.Now));
+                }
+                catch (Exception ex)
+                {
+                    log.Warn("Failed to update job {0}: {1}", jobid, ex);
+                }
+            }));
         }
 
         public object Handle(DataRecord message)

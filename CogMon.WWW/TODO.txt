@@ -1,4 +1,5 @@
 ﻿1. Logowanie user+hasło
+
 2. Rejestracja nowego usera
 #done 3. Zakres dat na stronie portalu
 #done 4. Pin-owanie stron albo zrobienie czegoś z tabami
@@ -31,3 +32,5 @@
 31. download obrazków png z wykresem
 32. Auto-konfiguracja rozdzielczości obrazka na podstawie data-source
 33. Model uprawnień uwzględniający prawo do odczytu i do modyfikacji (moze cos wiecej niz ownerId)
+34. Widok listy data sources z informacją o ostatniej aktualizacji
+35. Informacje o wykresie (description)

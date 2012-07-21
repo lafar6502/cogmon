@@ -23,6 +23,7 @@ namespace CogMon.Lib
         public List<string> MemberOf { get; set; }
         public List<string> PinnedPages { get; set; }
         public Dictionary<string, object> Preferences { get; set; }
+        public DateTime LastSync { get; set; }
 
         public UserInfo()
         {

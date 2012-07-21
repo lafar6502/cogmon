@@ -72,6 +72,7 @@ namespace CogMon.Lib.Graph
         public string Color { get; set; }
         public string Legend { get; set; }
         public string Params { get; set; }
+        
 
         public virtual string ToRRDString()
         {
@@ -89,7 +90,7 @@ namespace CogMon.Lib.Graph
                 case GraphOperation.TEXTALIGN:
                     return string.Format("\"{0}:{1}\"", Op.ToString(), Params);
                 case GraphOperation.TICK:
-                    return string.Format("\"{0}:{1}#{2}\"", Op.ToString(), Value, Color, Params, Legend);
+                    return string.Format("\"{0}:{1}#{2}{4}{3}\"", Op.ToString(), Value, Color, string.IsNullOrEmpty(Legend) ? "" : ":" + Legend, string.IsNullOrEmpty(Params) ? "" : ":" + Params);
                 case GraphOperation.SHIFT:
                     return string.Format("\"{0}:{1}:{2}\"", Op.ToString(), Value, Params);
                 case GraphOperation.COMMENT:

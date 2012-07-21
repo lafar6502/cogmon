@@ -87,10 +87,15 @@ namespace CogMon.Services.RRD
             {
                 RRDTool.AppendData(df, dr.Ts, data);
             }
+            NotifyRrdUpdated(dr.Series);
             log.Debug("Finished updating {0}. Time: {1}", dr.Series, DateTime.Now - dt);
+            
         }
 
-
+        protected void NotifyRrdUpdated(string rrd)
+        {
+            
+        }
 
         private static T SubstTemplate<T>(string tpl, T defaultValue, Dictionary<string, object> variables)
         {

@@ -1,5 +1,5 @@
 {
-	"TemplateId" : "4f5e238d9f94211cc4be21fb",
-	"Parameters" : {"GroupId" : "14"},
+	"TemplateId" : "4f8571ef48b3db0cb07bce27",
+	"Parameters" : {"groupId" : "100105"},
 	"OverwriteRRD" : false
 }
