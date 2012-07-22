@@ -5,6 +5,10 @@ using System.Text;
 
 namespace CogMon.Services.EventStats
 {
+    /// <summary>
+    /// Data series description for mongodb-based 
+    /// reports
+    /// </summary>
     public class DataSeries
     {
         public string Id { get; set; }

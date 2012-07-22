@@ -1,0 +1,50 @@
+{Template:{
+  "_id" : "nginn_mq_stat",
+  "Aggregates" : [{
+      "ConsolidationFunction" : "AVERAGE",
+      "XFilesFactor" : "0.5",
+      "AggregateSteps" : "1",
+      "StoredRows" : "2880"
+    }, {
+      "ConsolidationFunction" : "AVERAGE",
+      "XFilesFactor" : "0.5",
+      "AggregateSteps" : "12",
+      "StoredRows" : "2400"
+    }, {
+      "ConsolidationFunction" : "AVERAGE",
+      "XFilesFactor" : "0.5",
+      "AggregateSteps" : "72",
+      "StoredRows" : "3000"
+    }],
+  "Arguments" : "",
+  "CreateSchedule" : true,
+  "Description" : "nginn-messagebus kolejka ${cstring}/${mq_table}",
+  "IntervalSecs" : "300",
+  "Name" : "nginn-messagebus kolejka ${cstring}/${mq_table}",
+  "Query" : 1,
+  "ScriptOrUrl" : "nginn_mq.boo",
+  "Options": null,
+  "Series" : [
+	{"Name" : "queue_length","Description" : "D³ugoœæ kolejki","Heartbeat" : "3600","SeriesType" : "GAUGE","Min" : "0,0","Max" : "NaN"}, 
+	{"Name" : "new_messages","Description" : "Wchodz¹ce komunikaty","Heartbeat" : "3600","SeriesType" : "ABSOLUTE","Min" : "0,0","Max" : "NaN"}, 
+	{"Name" : "errors","Description" : "B³êdy","Heartbeat" : "3600","SeriesType" : "ABSOLUTE","Min" : "0,0","Max" : "NaN"}, 
+	{"Name" : "avg_latency_ms","Description" : "Œr. opóŸnienie (ms)","Heartbeat" : "3600","SeriesType" : "GAUGE","Min" : "0,0","Max" : "NaN"}, 
+	{"Name" : "messages_handled","Description" : "Komunikaty obs³u¿one","Heartbeat" : "3600","SeriesType" : "ABSOLUTE","Min" : "0,0","Max" : "NaN"}, 
+	],
+  "StartTime" : null,
+  "Step" : "300",
+  "Variables" : [{
+      "Name" : "mq_table",
+      "Description" : "Nazwa tabeli MQ",
+      "Required" : true,
+      "DefaultValue" : null,
+      "VariableType" : 0
+    }, {
+      "Name" : "cstring",
+      "Description" : "Atmo connection string",
+      "Required" : true,
+      "DefaultValue" : "atmodb_mq",
+      "VariableType" : 0,
+      "Filter" : null
+    }]
+}}

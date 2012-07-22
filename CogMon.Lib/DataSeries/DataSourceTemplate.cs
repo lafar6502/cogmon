@@ -65,11 +65,25 @@ namespace CogMon.Lib.DataSeries
         public List<RRATemplate> Aggregates { get; set; }
 
         public bool CreateSchedule { get; set; }
+
         public string IntervalSecs { get; set; }
         public QueryType Query { get; set; }
+        /// <summary>
+        /// job script or script file name or url to be queried
+        /// </summary>
         public string ScriptOrUrl { get; set; }
+        /// <summary>
+        /// job arguments
+        /// </summary>
         public string Arguments { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public List<string> VariableValueRegex { get; set; }
+        /// <summary>
+        /// Job options
+        /// </summary>
+        public Dictionary<string, string> Options { get; set; }
     }
 
     public class GetDataSourceTemplateNames

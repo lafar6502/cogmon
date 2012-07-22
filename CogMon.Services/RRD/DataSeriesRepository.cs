@@ -225,7 +225,18 @@ namespace CogMon.Services.RRD
                     sj.VariableNames = new List<string>(rci.Fields.Where(x => x.SeriesType != SeriesTypes.COMPUTE).Select(x => x.Name)).ToArray();
                     sj.VariableRetrieveRegex = vregex;
                     sj.LastModified = DateTime.Now;
-
+                    if (tpl.Options != null)
+                    {
+                        sj.Options = new Dictionary<string, object>();
+                        foreach (string k in tpl.Options.Keys)
+                        {
+                            sj.Options[k] = SubstTemplate<string>(tpl.Options[k], null, variables);
+                        }
+                    }
+                    else
+                    {
+                        sj.Options = request.Parameters;
+                    }
                     Db.GetCollection<ScheduledJob>().Save(sj);
                 }
             }

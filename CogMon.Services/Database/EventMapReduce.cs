@@ -15,5 +15,6 @@ namespace CogMon.Services.Database
         public string ReduceJs { get; set; }
         public string OutCollection { get; set; }
         public bool DeleteMappedData { get; set; }
+
     }
 }

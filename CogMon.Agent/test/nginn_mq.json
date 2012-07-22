@@ -1,0 +1,15 @@
+{
+    Id: "nginn_mq",
+    IntervalSeconds: 60,
+    DataSeries: "nginn_mq1",
+    Variables: [],
+    QueryMethod: "BooScript",
+    ScriptName: "nginn_mq.boo",
+    Options: {
+		"mq_table" : "MQ_Atmosfera",
+		"cstring" : "atmodb_mq"
+    },
+	Arguments: "",
+    VersionTag: "1",
+    Group: null
+}

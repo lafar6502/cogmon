@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CogMon.Lib.DataSeries
 {
+    /// <summary>
+    /// Event information record used with mongodb-based reports
+    /// </summary>
     public class MEvent
     {
         public int Id { get; set; }

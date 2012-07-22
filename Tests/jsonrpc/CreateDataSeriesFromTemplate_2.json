@@ -1,5 +1,5 @@
 {
-	"TemplateId" : "20120521gstat2",
-	"Parameters" : {"groupId" : "100105", "groupName": "I linia elektroniczne Transcom", "cstring" : "atmodb"},
+	"TemplateId" : "500ad87f48b3db17182a1a92",
+	"Parameters" : {"mq_table" : "MQ_Edms", "cstring" : "atmodb_mq"},
 	"OverwriteRRD" : false
 }
