@@ -85,5 +85,10 @@ namespace CogMon.Lib.Scheduling
         /// Job group
         /// </summary>
         public string Group { get; set; }
+        /// <summary>
+        /// Last run information
+        /// Used for calculating next run time
+        /// </summary>
+        public DateTime LastRun { get; set; }
     }
 }

@@ -51,6 +51,19 @@ namespace CogMon.Services.RRD
         public int StoredRows { get; set; }
     }
 
+    
+    /// <summary>
+    /// HWPREDICT configuration for a rrd
+    /// </summary>
+    public class HWConfig
+    {
+        public ConsolidationFunction Op { get; set; }
+        public int Rows { get; set; }
+        public double Alpha { get; set; }
+        public double Beta { get; set; }
+        public int SeasonalPeriod { get; set; }
+    }
+
     public class RrdFileInfo
     {
         public string filename { get;set;}
@@ -106,6 +119,7 @@ namespace CogMon.Services.RRD
 
         public List<DataField> Fields { get; set; }
         public List<RRAConfig> Aggregates { get; set; }
+        public List<HWConfig> HWAggregates { get; set; }
         /// <summary>
         /// template used for creating the rrd
         /// </summary>

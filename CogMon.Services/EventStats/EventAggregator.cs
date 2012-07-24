@@ -61,6 +61,7 @@ namespace CogMon.Services.EventStats
                 Db.GetCollection(er.Collection).Remove(Query.And(Query.GT("_id", minid), Query.LTE("_id", maxid)));
             }
             
+            
         }
 
         public void AddEvent(string seriesId, DateTime? tstamp, IEnumerable<int> values)

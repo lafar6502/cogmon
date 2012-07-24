@@ -43,7 +43,8 @@ namespace CogMon.Services.SCall
                     VersionTag = sj.LastModified.Ticks.ToString(),
                     Variables = sj.VariableNames,
                     VariableRegex = sj.VariableRetrieveRegex,
-                    Options = sj.Options
+                    Options = sj.Options,
+                    LastRun = sj.LastRun
                 });
             }
             return r;

@@ -14,7 +14,7 @@
 #done 13. Zmiana tytułu
 #done 14. Zmiana wielkości wykresu (portletu)
 #done 15. Klonowanie wykresu
-16. Zapamiętywanie ostatniej daty uruchomienia job-u i przekazywanie odpowiedniego offsetu do Agenta 
+#done 16. Zapamiętywanie ostatniej daty uruchomienia job-u i przekazywanie odpowiedniego offsetu do Agenta 
 17. Wykresy ExtJS z RRDXPORT
 18. Eksport danych z wykresu RRD (xml, csv)
 19. Automatyczne kasowanie starych danych zagregowanych w mongodb

@@ -134,7 +134,7 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 			fields: [{name: 'ResSec', type: 'int'}, {name:'SpanSec', type: 'int'}], autoDestroy: true
 		});
 		var defCdefSt = Ext.create('Ext.data.ArrayStore', {fields: [{name:'v', type: 'boolean'}, 'name'], data: [[true, 'CDEF'], [false, 'VDEF']], idProperty: 'v'});
-		var cfst = Ext.StoreManager.get('rrdConsolidationFunctions');
+		var cfst = Ext.create('Ext.data.Store', {fields:['Id', 'Name'], data: CogMon.ConstDictionaries.RrdConsolidationFunction, autoDestroy: true});
 		var cfst2 = Ext.create('Ext.data.Store', {fields:['Id', 'Name'], data: CogMon.ConstDictionaries.RrdConsolidationFunction, autoDestroy: true});
 		
 		var dsedit = {

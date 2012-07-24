@@ -166,7 +166,7 @@ namespace CogMon.Agent
                 {
                     Id = t.Id,
                     TaskData = t,
-                    NextTrigger = DateTime.Now.AddSeconds(_r.Next(60))
+                    NextTrigger = t.LastRun.AddSeconds(t.IntervalSeconds) < DateTime.Now ? DateTime.Now.AddSeconds(_r.Next(60)) : t.LastRun.AddSeconds(t.IntervalSeconds)
                 };
                 lst.Add(pt);
             }

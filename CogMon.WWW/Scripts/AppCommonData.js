@@ -10,7 +10,12 @@ Ext.define('CogMon.ConstDictionaries', {
 			{Id: 0, Name: 'MIN'},
 			{Id: 1, Name: 'MAX'},
 			{Id: 2, Name: 'AVERAGE'},
-			{Id: 3, Name: 'LAST'}
+			{Id: 3, Name: 'LAST'},
+			{Id: 4, Name: 'HWPREDICT'},
+			{Id: 5, Name: 'MHWPREDICT'},
+			{Id: 6, Name: 'DEVPREDICT'},
+			{Id: 7, Name: 'DEVSEASONAL'},
+			{Id: 8, Name: 'FAILURES'}
 		],
 		GraphElementType: [
 			{Id: 0, Name: 'LINE1'},

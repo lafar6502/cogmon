@@ -1,5 +1,5 @@
 {
-	"TemplateId" : "4f8571ef48b3db0cb07bce27",
-	"Parameters" : {"groupId" : "100105"},
+	"TemplateId" : "201204182258ch2",
+	"Parameters" : {"cstring" : "atmodb"},
 	"OverwriteRRD" : false
 }

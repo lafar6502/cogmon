@@ -50,7 +50,19 @@ namespace CogMon.Lib.DataSeries
         public string XFilesFactor { get; set; }
         public string AggregateSteps { get; set; }
         public string StoredRows { get; set; }
+        public string Alpha { get; set; }
+        public string Beta { get; set; }
     }
+
+    public class HWRRATemplate
+    {
+        public string Op { get; set; }
+        public string Alpha { get; set; }
+        public string Beta { get; set; }
+        public string Rows { get; set; }
+        public string SeasonalPeriod { get; set; }
+    }
+
 
     public class DataSourceTemplate
     {
@@ -63,7 +75,7 @@ namespace CogMon.Lib.DataSeries
         public string Step { get; set; }
         public List<SeriesTemplate> Series { get; set; }
         public List<RRATemplate> Aggregates { get; set; }
-
+        public List<HWRRATemplate> HWAggregates { get; set; }
         public bool CreateSchedule { get; set; }
 
         public string IntervalSecs { get; set; }

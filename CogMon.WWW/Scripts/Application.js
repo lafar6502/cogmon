@@ -1,4 +1,5 @@
-﻿Ext.onReady(function() {
+﻿if (typeof console == "undefined") var console = { log: function() {} };
+Ext.onReady(function() {
 	Ext.Loader.setConfig({enabled:true});
 	Ext.tip.QuickTipManager.init();
 	RPC.UserGui.GetUserInfo({

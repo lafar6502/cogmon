@@ -183,12 +183,27 @@ namespace CogMon.Services.RRD
             rci.Aggregates = new List<RRAConfig>();
             foreach (RRATemplate rrat in tpl.Aggregates)
             {
+                
                 RRAConfig rra = new RRAConfig();
                 rra.AggregateSteps = Convert.ToInt32(rrat.AggregateSteps);
                 rra.Function = SubstTemplate<ConsolidationFunction>(rrat.ConsolidationFunction, ConsolidationFunction.AVERAGE, variables);
                 rra.StoredRows = SubstTemplate<int>(rrat.StoredRows, 100, variables);
                 rra.XFilesFactor = SubstTemplate<double>(rrat.XFilesFactor, 0.9, variables);
                 rci.Aggregates.Add(rra);
+            }
+            if (tpl.HWAggregates != null)
+            {
+                rci.HWAggregates = new List<HWConfig>();
+                foreach (var hwra in tpl.HWAggregates)
+                {
+                    var hc = new HWConfig();
+                    hc.Op = SubstTemplate<ConsolidationFunction>(hwra.Op, ConsolidationFunction.HWPREDICT, variables);
+                    hc.Alpha = SubstTemplate<double>(hwra.Alpha, 0, variables);
+                    hc.Beta = SubstTemplate<double>(hwra.Beta, 0, variables);
+                    hc.Rows = SubstTemplate<int>(hwra.Rows, 0, variables);
+                    hc.SeasonalPeriod = SubstTemplate<int>(hwra.SeasonalPeriod, 0, variables);
+                    rci.HWAggregates.Add(hc);
+                }
             }
             string tf = null;
             string dsid = null;
@@ -557,7 +572,8 @@ namespace CogMon.Services.RRD
             log.Debug("Setting step size to {0}", actualStep);
             opts.Step = actualStep > 0 ? actualStep : (int?)null;
             
-            return this.RRDTool.ExportGraphData(gd, opts);
+            var ret = this.RRDTool.ExportGraphData(gd, opts);
+            return ret;
         }
     }
 }

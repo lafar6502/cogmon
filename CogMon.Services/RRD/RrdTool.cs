@@ -156,6 +156,13 @@ namespace CogMon.Services.RRD
             {
                 sb.AppendFormat(" RRA:{0}:{1}:{2}:{3}", ag.Function, ag.XFilesFactor, ag.AggregateSteps, ag.StoredRows);
             }
+            if (config.HWAggregates != null)
+            {
+                foreach (var hw in config.HWAggregates)
+                {
+                    sb.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, " RRA:{0}:{1}:{2}:{3}:{4}", hw.Op.ToString(), hw.Rows, hw.Alpha, hw.Beta, hw.SeasonalPeriod);
+                }
+            }
             RunRrdWithCommandline(sb.ToString());
         }
 
@@ -199,6 +206,12 @@ namespace CogMon.Services.RRD
             if (Double.TryParse(val, System.Globalization.NumberStyles.Any, cult, out dv)) return dv;
             if (val == "NaN") return Double.NaN;
             throw new Exception("Can't parse value: " + val);
+        }
+
+        private static string ToString(double val)
+        {
+            var cult = System.Globalization.CultureInfo.InvariantCulture;
+            return val.ToString(cult);
         }
 
         private Dictionary<string, object> ParseRRDInfo(string txt, bool dynAsArray)
