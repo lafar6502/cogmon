@@ -1,36 +1,33 @@
-//portlet based on sencha graph and rrd xport
+//time series graph
 Ext.define('CogMon.ui.TimeSeriesGraphPortlet', {
     extend: 'CogMon.ui.Portlet',
     requires: ['CogMon.ui.ExtGraphTheme'],
     autoRefreshInterval: undefined,
     dataSeriesId: undefined,
     step: 300,
-	theme: 'Category1',
+    theme: 'Category1',
     stacked: false,
-	setDateRange: function(start, end, suppressNotification) {
+    setDateRange: function(start, end, suppressNotification) {
         this.setStartTime(start);
         this.setEndTime(end);
-		Ext.apply(this.gstore.getProxy().extraParams, {
-			start: start,
-			end: end
-		});
-		this.gstore.load();
-		//if (!suppressNotification) this.fireEvent('daterangechanged', this, start, end);
+        this.loadData();
+        //if (!suppressNotification) this.fireEvent('daterangechanged', this, start, end);
     },
-	setupConfigPropertyGrid: function(gcfg) {
-		gcfg = this.callParent(arguments);
-		return Ext.apply(gcfg.source, {
-			step: 'D'
-		});
-	},
-	applyUpdatedConfig: function(cfg) {
-		this.setHeight(cfg.height);
-	},
+    setupConfigPropertyGrid: function(gcfg) {
+        gcfg = this.callParent(arguments);
+        return Ext.apply(gcfg.source, {
+            step: 'D'
+        });
+    },
+    applyUpdatedConfig: function(cfg) {
+        this.setHeight(cfg.height);
+    },
     loadData: function() {
+        var me = this;
         Ext.Ajax.request({
-            url: 'Data/XPortGraphData', method: 'GET',
+            url: 'Data/GetData', method: 'GET',
             params: {
-                definitionId: me.graphDefinitionId,
+                id: me.dataSeriesId,
                 startTime: me.getStartTime(),
                 endTime: me.getEndTime(),
                 step: me.step
@@ -46,9 +43,11 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortlet', {
     },
     loadDataObj: function(v) {
         var me = this;
-        var flds = [{name: 'ts', type: 'int'}, {name: 'timestamp', type: 'date'}];
-        for (var i=0; i<v.Columns.length; i++) {
+        var flds = [{name: 'T', type: 'int'}, {name: 'Timestamp', type: 'date'}];
+        var dflds = [];
+        for (var i=0; i<v.DataColumns.length; i++) {
             flds.push({name: 'c' + i, type: 'float'});
+            dflds.push('c' + i);
         }
         var dt = [];
         for (var j=0; j<v.Rows.length; j++) {
@@ -61,20 +60,46 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortlet', {
                 fields: flds,
                 data: dt
             });
-            var gc = {xtype: 'gridpanel', itemId: 'thegrid',
-				emptyText: 'No events in selected date range',
+            
+            var chart = Ext.create('Ext.chart.Chart', {
+                id: 'theChart', xtype: 'chart', animate: false, shadow: false,
                 store: gst,
-                columns: [
-                    {dataIndex: 'timestamp', header: 'Time', format:"Y-m-d H:i:sO", xtype: "datecolumn"}
-                ],
-				autoScroll: true
-            };
-            for (var i=0; i<v.Columns.length; i++) {
-                gc.columns.push({dataIndex: 'c' + i, header: v.Columns[i]});
-            }
-            var grid = Ext.create('Ext.grid.Panel', gc);
+                theme: me.theme,
+                legend: {
+                    position: 'left'
+                },
+                axes: [
+                {
+                    type: 'Numeric', position: 'left', fields: dflds, grid: true, minimum: 0
+                }, 
+                {
+                    type: 'Time', position: 'bottom', fields: 'Timestamp', 
+                    dateFormat: 'M d',
+                    //groupBy: 'year,month,day',
+                    //aggregateOp: 'sum',
+                    //constrain: true,
+                    //fromDate: new Date('1/1/11'),
+                    //toDate: new Date('1/7/11')
+                    title: 'Date'
+                }],
+                series: [{
+                    type: 'column',
+                    axis: 'left',
+                    highlight: true,
+                    stacked: Ext.isEmpty(me.stacked) ? false : me.stacked,
+                    xField: 'Timestamp',
+                    yField: dflds,
+                    tips: {
+                        /*trackMouse: true,
+                        width:170,
+                        renderer: function(storeItem, item) {
+                            this.setTitle(item.yField + ':' + item.value[1]);
+                        }*/
+                    }
+                }]
+            });
             me.removeAll();
-            me.add(grid);
+            me.add(chart);
             me.gstore = gst;
         }
         else {
@@ -83,96 +108,35 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortlet', {
     },
     initComponent: function() {
         var me = this;
-		var flds = ['Id', {name: 'Timestamp', type: 'date'}, 'Label'];
-		var series = [];
-		for (var i=0; i<me.dataFields.length; i++)
-		{
-			flds.push(me.dataFields[i].name);
-			series.push(me.dataFields[i].name);
-		}
-		var st = Ext.create('Ext.data.JsonStore', {
-			fields: flds,
-			proxy: {
-				type: 'ajax',
-				url: 'EventStat/GetData',
-				extraParams: {
-					series: me.seriesId,
-					start: me.getStartTime(),
-					end: me.getEndTime(),
-					step: me.step
-				},
-				reader: {
-					type: 'json',
-					idProperty: 'Id'
-				}
-			},
-			autoLoad: true
-		});
-		me.gstore = st;
-		var grph = Ext.create('Ext.chart.Chart', {
-			id: 'chartCmp',
-			xtype: 'chart',
-			animate: false,
-			shadow: false,
-			store: st,
-			theme: me.theme,
-			legend: {
-				position: 'bottom'
-			},
-			axes: [{
-				type: 'Numeric',
-				position: 'left',
-				fields: series,
-				grid: true,
-				minimum: 0
-			}, {
-				type: 'Category',
-				position: 'bottom',
-				fields: ['Label'],
-				dateFormat: 'M d',
-				groupBy: 'year,month,day',
-				aggregateOp: 'sum'
-			}],
-			series: [{
-				type: 'column',
-				axis: 'left',
-				highlight: true,
-				stacked: Ext.isEmpty(me.stacked) ? false : me.stacked,
-				xField: 'Timestamp',
-				yField: series,
-				tips: {
-                    trackMouse: true,
-					width:170,
-                    renderer: function(storeItem, item) {
-						
-                        this.setTitle(item.yField + ':' + item.value[1]);
-                    }
-                }
-			}]
-		});
-		Ext.apply(me, {     
+        
+        Ext.apply(me, {     
             layout: 'fit',
-			tools: [
+            tools: [
                 {
                     type: 'gear',
                     tooltip: 'Settings',
                     handler: function(event, toolEl, panel) {
-						me.showConfigEditor();
+                        me.showConfigEditor();
                     }
                 },
                 {
                     type:'refresh',
                     tooltip: 'Refresh',
                     handler: function(event, toolEl, panel){
-						me.gstore.load();
+                        me.gstore.load();
                     }
                 }
             ],
-			items: grph
+            items: []
         });
         if (Ext.isEmpty(me.listeners)) me.listeners = {};        
+        me.on('render', function() {
+            console.log('activate');
+            me.loadData();
+        });
+        this.addEvents( 'daterangechanged');
         this.callParent(arguments);
-		this.addEvents( 'daterangechanged');
+        
     },
-    alias: 'widget.eventstatgraphportlet'
+    alias: 'widget.timeseriesgraphportlet'
 });

@@ -72,7 +72,7 @@ namespace CogMon.WWW.Controllers
             TimeSeriesData tsd = null;
             if (id.StartsWith("RRD"))
             {
-                tsd = GetRrdData(id.Substring(2), startTime, endTime, step, maxRows);
+                tsd = GetRrdData(id.Substring(3), startTime, endTime, step, maxRows);
             }
             else if (id.StartsWith("MAP"))
             {

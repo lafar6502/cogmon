@@ -16,6 +16,7 @@ namespace CogMon.Services
         void AddEvent(DataRecord dr);
         void RunAggregation(string id);
 
+        object GetDataSeries(string seriesId, DateTime start, DateTime end, string step);
         TimeSeriesData GetTimeSeries(string seriesId, DateTime start, DateTime end, string step);
 
     }
