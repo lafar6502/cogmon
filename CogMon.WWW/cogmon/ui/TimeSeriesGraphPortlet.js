@@ -1,9 +1,9 @@
 //portlet based on sencha graph and rrd xport
-Ext.define('CogMon.ui.EventStatGraphPortlet', {
+Ext.define('CogMon.ui.TimeSeriesGraphPortlet', {
     extend: 'CogMon.ui.Portlet',
     requires: ['CogMon.ui.ExtGraphTheme'],
-    autoRefreshInterval: 300,
-    graphDefinitionId: null,
+    autoRefreshInterval: undefined,
+    dataSeriesId: undefined,
     step: 300,
 	theme: 'Category1',
     stacked: false,
@@ -26,6 +26,61 @@ Ext.define('CogMon.ui.EventStatGraphPortlet', {
 	applyUpdatedConfig: function(cfg) {
 		this.setHeight(cfg.height);
 	},
+    loadData: function() {
+        Ext.Ajax.request({
+            url: 'Data/XPortGraphData', method: 'GET',
+            params: {
+                definitionId: me.graphDefinitionId,
+                startTime: me.getStartTime(),
+                endTime: me.getEndTime(),
+                step: me.step
+            },
+            success: function(resp) {
+                var rt = Ext.decode(resp.responseText);
+                me.loadDataObj(rt);
+            },
+            failure: function() {
+                console.log('fail');
+            }
+        });
+    },
+    loadDataObj: function(v) {
+        var me = this;
+        var flds = [{name: 'ts', type: 'int'}, {name: 'timestamp', type: 'date'}];
+        for (var i=0; i<v.Columns.length; i++) {
+            flds.push({name: 'c' + i, type: 'float'});
+        }
+        var dt = [];
+        for (var j=0; j<v.Rows.length; j++) {
+            var r = v.Rows[j];
+            var av = [r.T, new Date(r.T * 1000)];
+            dt.push(av.concat(r.V));
+        }
+        if (Ext.isEmpty(me.gstore)) {
+            var gst = Ext.create('Ext.data.ArrayStore', {
+                fields: flds,
+                data: dt
+            });
+            var gc = {xtype: 'gridpanel', itemId: 'thegrid',
+				emptyText: 'No events in selected date range',
+                store: gst,
+                columns: [
+                    {dataIndex: 'timestamp', header: 'Time', format:"Y-m-d H:i:sO", xtype: "datecolumn"}
+                ],
+				autoScroll: true
+            };
+            for (var i=0; i<v.Columns.length; i++) {
+                gc.columns.push({dataIndex: 'c' + i, header: v.Columns[i]});
+            }
+            var grid = Ext.create('Ext.grid.Panel', gc);
+            me.removeAll();
+            me.add(grid);
+            me.gstore = gst;
+        }
+        else {
+            me.gstore.loadData(dt);
+        }
+    },
     initComponent: function() {
         var me = this;
 		var flds = ['Id', {name: 'Timestamp', type: 'date'}, 'Label'];

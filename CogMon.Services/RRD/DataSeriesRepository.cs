@@ -532,14 +532,14 @@ namespace CogMon.Services.RRD
         }
 
 
-        public RrdDataXport ExportGraphData(string graphDefinitionId, DrawOptions opts)
+        public TimeSeriesData ExportGraphData(string graphDefinitionId, DrawOptions opts)
         {
             var gd = Db.GetCollection<GraphDefinition>().FindOneById(graphDefinitionId);
             if (gd == null) throw new Exception("Invalid graph definition Id");
             return ExportGraphData(gd, opts);
         }
 
-        public RrdDataXport ExportGraphData(GraphDefinition gd, DrawOptions opts)
+        public TimeSeriesData ExportGraphData(GraphDefinition gd, DrawOptions opts)
         {
             foreach (var d in gd.Defs)
             {

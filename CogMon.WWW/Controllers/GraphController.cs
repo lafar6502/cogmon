@@ -146,7 +146,7 @@ namespace CogMon.WWW.Controllers
         /// <param name="w"></param>
         /// <param name="step"></param>
         /// <returns></returns>
-        public ActionResult XportGraphData(string definitionId, string startTime, string endTime, int? maxRows, int? step)
+        public ActionResult XportGraphData(string definitionId, string startTime, string endTime, int? maxRows, int? step, string format)
         {
             DrawOptions opts = new DrawOptions 
             {
@@ -158,7 +158,15 @@ namespace CogMon.WWW.Controllers
             };
 
             var res = this.DataSeriesRepo.ExportGraphData(definitionId, opts);
-            return Json(res, JsonRequestBehavior.AllowGet);
+            if (string.IsNullOrEmpty(format) || format == "json")
+            {
+                return Json(res, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                
+                throw new Exception("Format not supported: " + format);
+            }
         }
 
         public ActionResult GraphInfo(string definitionId, string startTime, string endTime, int? w, int? h, string eventCategories, string skipElements, int? step)

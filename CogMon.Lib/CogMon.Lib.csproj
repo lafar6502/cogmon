@@ -59,6 +59,7 @@
     <Compile Include="DataSeries\GraphTemplate.cs" />
     <Compile Include="DataSeries\MEvent.cs" />
     <Compile Include="DataSeries\SaveDataSourceTemplate.cs" />
+    <Compile Include="DataSeries\TimeSeriesData.cs" />
     <Compile Include="Graph\DrawGraphByDefinition.cs" />
     <Compile Include="Graph\GraphDefinition.cs" />
     <Compile Include="Graph\GraphDefinitionTemplate.cs" />

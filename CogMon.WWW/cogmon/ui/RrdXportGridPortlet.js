@@ -52,7 +52,7 @@ Ext.define('CogMon.ui.RrdXportGridPortlet', {
 				emptyText: 'No events in selected date range',
                 store: gst,
                 columns: [
-                    {dataIndex: 'timestamp', header: 'Time'}
+                    {dataIndex: 'timestamp', header: 'Time', format:"Y-m-d H:i:sO", xtype: "datecolumn"}
                 ],
 				autoScroll: true
             };

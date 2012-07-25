@@ -36,6 +36,6 @@ namespace CogMon.Services
         /// <param name="dataSeries"></param>
         /// <returns></returns>
         IList<double> GetLastDataValues(IEnumerable<KeyValuePair<string, string>> dataSeries);
-        RrdDataXport ExportGraphData(string graphDefinitionId, DrawOptions opts);
+        TimeSeriesData ExportGraphData(string graphDefinitionId, DrawOptions opts);
     }
 }

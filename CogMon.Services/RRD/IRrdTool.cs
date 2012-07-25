@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CogMon.Lib.Graph;
+using CogMon.Lib.DataSeries;
 using System.IO;
 
 namespace CogMon.Services.RRD
@@ -62,7 +63,7 @@ namespace CogMon.Services.RRD
 
         void DrawGraph(GraphDefinition gd, DrawOptions opts, Stream writeImageTo);
 
-        RrdDataXport ExportGraphData(GraphDefinition gd, DrawOptions opts);
+        TimeSeriesData ExportGraphData(GraphDefinition gd, DrawOptions opts);
 
     }
 }

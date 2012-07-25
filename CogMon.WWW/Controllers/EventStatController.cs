@@ -38,7 +38,7 @@ namespace CogMon.WWW.Controllers
         {
             DateTime st, ed;
             Services.RRD.RrdUtil.ParseRrdDateRange(start, end, out st, out ed);
-            var dt = EventAggregator.GetDataSeries(series, st, ed, step);
+            var dt = EventAggregator.GetTimeSeries(series, st, ed, step);
             return Content(JsonConvert.SerializeObject(dt, new Newtonsoft.Json.Converters.IsoDateTimeConverter()), "application/json");
             //return Json(dt, JsonRequestBehavior.AllowGet);
         }

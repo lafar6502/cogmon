@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CogMon.Lib;
+using CogMon.Lib.DataSeries;
 
 namespace CogMon.Services
 {
@@ -15,7 +16,7 @@ namespace CogMon.Services
         void AddEvent(DataRecord dr);
         void RunAggregation(string id);
 
-        object GetDataSeries(string seriesId, DateTime start, DateTime end, string step);
+        TimeSeriesData GetTimeSeries(string seriesId, DateTime start, DateTime end, string step);
 
     }
 }

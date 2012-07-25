@@ -7,6 +7,7 @@ using NLog;
 using System.IO;
 using Newtonsoft.Json;
 using CogMon.Lib.Graph;
+using CogMon.Lib.DataSeries;
 using System.Xml;
 
 
@@ -436,31 +437,33 @@ namespace CogMon.Services.RRD
 
 
 
-        public RrdDataXport ExportGraphData(GraphDefinition gd, DrawOptions opts)
+        public TimeSeriesData ExportGraphData(GraphDefinition gd, DrawOptions opts)
         {
             var cmdtext = BuildRrdGraphCmdline(gd, opts, null, null, true);
             string ret = RunRrdWithCommandline(cmdtext);
             var doc = new XmlDocument();
             doc.LoadXml(ret);
-            var x = new RrdDataXport();
-            x.Columns = new List<string>();
-            x.Rows = new List<RrdDataXport.Row>();
-            x.Start = int.Parse(doc.DocumentElement.SelectSingleNode("meta/start").InnerText);
-            x.End = int.Parse(doc.DocumentElement.SelectSingleNode("meta/end").InnerText);
-            x.Step = int.Parse(doc.DocumentElement.SelectSingleNode("meta/step").InnerText);
+            var x = new TimeSeriesData();
+            x.DataColumns = new List<string>();
+            x.Rows = new List<TimeSeriesData.Row>();
+            x.StartTime = FromUnixTime(int.Parse(doc.DocumentElement.SelectSingleNode("meta/start").InnerText));
+            x.EndTime = FromUnixTime(int.Parse(doc.DocumentElement.SelectSingleNode("meta/end").InnerText));
+            x.StepSecs = int.Parse(doc.DocumentElement.SelectSingleNode("meta/step").InnerText);
             foreach (XmlElement el in doc.DocumentElement.SelectNodes("meta/legend/entry"))
             {
-                x.Columns.Add(el.InnerText);
+                x.DataColumns.Add(el.InnerText);
             }
             foreach (XmlElement el in doc.DocumentElement.SelectNodes("data/row"))
             {
-                var r = new RrdDataXport.Row();
+                var r = new TimeSeriesData.Row();
                 r.T = Int32.Parse(el.SelectSingleNode("t").InnerText);
-                r.V = new List<double>();
-                foreach (XmlElement v in el.SelectNodes("v"))
+                r.Timestamp = FromUnixTime(r.T);
+                var v = new List<double>();
+                foreach (XmlElement xv in el.SelectNodes("v"))
                 {
-                    r.V.Add(ParseDouble(v.InnerText));
+                    v.Add(ParseDouble(xv.InnerText));
                 }
+                r.V = v.ToArray();
                 x.Rows.Add(r);
             }
             return x;

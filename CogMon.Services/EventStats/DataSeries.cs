@@ -21,5 +21,6 @@ namespace CogMon.Services.EventStats
         }
         public List<DataField> Fields { get; set; }
         public string AggDataCollection { get; set; }
+        public List<string> ACL { get; set; }
     }
 }

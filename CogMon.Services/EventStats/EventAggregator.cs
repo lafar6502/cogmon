@@ -191,8 +191,11 @@ namespace CogMon.Services.EventStats
             return string.Format("{0}{1}#{2}", step, seriesId, ed);
         }
 
-        public object GetDataSeries(string seriesId, DateTime start, DateTime end, string step)
+        public TimeSeriesData GetTimeSeries(string seriesId, DateTime start, DateTime end, string step)
         {
+            var tsd = new TimeSeriesData();
+            tsd.SeriesId = seriesId;
+            
             var ds = Db.GetCollection<DataSeries>().FindOneById(seriesId);
             if (ds == null) throw new Exception("Invalid series: " + seriesId);
             char stp = string.IsNullOrEmpty(step) ? CalcDefaultStep(end - start, ds) : step[0];
@@ -231,7 +234,7 @@ namespace CogMon.Services.EventStats
                 st1 = Increment(st1, stp, 1);
             }
 
-            return ret;
+            return tsd;
         }
 
         public DataSeries GetDataSeriesInfo(string seriesId)

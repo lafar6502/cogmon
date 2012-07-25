@@ -34,3 +34,6 @@
 33. Model uprawnień uwzględniający prawo do odczytu i do modyfikacji (moze cos wiecej niz ownerId)
 34. Widok listy data sources z informacją o ostatniej aktualizacji
 35. Informacje o wykresie (description)
+36. Nowy sposób dodawania portletów => wybierz typ portletu a potem rrd z listy (albo coś innego z listy)
+37. Obsługa 'page help'
+38. Unifikacja eksportu serii danych (zarówno z rrd jak i mongo) do json, xml, csv, gnuplot
