@@ -16,11 +16,15 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortlet', {
     setupConfigPropertyGrid: function(gcfg) {
         gcfg = this.callParent(arguments);
         return Ext.apply(gcfg.source, {
-            step: 'D'
+            step: this.step,
+            dataSeriesId: this.dataSeriesId
         });
     },
     applyUpdatedConfig: function(cfg) {
         this.setHeight(cfg.height);
+        this.step = cfg.step;
+        this.fireEvent('configchanged', this, cfg);
+        this.loadData();
     },
     loadData: function() {
         var me = this;
@@ -134,7 +138,7 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortlet', {
             console.log('activate');
             me.loadData();
         });
-        this.addEvents( 'daterangechanged');
+        this.addEvents( 'daterangechanged', 'configchanged');
         this.callParent(arguments);
         
     },

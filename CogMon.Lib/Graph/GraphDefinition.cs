@@ -72,7 +72,7 @@ namespace CogMon.Lib.Graph
         public string Color { get; set; }
         public string Legend { get; set; }
         public string Params { get; set; }
-        
+        public bool Hide { get; set; }
 
         public virtual string ToRRDString()
         {

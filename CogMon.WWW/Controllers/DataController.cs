@@ -9,6 +9,7 @@ using CogMon.Lib;
 using CogMon.Lib.Graph;
 using NLog;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace CogMon.WWW.Controllers
 {
@@ -81,7 +82,7 @@ namespace CogMon.WWW.Controllers
 
             if (string.IsNullOrEmpty(format) || format == "json")
             {
-                return Json(tsd, JsonRequestBehavior.AllowGet);
+                return Content(JsonConvert.SerializeObject(tsd, new Newtonsoft.Json.Converters.IsoDateTimeConverter()), "application/json");
             }
             else
             {

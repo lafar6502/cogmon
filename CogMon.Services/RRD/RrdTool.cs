@@ -338,8 +338,9 @@ namespace CogMon.Services.RRD
             }
             for (int i = 0; i < gd.Elements.Count; i++)
             {
-                if (opts.SkipElements != null && opts.SkipElements.Contains(i)) continue;
                 var el = gd.Elements[i];
+                if (el.Hide) continue;
+                if (opts.SkipElements != null && opts.SkipElements.Contains(i)) continue;
                 if (asXport)
                 {
                     if (el.Op == GraphOperation.AREA || el.Op == GraphOperation.LINE1 || el.Op == GraphOperation.LINE2
