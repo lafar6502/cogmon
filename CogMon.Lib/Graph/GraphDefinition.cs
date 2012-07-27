@@ -96,7 +96,7 @@ namespace CogMon.Lib.Graph
                 case GraphOperation.COMMENT:
                     return string.Format("\"{0}:{1}{2}\"", Op.ToString(), Legend, Params);
                 case GraphOperation.PRINT:
-                case GraphOperation.GPRINT:
+                case GraphOperation.GPRINT: //todo legend + params
                     return string.Format("\"{0}:{1}:{2}\"", Op.ToString(), Value, Params);
                 default: throw new NotImplementedException();
             }

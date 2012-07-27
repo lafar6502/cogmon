@@ -1,4 +1,8 @@
 ﻿if (typeof console == "undefined") var console = { log: function() {} };
+google.load('visualization', '1.0', {'packages':['corechart']});
+google.setOnLoadCallback(function() {
+    console.log('google vis api loaded');
+});
 Ext.onReady(function() {
 	Ext.Loader.setConfig({enabled:true});
 	Ext.tip.QuickTipManager.init();

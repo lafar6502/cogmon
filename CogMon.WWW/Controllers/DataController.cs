@@ -84,6 +84,21 @@ namespace CogMon.WWW.Controllers
             {
                 return Content(JsonConvert.SerializeObject(tsd, new Newtonsoft.Json.Converters.IsoDateTimeConverter()), "application/json");
             }
+            else if (format == "csv")
+            {
+                var sw = new StringWriter();
+                foreach (var r in tsd.Rows)
+                {
+                    sw.Write("{0},{1}", r.T, r.Timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
+                    foreach (var v in r.V)
+                    {
+                        sw.Write(",");
+                        sw.Write(v);
+                    }
+                    sw.WriteLine();
+                }
+                return Content(sw.ToString(), "text/csv");
+            }
             else
             {
                 throw new Exception("Format not supported: " + format);

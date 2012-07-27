@@ -1,5 +1,5 @@
 //time series graph
-Ext.define('CogMon.ui.TimeSeriesGraphPortlet', {
+Ext.define('CogMon.ui.TimeSeriesGraphPortletGV', {
     extend: 'CogMon.ui.Portlet',
     requires: ['CogMon.ui.ExtGraphTheme'],
     autoRefreshInterval: undefined,
@@ -48,74 +48,28 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortlet', {
     },
     loadDataObj: function(v) {
         var me = this;
-        var flds = [{name: 'T', type: 'int'}, {name: 'Timestamp', type: 'date'}];
-        var dflds = [];
+        var dT = new google.visualization.DataTable();
+        dT.addColumn('date', 'Timestamp');
         for (var i=0; i<v.DataColumns.length; i++) {
-            flds.push({name: 'c' + i, type: 'float'});
-            dflds.push('c' + i);
+            dT.addColumn('number', v.DataColumns[i]);
         }
         var dt = [];
         for (var j=0; j<v.Rows.length; j++) {
             var r = v.Rows[j];
-            var av = [r.T, new Date(r.T * 1000)];
-            for (var k=0; k<r.V.length; k++)
-            {
-                var sv = r.V[k];
-                av.push(!Ext.isNumber(sv) ? 0 : sv);
-            }
-            dt.push(av);
+            var av = [new Date(r.T * 1000)];
+            dt.push(av.concat(r.V));
         }
         console.log('DATA: ' + Ext.encode(dt));
-        if (Ext.isEmpty(me.gstore)) {
-            var gst = Ext.create('Ext.data.ArrayStore', {
-                fields: flds,
-                data: dt
-            });
-            
-            var chart = Ext.create('Ext.chart.Chart', {
-                id: 'theChart', xtype: 'chart', animate: false, shadow: false,
-                store: gst,
-                theme: me.theme,
-                legend: {
-                    position: 'right'
-                },
-                axes: [
-                {
-                    type: 'Numeric', position: 'left', fields: dflds, grid: true, minimum: 0
-                }, 
-                {
-                    type: 'Time', position: 'bottom', fields: 'Timestamp', 
-                    dateFormat: 'M d',
-                    //groupBy: 'year,month,day',
-                    //aggregateOp: 'sum',
-                    //constrain: true,
-                    //fromDate: new Date('1/1/11'),
-                    //toDate: new Date('1/7/11')
-                    title: 'Date'
-                }],
-                series: [{
-                    type: 'column',
-                    axis: 'left',
-                    highlight: true,
-                    stacked: Ext.isEmpty(me.stacked) ? false : me.stacked,
-                    xField: 'Timestamp',
-                    yField: dflds,
-                    tips: {
-                        /*trackMouse: true,
-                        width:170,
-                        renderer: function(storeItem, item) {
-                            this.setTitle(item.yField + ':' + item.value[1]);
-                        }*/
-                    }
-                }]
-            });
-            me.removeAll();
-            me.add(chart);
-            me.gstore = gst;
-        }
-        else {
-            me.gstore.loadData(dt);
-        }
+        dT.addRows(dt);
+        console.log('my id is ' + me.getId());
+        var bid = me.getId() + '-body';
+        var wrp = new google.visualization.ChartWrapper({
+            chartType: 'LineChart',
+            dataTable: dT,
+            options: {'title': 'Test'},
+            containerId: bid
+        });
+        wrp.draw();
     },
     initComponent: function() {
         var me = this;
@@ -149,5 +103,5 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortlet', {
         this.callParent(arguments);
         
     },
-    alias: 'widget.timeseriesgraphportlet'
+    alias: 'widget.timeseriesgraphportletgv'
 });
