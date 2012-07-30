@@ -350,7 +350,7 @@
                             text: 'Add..', icon: 'Content/img/add.png', itemId: 'btn_add',
 							menu: [
 								{
-									text: 'RRD Graph',
+									text: 'RRD/Time series graph',
 									handler: function() {
                                         CogMon.ui.AddDataSeriesPortletPanel.showSelectionWindow({
                                             callback: function(s) {
@@ -361,8 +361,11 @@
 									}
 								},
                                 {
-                                    text: 'Other portlets',
+                                    text: 'Predefined portlets',
                                     handler: function() {
+                                        CogMon.ui.AddPortletPanel.runPortletSelection(function(pt) {
+                                            me.addPortlet(pt);
+                                        });
                                     }
                                 },
 								{

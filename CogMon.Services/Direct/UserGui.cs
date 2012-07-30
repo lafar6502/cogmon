@@ -301,10 +301,10 @@ namespace CogMon.Services.Direct
         /// </summary>
         /// <returns></returns>
         [DirectMethod]
-        public IList<Portlet> GetGraphPortletList()
+        public IList<Portlet> GetPredefinedPortletList()
         {
             List<Portlet> ret = new List<Portlet>();
-            var lst = Db.Find<GraphDefinition>(x => x.OwnerId == UserSessionContext.CurrentUserRecordId || x.ACL.In(UserSessionContext.CurrentUserInfo.GetUserACL())).ToList();
+            /*var lst = Db.Find<GraphDefinition>(x => x.OwnerId == UserSessionContext.CurrentUserRecordId || x.ACL.In(UserSessionContext.CurrentUserInfo.GetUserACL())).ToList();
             foreach (var gd in lst)
             {
                 Portlet p = new Portlet();
@@ -316,7 +316,7 @@ namespace CogMon.Services.Direct
                 p.Config["height"] = 300;
                 p.PortletClass = "CogMon.ui.RrdGraphPortlet";
                 ret.Add(p);
-            }
+            }*/
             var lst2 = Db.Find<PortletDef>(x => x.ACL.In(UserSessionContext.CurrentUserInfo.GetUserACL())).SetSortOrder("Title");
             foreach (var pd in lst2)
             {

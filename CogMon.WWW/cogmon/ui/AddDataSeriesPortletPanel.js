@@ -9,7 +9,7 @@ Ext.define('CogMon.ui.AddDataSeriesPortletPanel', {
                 modal: true,
                 width: 700,
                 height: 400,
-                title: 'Add portlet',
+                title: 'Add graph portlet',
                 layout: 'fit',
                 autoDestroy: true,
                 items: Ext.create('CogMon.ui.AddDataSeriesPortletPanel', {itemId: 'thepnl'}),
@@ -91,7 +91,7 @@ Ext.define('CogMon.ui.AddDataSeriesPortletPanel', {
         var pts = Ext.create('Ext.data.ArrayStore', {
             fields: ['id', 'name'],
             data: [
-                ['CogMon.ui.RrdGraphPortlet', 'RRD Graph'],
+                ['CogMon.ui.RrdGraphPortlet', 'RRD Graph (image)'],
                 ['CogMon.ui.TimeSeriesGraphPortletGV', 'Configurable time series graph']
             ]
         });
@@ -108,7 +108,6 @@ Ext.define('CogMon.ui.AddDataSeriesPortletPanel', {
                             buffer: 300,
                             change: function() {
                                 var sv = this.getValue().toLowerCase();
-                                console.log('srch: ' + sv);
                                 st.clearFilter();
                                 st.filterBy(function(r) {
                                     var s = Ext.encode(r.data).toLowerCase();
@@ -119,7 +118,7 @@ Ext.define('CogMon.ui.AddDataSeriesPortletPanel', {
                     },
                     {xtype: 'tbspacer'},
                     {
-                        xtype: 'combobox', name: 'portletType', fieldLabel: 'Graph type', width: 300, flex: 1, store: pts, valueField: 'id', displayField: 'name', itemId: 'portletType'
+                        xtype: 'combobox', name: 'portletType', fieldLabel: 'Graph type', width: 300, flex: 1, store: pts, valueField: 'id', displayField: 'name', allowBlank: false, itemId: 'portletType'
                     }
                 ]
             },

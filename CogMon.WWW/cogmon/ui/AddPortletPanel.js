@@ -45,7 +45,7 @@ Ext.define('CogMon.ui.AddPortletPanel', {
             idProperty: 'Id',
             autoLoad: true,
             root: undefined,
-            directFn: RPC.UserGui.GetGraphPortletList
+            directFn: RPC.UserGui.GetPredefinedPortletList
         });
         
 		Ext.apply(me, {
