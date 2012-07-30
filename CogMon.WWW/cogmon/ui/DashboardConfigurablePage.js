@@ -1,7 +1,7 @@
 ﻿Ext.define('CogMon.ui.DashboardConfigurablePage', {
     extend: 'Ext.panel.Panel',
 	requires: [],
-	uses: ['CogMon.ui.RrdGraphPortlet', 'Ext.app.PortalPanel', 'CogMon.ui.AddPortletPanel', 'CogMon.ui.DatePickField', 'CogMon.ui.DetailedGraphViewPanel'],
+	uses: ['CogMon.ui.RrdGraphPortlet', 'Ext.app.PortalPanel', 'CogMon.ui.AddPortletPanel', 'CogMon.ui.DatePickField', 'CogMon.ui.DetailedGraphViewPanel', 'CogMon.ui.AddDataSeriesPortletPanel'],
     alias: 'widget.dashboardconfigurablepage',
     startTime: 'e-1d',
     endTime: 'now',
@@ -352,11 +352,19 @@
 								{
 									text: 'RRD Graph',
 									handler: function() {
-									CogMon.ui.AddPortletPanel.runPortletSelection(function(pt) {
-											me.addPortlet(pt);
-										});
+                                        CogMon.ui.AddDataSeriesPortletPanel.showSelectionWindow({
+                                            callback: function(s) {
+                                                console.log('sel: ' + Ext.encode(s));
+                                                me.addPortlet(s);
+                                            }
+                                        });
 									}
 								},
+                                {
+                                    text: 'Other portlets',
+                                    handler: function() {
+                                    }
+                                },
 								{
 									text: 'Other',
 									menu: [

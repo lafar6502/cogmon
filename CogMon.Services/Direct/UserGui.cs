@@ -263,6 +263,39 @@ namespace CogMon.Services.Direct
             }
         }
 
+        public class GraphDataSeriesInfo
+        {
+            public string Id { get; set; }
+            public string SeriesType { get; set; }
+            public bool ImOwner { get; set; }
+            public string OwnerName { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+        }
+
+        /*public IList<object> GetGraphList()
+        {
+            List<object> ret = new List<object>();
+            var lst = Db.Find<GraphDefinition>(x.ACL.In(UserSessionContext.CurrentUserInfo.GetUserACL())).ToList();
+            foreach (var gd in lst)
+            {
+                ret.Add(new
+                {
+                    Id = "RRD" + gd.Id,
+                    SeriesType = "rrd",
+                    ImOwner = gd.OwnerId == UserSessionContext.CurrentUserRecordId,
+                    OwnerName = string.IsNullOrEmpty(gd.OwnerName) ? "" : gd.OwnerName,
+                    Name = gd.Title,
+                    Description = gd.Description
+                });
+            }
+            var lst2 = Db.Find<CogMon.Services.EventStats.DataSeries>(x => x.ACL.In(UserSessionContext.CurrentUserInfo.GetUserACL()));
+            foreach (var ds in lst2)
+            {
+                
+            }
+        }*/
+
         /// <summary>
         /// returns a list of rrd graph portlets for current user
         /// </summary>
