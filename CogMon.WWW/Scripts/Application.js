@@ -1,5 +1,5 @@
 ﻿if (typeof console == "undefined") var console = { log: function() {} };
-google.load('visualization', '1.0', {'packages':['corechart']});
+google.load('visualization', '1.0', {'packages':['corechart', 'charteditor']});
 google.setOnLoadCallback(function() {
     console.log('google vis api loaded');
 });

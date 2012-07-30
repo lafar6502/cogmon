@@ -19,6 +19,16 @@ namespace CogMon.Lib.DataSeries
         /// </summary>
         public List<string> DataColumns { get; set; }
 
+        public class Column
+        {
+            public string Name { get; set; }
+            public string Color { get; set; }
+        }
+        /// <summary>
+        /// Todo use instead of DataColumns...
+        /// </summary>
+        public List<Column> Columns { get; set; }
+
         public class Row
         {
             /// <summary>
