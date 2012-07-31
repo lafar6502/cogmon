@@ -59,6 +59,8 @@ namespace CogMon.WWW.Controllers
 
             return this.DataSeriesRepo.ExportGraphData(id, opts);
         }
+
+        
         /// <summary>
         /// Export RRD graph data as xml
         /// </summary>
@@ -77,6 +79,20 @@ namespace CogMon.WWW.Controllers
             }
             else if (id.StartsWith("MAP"))
             {
+                DateTime sd, ed;
+                if (!Services.RRD.RrdUtil.ParseRrdDateRange(startTime, endTime, out sd, out ed)) throw new Exception("Invalid date range");
+                string stp;
+                var ts = ed - sd;
+                if (ts.TotalHours < 6)
+                    stp = "A";
+                else if (ts.TotalHours < 72)
+                    stp = "H";
+                else if (ts.TotalDays < 62)
+                    stp = "D";
+                else 
+                    stp = "M";
+                log.Info("Getting time series {0}. Start: {1}, End: {2}, step: {3}", id, sd, ed, stp);
+                tsd = this.AggDb.GetTimeSeries(id.Substring(3), sd, ed, stp);
             }
             else throw new Exception("Unknown id prefix");
 

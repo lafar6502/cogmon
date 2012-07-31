@@ -195,7 +195,9 @@ namespace CogMon.Services.EventStats
         {
             var tsd = new TimeSeriesData();
             tsd.SeriesId = seriesId;
-
+            tsd.StartTime = start;
+            tsd.EndTime = end;
+            
             var ds = Db.GetCollection<DataSeries>().FindOneById(seriesId);
             if (ds == null) throw new Exception("Invalid series: " + seriesId);
             char stp = string.IsNullOrEmpty(step) ? CalcDefaultStep(end - start, ds) : step[0];
@@ -203,6 +205,14 @@ namespace CogMon.Services.EventStats
             string ed = FormatDatePartForStep(end, stp);
             st = string.Format("{0}{1}#{2}", stp, ds.Id, st);
             ed = string.Format("{0}{1}#{2}", stp, ds.Id, ed);
+            tsd.DataColumns = new List<string>();
+            tsd.Columns = new List<TimeSeriesData.Column>();
+            tsd.Rows = new List<TimeSeriesData.Row>();
+            foreach (var f in ds.Fields)
+            {
+                tsd.DataColumns.Add(f.Name);
+                tsd.Columns.Add(new TimeSeriesData.Column { Name = f.Name, Color = null });
+            }
             var lst = Db.GetCollection(ds.AggDataCollection).FindAs<reduce_sums>(MongoQueryBuilder.DynQuery(x => x._id >= st && x._id <= ed)).SetSortOrder("_id").ToList();
             var ret = new List<object>();
             Dictionary<string, reduce_sums> d = new Dictionary<string, reduce_sums>();
@@ -217,20 +227,16 @@ namespace CogMon.Services.EventStats
                 string k = GetKey(ds.Id, stp, st1);
                 reduce_sums s;
                 if (d.ContainsKey(k))
-                    s = d[k];
-                else
-                    s = new reduce_sums { _id = k, value = new reduce_sums.reduce_sums_val { count = 0, V = (int[])Array.CreateInstance(typeof(int), ds.Fields.Count) } };
-                var bd = new Dictionary<string, object>();
-
-                bd.Add("Id", s._id);
-                bd.Add("Timestamp", st1);
-                bd.Add("Count", s.value.count);
-                bd.Add("Label", FormatLabelForTimestamp(st1, stp));
-                for (int i = 0; i < s.value.V.Length; i++)
                 {
-                    bd.Add(ds.Fields[i].Name, s.value.V[i]);
+                    s = d[k];
+                    tsd.Rows.Add(new TimeSeriesData.Row
+                    {
+                        T = RRD.RrdUtil.ToUnixTime(st1),
+                        Timestamp = st1,
+                        V = s.value.V.Select(x => (double) x).ToArray()
+                    });
+                        
                 }
-                ret.Add(bd);
                 st1 = Increment(st1, stp, 1);
             }
 

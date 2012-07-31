@@ -78,9 +78,22 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortletGV', {
         for (var j=0; j<v.Rows.length; j++) {
             var r = v.Rows[j];
             var av = [new Date(r.T * 1000)];
+			if (j == 0 || j == v.Rows.length - 1) 
+			{
+				var ae = true;
+				for (var k = 0; k<r.V.length; k++) 
+				{
+					if (Ext.isNumber(r.V[k]))
+					{
+						ae = false;
+						break;
+					}
+				}
+				if (ae) continue;
+			}
             dt.push(av.concat(r.V));
         }
-        console.log('loading DATA: ' + Ext.encode(dt));
+        //console.log('loading DATA: ' + Ext.encode(dt));
         dT.addRows(dt);
         console.log('my id is ' + me.getId());
         var bid = me.getId() + '-body';
