@@ -189,12 +189,28 @@ namespace CogMon.Services.Direct
             if (pp.ACL == null) pp.ACL = new List<string>();
             if (!pp.ACL.Contains(UserSessionContext.CurrentUserRecordId)) pp.ACL.Add(UserSessionContext.CurrentUserRecordId);
             Db.GetCollection<PortalPage>().Save(pp);
+            VerifySavedPage(pp);
+            
             return pp;
+        }
+
+        void VerifySavedPage(PortalPage pp)
+        {
+            try
+            {
+                var p2 = Db.GetCollection<PortalPage>().FindOneById(pp.Id);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error loading saved page {0}: {1}\nJSON: {2}", pp.Id, ex, Newtonsoft.Json.JsonConvert.SerializeObject(pp));
+                throw new Exception("Error saving page: " + Newtonsoft.Json.JsonConvert.SerializeObject(pp));
+            }
         }
 
         [DirectMethod]
         public bool IsPagePinnedByMe(string pageId)
         {
+            Db.GetCollection<UserInfo>(). .Find(Query.GT("_id", 3000))
             var usr = Db.GetCollection<UserInfo>().FindOneById(UserSessionContext.CurrentUserInfo.Id);
             return usr.HasPinnedPage(pageId);
         }
@@ -382,6 +398,7 @@ namespace CogMon.Services.Direct
                 }
             }
             if (removed) Db.GetCollection<PortalPage>().Save(p);
+            VerifySavedPage(p);
             return UpdatePageBeforeReturning(p);
         }
 
@@ -397,6 +414,7 @@ namespace CogMon.Services.Direct
                 var por = pc.Portlets[idx];
                 por.Config = Util.JsonUtil.NormalizeJsonObject(config);
                 Db.GetCollection<PortalPage>().Save(p);
+                VerifySavedPage(p);
                 return p;
             }
             throw new Exception("Portlet not found: " + portletId);
@@ -421,6 +439,7 @@ namespace CogMon.Services.Direct
                 modified = true;
             }
             if (modified) Db.GetCollection<PortalPage>().Save(p);
+            VerifySavedPage(p);
             return UpdatePageBeforeReturning(p);
         }
         
@@ -453,6 +472,7 @@ namespace CogMon.Services.Direct
             portlet.Id = (p.IdGen++).ToString();
             pc.Portlets.Add(portlet);
             Db.GetCollection<PortalPage>().Save(p);
+            VerifySavedPage(p);
             return UpdatePageBeforeReturning(p);
         }
 
@@ -766,6 +786,7 @@ namespace CogMon.Services.Direct
                 if (pp.OwnerId != UserSessionContext.CurrentUserRecordId) throw new Exception("Not allowed");
                 pp.FolderId = df.Id;
                 Db.GetCollection<PortalPage>().Save(pp);
+                VerifySavedPage(pp);
             }
             else throw new Exception("item type");
         }

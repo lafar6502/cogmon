@@ -28,6 +28,8 @@ namespace CogMon.Services.User
             var users = Db.Find<UserInfo>(x => x.Login == user && x.Active == true).ToList();
             UserInfo ui = null;
             if (users.Count == 0) return false;
+            ui = users[0];
+            if (!ui.Active) return false;
             return true;
         }
 
@@ -35,7 +37,7 @@ namespace CogMon.Services.User
         {
             if (!userIdentity.IsAuthenticated) return false;
             var ui = GetUserInfo(userIdentity);
-            return ui != null;
+            return ui != null && ui.Active;
         }
 
         public virtual UserInfo GetUserInfo(IIdentity userIdentity)

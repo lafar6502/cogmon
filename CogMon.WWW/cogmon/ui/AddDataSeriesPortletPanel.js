@@ -76,7 +76,16 @@ Ext.define('CogMon.ui.AddDataSeriesPortletPanel', {
                 }
             };
         }
-        else throw "Invalid portlet class";
+        else return {
+            Id: series.Id,
+            PortletClass: portletClass,
+            Title: series.Name,
+            Config: {
+                dataSeriesId: series.Id,
+                height: 300
+            }
+        };
+        
     },
 	initComponent: function() {
 		var me = this;
@@ -92,7 +101,8 @@ Ext.define('CogMon.ui.AddDataSeriesPortletPanel', {
             fields: ['id', 'name'],
             data: [
                 ['CogMon.ui.RrdGraphPortlet', 'RRD Graph (image)'],
-                ['CogMon.ui.TimeSeriesGraphPortletGV', 'Configurable time series graph']
+                ['CogMon.ui.TimeSeriesGraphPortletGV', 'Configurable time series graph'],
+                ['CogMon.ui.RrdXportGridPortlet', 'Data table']
             ]
         });
 		Ext.apply(me, {

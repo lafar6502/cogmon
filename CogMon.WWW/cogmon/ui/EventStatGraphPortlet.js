@@ -1,3 +1,4 @@
+//Ext js graph. TODO: remove it
 Ext.define('CogMon.ui.EventStatGraphPortlet', {
     extend: 'CogMon.ui.Portlet',
     requires: ['CogMon.ui.ExtGraphTheme'],

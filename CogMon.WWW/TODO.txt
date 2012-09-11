@@ -28,12 +28,13 @@
 #done 27. Dokonczyc konfigurowanie rozdzielczosci dla wykresow RRD
 #done 28. Edytor RRD - klonowanie wpisow (def/cdef/graph element)
 #done 29. Widok 'raw json' dla definicji graphu
-30!. Uprawnienia
+30!. Uprawnienia - kontrola praw do edycji stron i wykresów
 31. download obrazków png z wykresem
 32. Auto-konfiguracja rozdzielczości obrazka na podstawie data-source
 33. Model uprawnień uwzględniający prawo do odczytu i do modyfikacji (moze cos wiecej niz ownerId)
 34. Widok listy data sources z informacją o ostatniej aktualizacji
 35. Informacje o wykresie (description)
-36. Nowy sposób dodawania portletów => wybierz typ portletu a potem rrd z listy (albo coś innego z listy)
+#done 36. Nowy sposób dodawania portletów => wybierz typ portletu a potem rrd z listy (albo coś innego z listy)
 37. Obsługa 'page help'
 38. Unifikacja eksportu serii danych (zarówno z rrd jak i mongo) do json, xml, csv, gnuplot
+39. Przejście do edycji RRD graph od razu z wykresu

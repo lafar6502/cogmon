@@ -40,10 +40,9 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortletGV', {
     applyUpdatedConfig: function(cfg) {
         this.setHeight(cfg.height);
         this.step = cfg.step;
-        if (Ext.isEmpty(this.chartWrapper)) return;
         Ext.apply(cfg, {
-            chartConfig: this.chartWrapper.getOptions(),
-            chartType: this.chartWrapper.getChartType()
+            chartConfig: this.chartConfig,
+            chartType: this.chartType
         });
         this.fireEvent('configchanged', this, cfg);
         this.loadData();
@@ -125,9 +124,11 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortletGV', {
         google.visualization.events.addListener(ce, 'ok', function() {
               var cw = ce.getChartWrapper();  
               console.log('current chart: ' + Ext.encode(cw.getOptions()));
+              me.chartType = cw.getChartType();
+              me.chartConfig = cw.getOptions();
               var cfg = {
-                chartType: cw.getChartType(),
-                chartConfig: cw.getOptions(),
+                chartType: me.chartType,
+                chartConfig: me.chartConfig,
                 step: me.step,
                 dataSeriesId: me.dataSeriesId,
                 height: me.getHeight()
@@ -135,7 +136,6 @@ Ext.define('CogMon.ui.TimeSeriesGraphPortletGV', {
               me.fireEvent('configchanged', me, cfg);
               me.chartWrapper = cw;
               me.chartWrapper.draw();
-              //me.chartWrapper.draw();
         });
         ce.openDialog(me.chartWrapper, {});
     },
