@@ -49,17 +49,18 @@ There were no attempts to run CogMon on Mono/Linux.</p>
 
 <h3>How it works</h3>
 
-<p>Data is collected by querying various data sources for current values of monitored parameters in regular intervals (e.g. every 5 minutes) </p>
+<p>CogMon collects data by polling data sources in regular intervals. Data source returns a sample containing current values of monitored parameters. Samples are stored in CogMon database and are used for calculating statistics, which are then shown in the reporting GUI.
+CogMon has two methods of storing and processing the data. First one is based on the rrdtool utility, which is a all-in-one round-robin database management tool with graph drawing functionality. Another one is based on MongoDB database and custom map-reduce functions for data aggregation. The latter is more difficult and complicated to set up, but can be used for complex data processing.</p>
 
 <h3>Why not Cacti</h3>
 
-<p>Cacti is targeted for hardware/network infrastructure monitoring and lacks some features important for non-IT users.</p>
+<p>There are several network/hardware monitoring tools based on rrdtool, Cacti being the most popular among them. CogMon is based on the same ideas (round-robin database, polling) but is less focused on IT infrastructure monitoring and targeted mainly to 'business' users.</p>
 
 <h3>What kinds of information can be collected</h3>
 
-<p>Any numeric parameter that can be queried for current value can be monitored.</p>
+<p>Any numeric parameter that changes in time and that can be queried for current value can be monitored. There are many methods of collecting the data: http text/json/xml request, SQL query, text file parsing, windows performance counters API and custom scripts. </p>
 
-<h3>What reports are available</h3>
+<h3>How does the GUI look like and what reports are available?</h3>
       </section>
 
     </div>
