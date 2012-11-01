@@ -210,7 +210,7 @@ namespace CogMon.Services.Direct
         [DirectMethod]
         public bool IsPagePinnedByMe(string pageId)
         {
-            Db.GetCollection<UserInfo>(). .Find(Query.GT("_id", 3000))
+            //Db.GetCollection<UserInfo>(). .Find(Query.GT("_id", 3000))
             var usr = Db.GetCollection<UserInfo>().FindOneById(UserSessionContext.CurrentUserInfo.Id);
             return usr.HasPinnedPage(pageId);
         }

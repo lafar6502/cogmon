@@ -93,6 +93,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\PerfController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\EventStatController.cs" />

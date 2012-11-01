@@ -11,8 +11,17 @@ namespace CogMon.Lib.DataSeries
     public class MEvent
     {
         public int Id { get; set; }
+        /// <summary>
+        /// timestamp
+        /// </summary>
         public DateTime Ts { get; set; }
+        /// <summary>
+        /// event name (grouping key)
+        /// </summary>
         public string P { get; set; }
+        /// <summary>
+        /// list of event values
+        /// </summary>
         public List<int> V { get; set; }
     }
 }

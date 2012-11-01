@@ -58,6 +58,7 @@
     <Compile Include="DataSeries\GetDataSourceInfo.cs" />
     <Compile Include="DataSeries\GraphTemplate.cs" />
     <Compile Include="DataSeries\MEvent.cs" />
+    <Compile Include="DataSeries\PerfEventAggregator.cs" />
     <Compile Include="DataSeries\SaveDataSourceTemplate.cs" />
     <Compile Include="DataSeries\TimeSeriesData.cs" />
     <Compile Include="Graph\DrawGraphByDefinition.cs" />

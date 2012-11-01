@@ -91,6 +91,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -101,6 +102,10 @@
     <Compile Include="BooScript\ScriptDSLEngine.cs" />
     <Compile Include="InlineScriptTask.cs" />
     <Compile Include="LogGrepTask.cs" />
+    <Compile Include="PerfMon\ConcurrentCircularBuffer.cs" />
+    <Compile Include="PerfMon\PerfCounter.cs" />
+    <Compile Include="PerfMon\PerfCounterStore.cs" />
+    <Compile Include="PerfMon\UDPPerfmonListener.cs" />
     <Compile Include="Tools\HttpUtil.cs" />
     <Compile Include="WinPerf.cs" />
     <Compile Include="WinPerfTask.cs" />

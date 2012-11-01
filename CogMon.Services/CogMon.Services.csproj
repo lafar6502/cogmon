@@ -88,8 +88,10 @@
     <Compile Include="Dao\ScheduledJob.cs" />
     <Compile Include="EventStats\DataSeries.cs" />
     <Compile Include="EventStats\EventAggregator.cs" />
+    <Compile Include="EventStats\PersistentPerfCounterManager.cs" />
     <Compile Include="IDataSeriesRepository.cs" />
     <Compile Include="IEventAggregator.cs" />
+    <Compile Include="IPerfCounters.cs" />
     <Compile Include="IUserAuth.cs" />
     <Compile Include="MongoQuery.cs" />
     <Compile Include="MongoUtil.cs" />

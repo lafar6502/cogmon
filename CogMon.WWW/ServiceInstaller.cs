@@ -77,6 +77,7 @@ namespace CogMon.WWW
             MongoDatabase db = MongoDatabase.Create(System.Configuration.ConfigurationManager.ConnectionStrings["cogmon"].ConnectionString);
             wc.Register(Component.For<MongoDatabase>().Instance(db));
             wc.Register(Component.For<IEventAggregator>().ImplementedBy<CogMon.Services.EventStats.SimpleEventAggregator>().LifeStyle.Singleton);
+            wc.Register(Component.For<IPerfCounters>().ImplementedBy<CogMon.Services.EventStats.PersistentPerfCounterManager>().LifeStyle.Singleton);
             CogMon.Services.Database.DatabaseInit.Configure();
             CogMon.Services.Database.DatabaseInit.InitializeCogMonDatabase(db);
         }
