@@ -59,6 +59,11 @@ namespace CogMon.Agent
                     BaseDirectory = Path.Combine(bd, "booscripts")
                 }));
             _wc.Register(Component.For<WinPerf>().ImplementedBy<WinPerf>().LifeStyle.Singleton);
+            _wc.Register(Component.For<IStartableService>().ImplementedBy<PerfMon.UDPPerfmonListener>()
+                .LifeStyle.Singleton.DependsOn(new
+                {
+                    Port = 29823
+                }));
         }
     }
 }

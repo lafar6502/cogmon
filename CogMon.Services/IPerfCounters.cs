@@ -15,5 +15,6 @@ namespace CogMon.Services
     {
         void AddEvent(string counterId, int value);
         PerfCounterStats GetCurrentStats(string counterId, bool reset);
+        IList<string> GetPerfCounterNames();
     }
 }

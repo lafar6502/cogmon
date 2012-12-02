@@ -31,13 +31,32 @@ namespace CogMon.Services.EventStats
 
         public PerfCounterStats GetCurrentStats(string counterId, bool reset)
         {
-            var res = Db.GetCollection<PerfEventAggregator>().FindAndModify(
-                Query.EQ("_id", counterId),
-                SortBy.Ascending("_id"),
-                Update.Set("Data", BsonArray.Create(new int[] { })).Set("FrameStart", DateTime.Now).Set("LastUpdate", DateTime.Now),
-                false);
-            var pv = res.GetModifiedDocumentAs<PerfEventAggregator>();
-            return pv.CalculateCurrentStats();
+            if (reset)
+            {
+                var res = Db.GetCollection<PerfEventAggregator>().FindAndModify(
+                    Query.EQ("_id", counterId),
+                    SortBy.Ascending("_id"),
+                    Update.Set("Data", BsonArray.Create(new int[] { })).Set("FrameStart", DateTime.Now).Set("LastUpdate", DateTime.Now),
+                    false);
+                var pv = res.GetModifiedDocumentAs<PerfEventAggregator>();
+                return pv.CalculateCurrentStats();
+            }
+            else
+            {
+                var pv = Db.GetCollection<PerfEventAggregator>().FindOneById(counterId);
+                return pv.CalculateCurrentStats();
+            }
+        }
+
+
+        public IList<string> GetPerfCounterNames()
+        {
+            List<string> ret = new List<string>();
+            foreach (var ea in Db.GetCollection<PerfEventAggregator>().FindAll().SetFields(Fields.Include("_id")).ToList())
+            {
+                ret.Add(ea.Id);
+            }
+            return ret;
         }
     }
 }

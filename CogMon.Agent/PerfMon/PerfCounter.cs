@@ -35,18 +35,24 @@ namespace CogMon.Agent.PerfMon
         /// Max number of events the counter will hold
         /// before auto-resetting
         /// </summary>
-        public int MaxUpdates { get; set; }
+        public int MaxUpdates
+        {
+            get { return _data.Capacity; }
+            set { if (value != _data.Capacity) _data = new ConcurrentCircularBuffer<int>(value); }
+        }
 
+        public ConcurrentCircularBuffer<int> _data = new ConcurrentCircularBuffer<int>(300);
         private DateTime _lastReset;
         private DateTime _lastUpdate;
-        private long _sum;
         private int _count;
-        private int _min;
+        private long _sum;
         private int _max;
+        private int _min;
 
         public PerfCounter()
         {
-            GetValuesAndReset();
+            _lastReset = DateTime.Now;
+            _lastUpdate = DateTime.Now;
         }
 
         /// <summary>
@@ -55,7 +61,14 @@ namespace CogMon.Agent.PerfMon
         /// <param name="val"></param>
         public void Update(int val)
         {
-
+            _data.Enqueue(val);
+            _lastUpdate = DateTime.Now;
+            Interlocked.Increment(ref _count);
+            Interlocked.Add(ref _sum, val);
+            var m = _max;
+            if (val > m) Interlocked.CompareExchange(ref _max, val, m);
+            m = _min;
+            if (val < m) Interlocked.CompareExchange(ref _min, val, m);
         }
 
         /// <summary>
@@ -68,6 +81,7 @@ namespace CogMon.Agent.PerfMon
             if (reset) return GetValuesAndReset();
             throw new NotImplementedException();
         }
+
         
         /// <summary>
         /// Resets the counter
