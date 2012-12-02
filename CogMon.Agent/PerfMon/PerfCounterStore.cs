@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Concurrent;
 using NLog;
+using CogMon.Lib.DataSeries;
 
 namespace CogMon.Agent.PerfMon
 {
@@ -26,6 +27,12 @@ namespace CogMon.Agent.PerfMon
         private PerfCounter GetCachedCounter(string key)
         {
             return _counters.GetOrAdd(key, x => new PerfCounter { Id = x });
+        }
+
+        public PerfCounterStats GetPerfCounterValuesAndReset(string id)
+        {
+            var pc = GetCachedCounter(id);
+            return pc.GetCurrentValue(true);
         }
     }
 }

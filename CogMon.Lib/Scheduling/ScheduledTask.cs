@@ -8,8 +8,11 @@ namespace CogMon.Lib.Scheduling
     public enum QueryType
     {
         HttpGet = 0,
+        
         BooScript = 1,
+        
         SystemCommand = 2,
+
         SqlSelect = 3,
         ///windows perf counters
         WinPerf = 4,
@@ -23,8 +26,18 @@ namespace CogMon.Lib.Scheduling
         MongoMapReduce = 6,
         /// <summary>
         /// inline boo script
+        /// executed by the agent
         /// </summary>
-        InlineScript = 7
+        InlineScript = 7,
+        /// <summary>
+        /// Cogmon agent perf counter
+        /// </summary>
+        AgentPerfCnt = 8,
+        /// <summary>
+        /// Cogmon persistent perf counter
+        /// stored in server db
+        /// </summary>
+        ServerPerfCnt = 9
     }
 
     /// <summary>
@@ -65,7 +78,7 @@ namespace CogMon.Lib.Scheduling
         /// Script name for boo/system commands
         /// request URL for http get
         /// sql select query for SqlSelect
-        /// and so on
+        /// each task type has its own interpretation of this field
         /// </summary>
         public string ScriptName { get; set; }
         /// <summary>

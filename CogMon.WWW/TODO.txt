@@ -38,3 +38,13 @@
 37. Obsługa 'page help'
 38. Unifikacja eksportu serii danych (zarówno z rrd jak i mongo) do json, xml, csv, gnuplot
 39. Przejście do edycji RRD graph od razu z wykresu
+
+
+===============================================================
+Management
+2.1 Lista Job-ów ze statusem kazdego, informacja o ostatnim update i bledach
+2.2 Lista agentow ze statusem kazdego, informacja o ostatnim update i bledach
+2.3 Lista data sources (rrd + mongodb) + info o ostatnim update i jobie
+2.4 Lista perf counterow na agencie (wybranym)
+2.5 Lista perf counterow na serwerze
+2.6 Definiowanie akcji w formie skryptow boo (np automatyzacja zakladania data sources dla wiekszej liczby parametrow)

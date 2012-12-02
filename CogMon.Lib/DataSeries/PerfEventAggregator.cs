@@ -30,7 +30,7 @@ namespace CogMon.Lib.DataSeries
             pc.Max = Data[Data.Count - 1];
             pc.Median = GetPercentile(Data, 50);
             pc.Perc95 = GetPercentile(Data, 95);
-            pc.Perc99 = GetPercentile(Data, 99);
+            pc.Perc98 = GetPercentile(Data, 98);
             pc.Perc90 = GetPercentile(Data, 90);
             pc.Sum = Data.Sum();
             return pc;
@@ -54,9 +54,11 @@ namespace CogMon.Lib.DataSeries
         public int Count { get; set; }
         public int Min { get; set; }
         public int Max { get; set; }
-        public int Sum { get; set; }
+        
+        public long Sum { get; set; }
+
         public int Median { get; set; }
-        public int Perc99 { get; set; }
+        public int Perc98 { get; set; }
         public int Perc95 { get; set; }
         public int Perc90 { get; set; }
     }

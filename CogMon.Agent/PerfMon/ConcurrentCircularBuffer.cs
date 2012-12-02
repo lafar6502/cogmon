@@ -38,6 +38,11 @@ namespace CogMon.Agent.PerfMon
             get { return _maxLen; }
         }
 
+        T[] ToArray()
+        {
+            return _q.ToArray();
+        }
+
         T[] GetDataAndReset()
         {
             var tq = _q;
