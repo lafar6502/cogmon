@@ -151,7 +151,9 @@ namespace CogMon.Agent
         protected void UpdateScheduledJobs()
         {
             log.Debug("Updating scheduler jobs. group: {0}", this.SchedulerGroup);
-            var resp = CogMon.CallService<GetActiveScheduledJobsResponse>(new GetActiveScheduledJobs { Groups = string.IsNullOrEmpty(SchedulerGroup) ? (string[]) null : new string[] {SchedulerGroup} });
+            string pid = System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
+
+            var resp = CogMon.CallService<GetActiveScheduledJobsResponse>(new GetActiveScheduledJobs { Groups = string.IsNullOrEmpty(SchedulerGroup) ? (string[]) null : new string[] {SchedulerGroup}, AgentPID = pid });
             List<SchedTask> lst = new List<SchedTask>();
             var tsks = _tasks;
             

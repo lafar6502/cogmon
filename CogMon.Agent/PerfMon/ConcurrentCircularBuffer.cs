@@ -38,12 +38,12 @@ namespace CogMon.Agent.PerfMon
             get { return _maxLen; }
         }
 
-        T[] ToArray()
+        public T[] ToArray()
         {
             return _q.ToArray();
         }
 
-        T[] GetDataAndReset()
+        public T[] GetDataAndReset()
         {
             var tq = _q;
             _q = new ConcurrentQueue<T>();

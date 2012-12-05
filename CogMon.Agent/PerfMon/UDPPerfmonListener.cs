@@ -46,6 +46,7 @@ namespace CogMon.Agent.PerfMon
             IPEndPoint remote = null;
             var ret = cli.EndReceive(ar, ref remote);
             string data = Encoding.UTF8.GetString(ret);
+            log.Debug("From {0}: {1}", remote, data);
             if (Counters != null)
             {
                 int idx = data.IndexOf(':');

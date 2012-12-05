@@ -61,5 +61,7 @@ namespace CogMon.Lib.DataSeries
         public int Perc98 { get; set; }
         public int Perc95 { get; set; }
         public int Perc90 { get; set; }
+        public double Freq { get; set; }
+        public double Avg { get; set; }
     }
 }

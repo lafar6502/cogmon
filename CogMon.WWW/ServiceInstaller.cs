@@ -78,6 +78,7 @@ namespace CogMon.WWW
             wc.Register(Component.For<MongoDatabase>().Instance(db));
             wc.Register(Component.For<IEventAggregator>().ImplementedBy<CogMon.Services.EventStats.SimpleEventAggregator>().LifeStyle.Singleton);
             wc.Register(Component.For<IPerfCounters>().ImplementedBy<CogMon.Services.EventStats.PersistentPerfCounterManager>().LifeStyle.Singleton);
+            wc.Register(Component.For<IReportCogmonStatus, IJobStatusTracker>().ImplementedBy<CogMon.Services.Management.JobStatusTracker>().LifeStyle.Singleton);
             CogMon.Services.Database.DatabaseInit.Configure();
             CogMon.Services.Database.DatabaseInit.InitializeCogMonDatabase(db);
         }

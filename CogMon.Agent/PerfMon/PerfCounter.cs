@@ -79,7 +79,22 @@ namespace CogMon.Agent.PerfMon
                 StartTime = _lastReset,
                 EndTime = DateTime.Now
             };
-            
+            var dt = _data;
+            if (reset)
+            {
+                var c = MaxUpdates;
+                _lastReset = _lastUpdate = DateTime.Now;
+                dt = Interlocked.Exchange(ref _data, new ConcurrentCircularBuffer<int>(c));
+            }
+            int[] dd = dt.ToArray();
+            if (dd.Length > 0)
+            {
+                Array.Sort(dd);
+                pv.Median = dd[dd.Length / 2];
+                pv.Perc90 = dd[(int)((dd.Length - 1) * 0.90)];
+                pv.Perc95 = dd[(int)((dd.Length - 1) * 0.95)];
+                pv.Perc98 = dd[(int)((dd.Length - 1) * 0.98)];
+            }
             return pv;
         }
 
@@ -98,6 +113,12 @@ namespace CogMon.Agent.PerfMon
                 Min = Interlocked.Exchange(ref _min, Int32.MaxValue),
                 Max = Interlocked.Exchange(ref _max, Int32.MinValue)
             };
+            pv.Avg = pv.Count == 0 ? 0 : pv.Sum / pv.Count;
+            pv.StartTime = this._lastReset;
+            pv.EndTime = DateTime.Now;
+            var df = (pv.EndTime - pv.StartTime).TotalSeconds;
+            pv.Freq = pv.Count == 0 ? 0.0 : df / pv.Count;
+
             return pv;
 
             

@@ -28,7 +28,7 @@ namespace CogMon.Agent
             if (Variables.Length == 0)
             {
                 var pv = Counters.GetPerfCounterValuesAndReset(this.ScriptName);
-                dr.Data = new double[] { pv.Count, pv.Sum, pv.Min, pv.Max, pv.Median, pv.Perc90, pv.Perc95, pv.Perc98 };
+                dr.Data = new double[] { pv.Count, pv.Sum, pv.Avg, pv.Freq, pv.Min, pv.Max, pv.Median, pv.Perc90, pv.Perc95, pv.Perc98 };
             }
             else
             {

@@ -92,7 +92,9 @@
     <Compile Include="IDataSeriesRepository.cs" />
     <Compile Include="IEventAggregator.cs" />
     <Compile Include="IPerfCounters.cs" />
+    <Compile Include="IReportCogmonStatus.cs" />
     <Compile Include="IUserAuth.cs" />
+    <Compile Include="Management\JobStatusTracker.cs" />
     <Compile Include="MongoQuery.cs" />
     <Compile Include="MongoUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -20,10 +20,17 @@ Ext.onReady(function() {
 				Ext.application({
 					name: 'CogMon',
 					appFolder: '../cogmon',
-					autoCreateViewport: true,
-					controllers: ['MainAdmin'],
+					autoCreateViewport: false,
+					controllers: [],
 					launch: function () {
-						console.log('app launch');
+						var vp =  Ext.create('Ext.container.Viewport', {
+                            layout: 'fit',
+                            items: [
+                                Ext.create('CogMon.admui.AdminView', {
+                                    
+                                })
+                            ]
+                        });
 					}
 				});
 			}

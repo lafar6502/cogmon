@@ -42,6 +42,14 @@ namespace CogMon.WWW.Controllers
         {
             get { return _input;  }
         }
+        
+        public string ClientIP
+        {
+            get
+            {
+                return _ctx.Request.UserHostAddress;
+            }
+        }
 
         public Stream InputStream
         {

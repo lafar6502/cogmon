@@ -12,6 +12,7 @@ using MongoDB.Driver.Builders;
 using CogMon.Lib.Graph;
 using Newtonsoft.Json;
 using System.Threading;
+using NGinnBPM.MessageBus.Impl.HttpService;
 
 namespace CogMon.Services.SCall
 {
@@ -25,6 +26,7 @@ namespace CogMon.Services.SCall
         IMessageHandlerService<SaveDataSourceTemplate>,
         IMessageHandlerService<CreateDataSeriesFromTemplate>,
         IMessageHandlerService<UpdateData>,
+        IMessageHandlerService<UpdateDataBatch>,
         IMessageHandlerService<DataRecord>,
         IMessageHandlerService<DrawGraphByDefinition>,
         IMessageHandlerService<ReCreateDataSeries>,
@@ -32,6 +34,7 @@ namespace CogMon.Services.SCall
     {
         public IDataSeriesRepository DSRepo { get; set; }
         public IEventAggregator EventAggregator { get; set; }
+        public IReportCogmonStatus StatusReporter { get; set; }
         public MongoDatabase Db { get; set; }
         private Logger log = LogManager.GetCurrentClassLogger();
 
@@ -86,7 +89,9 @@ namespace CogMon.Services.SCall
 
         protected void ReportJobExecuted(string jobid)
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(x=> {
+            string addr = RequestContext.CurrentRequest == null ? "" : RequestContext.CurrentRequest.ClientIP;
+            StatusReporter.ReportJobExecuted(jobid, addr);
+            /*ThreadPool.QueueUserWorkItem(new WaitCallback(x=> {
                 try
                 {
                     Db.GetCollection<ScheduledJob>().Update(Query.EQ("_id", jobid), Update.Set("LastRun", DateTime.Now));
@@ -95,7 +100,7 @@ namespace CogMon.Services.SCall
                 {
                     log.Warn("Failed to update job {0}: {1}", jobid, ex);
                 }
-            }));
+            }));*/
         }
 
         public object Handle(DataRecord message)
@@ -148,6 +153,12 @@ namespace CogMon.Services.SCall
             if (string.IsNullOrEmpty(gd.Description)) gd.Description = tpl.Description;
             Db.GetCollection<GraphDefinition>().Save(gd);
             return gd;
+        }
+
+        public object Handle(UpdateDataBatch message)
+        {
+            
+            throw new NotImplementedException();
         }
     }
 }

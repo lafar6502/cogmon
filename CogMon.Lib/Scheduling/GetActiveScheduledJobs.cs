@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CogMon.Lib.Scheduling
 {
+    /// <summary>
+    /// Query the server for job information
+    /// </summary>
     public class GetActiveScheduledJobs
     {
         /// <summary>
@@ -12,6 +15,7 @@ namespace CogMon.Lib.Scheduling
         /// If null, all jobs will be returned
         /// </summary>
         public string[] Groups { get; set; }
+        public string AgentPID { get; set; }
         public DateTime? UpdatedAfter { get; set; }
     }
 

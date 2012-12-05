@@ -62,7 +62,8 @@ namespace CogMon.Agent
             _wc.Register(Component.For<IStartableService>().ImplementedBy<PerfMon.UDPPerfmonListener>()
                 .LifeStyle.Singleton.DependsOn(new
                 {
-                    Port = 29823
+                    Port = 29823,
+                    LocalIP = "0.0.0.0"
                 }));
         }
     }

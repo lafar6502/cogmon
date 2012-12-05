@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NGinnBPM.MessageBus;
+using NGinnBPM.MessageBus.Impl.HttpService;
 using CogMon.Lib.Scheduling;
 using NLog;
 using MongoDB.Driver;
@@ -18,10 +19,14 @@ namespace CogMon.Services.SCall
     {
         public MongoDatabase Db { get; set; }
         public IDataSeriesRepository DsRepo { get; set; }
+        public IReportCogmonStatus StatusReporter { get; set; }
+
         private Logger log = LogManager.GetCurrentClassLogger();
 
         public object Handle(GetActiveScheduledJobs message)
         {
+            string addr = RequestContext.CurrentRequest == null ? "" : RequestContext.CurrentRequest.ClientIP;
+            StatusReporter.ReportAgentQuery(addr, message.AgentPID, message.Groups.Length > 0 ? message.Groups[0] : null);
             DateTime lm = message.UpdatedAfter.HasValue ? message.UpdatedAfter.Value : new DateTime(2000, 1, 1);
             var l = Db.Find<ScheduledJob>(x => x.Active == true && x.LastModified >= lm && (message.Groups == null || message.Groups.Length == 0 ? x.Group.IsNull() : x.Group.In(message.Groups)));
             //var l = Db.GetCollection<ScheduledJob>().Find(Query.EQ("Active", true));
@@ -53,6 +58,8 @@ namespace CogMon.Services.SCall
         public object Handle(ReportJobFailed message)
         {
             log.Warn("Job {0} failed: {1}", message.JobId, message.ErrorInfo);
+            string addr = RequestContext.CurrentRequest == null ? "" : RequestContext.CurrentRequest.ClientIP;
+            StatusReporter.ReportJobFailed(message.JobId, addr, message.ErrorInfo);
             return "";
         }
     }

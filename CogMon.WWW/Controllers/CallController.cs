@@ -47,6 +47,7 @@ namespace CogMon.WWW.Controllers
             c2.UrlVariables["name"] = sname;
             try
             {
+                RequestContext.CurrentRequest = c2;
                 CallHandler.HandleRequest(c2);
             }
             catch (Exception ex)
@@ -55,6 +56,10 @@ namespace CogMon.WWW.Controllers
                 c2.ClearResponse();
                 c2.ResponseStatus = 500;
                 c2.Output.WriteLine("Error: {0}", ex.Message);
+            }
+            finally
+            {
+                RequestContext.CurrentRequest = null;
             }
         }
 
