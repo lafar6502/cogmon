@@ -28,6 +28,14 @@ namespace CogMon.Services
         public int IntervalSeconds { get; set; }
     }
 
+    public class DataSeriesStatusInfo
+    {
+        public string SeriesId { get; set; }
+        public string Description { get; set; }
+        public DateTime? LastUpdate { get; set; }
+        public string LastUpdateJob { get; set; }
+    }
+
     public class AgentStatusInfo
     {
         public string Id { get; set; }
@@ -42,5 +50,6 @@ namespace CogMon.Services
     {
         IEnumerable<JobStatusInfo> GetStatusOfAllJobs();
         IEnumerable<AgentStatusInfo> GetStatusOfAllAgents();
+        IEnumerable<DataSeriesStatusInfo> GetStatusOfAllDataSeries();
     }
 }

@@ -12,6 +12,8 @@ namespace CogMon.Services.Management
     public class JobStatusTracker : IReportCogmonStatus, IJobStatusTracker
     {
         public MongoDatabase Db { get; set; }
+        public IDataSeriesRepository DSRepo { get; set; }
+
         private ConcurrentDictionary<string, JobStatusInfo> _jobs = new ConcurrentDictionary<string, JobStatusInfo>();
         private ConcurrentDictionary<string, AgentStatusInfo> _agents = new ConcurrentDictionary<string, AgentStatusInfo>();
 
@@ -85,6 +87,26 @@ namespace CogMon.Services.Management
                 {
                     ret.Add(st);
                 }
+            }
+            return ret;
+        }
+
+
+        public IEnumerable<DataSeriesStatusInfo> GetStatusOfAllDataSeries()
+        {
+            List<DataSeriesStatusInfo> ret = new List<DataSeriesStatusInfo>();
+            List<JobStatusInfo> jobs = _jobs.Values.ToList();
+            var lst = DSRepo.DataSources;
+            foreach (var dr in lst)
+            {
+                var st = new DataSeriesStatusInfo { SeriesId = dr.Id, Description = dr.Description };
+                var si = jobs.Find(x => x.DataSeriesId == st.SeriesId);
+                if (si != null)
+                {
+                    st.LastUpdateJob = si.Id;
+                    st.LastUpdate = si.LastSuccessfulRun;
+                }
+                ret.Add(st);
             }
             return ret;
         }

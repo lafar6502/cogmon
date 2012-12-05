@@ -1,6 +1,6 @@
 Ext.define('CogMon.admui.AdminView', {
     extend: 'Ext.panel.Panel',
-	requires: ['Ext.panel.Panel', 'CogMon.admui.AgentStatusPanel', 'CogMon.admui.JobStatusPanel'],
+	requires: ['Ext.panel.Panel', 'CogMon.admui.AgentStatusPanel', 'CogMon.admui.JobStatusPanel', 'CogMon.admui.DataSeriesStatusPanel'],
 	uses: [],
     alias: 'widget.adminview',
     dummy: false,
@@ -22,6 +22,9 @@ Ext.define('CogMon.admui.AdminView', {
                         },{
                             title: 'Current job status',
                             items: {xtype: 'jobstatuspanel'}
+                        },{
+                            title: 'Status of data sources',
+                            items: {xtype: 'dataseriesstatuspanel'}
                         }]
                 }),
                 Ext.create('Ext.panel.Panel', {html: 'west', region: 'west', width: 200})

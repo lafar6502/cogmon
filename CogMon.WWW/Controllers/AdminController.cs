@@ -31,9 +31,9 @@ namespace CogMon.WWW.Controllers
             return new JsonNetResult(JobTracker.GetStatusOfAllAgents());
         }
 
-        public ActionResult DataSourcesStatus()
+        public ActionResult CurrentDataSourcesStatus()
         {
-            throw new NotImplementedException();
+            return new JsonNetResult(JobTracker.GetStatusOfAllDataSeries());
         }
     }
 }
