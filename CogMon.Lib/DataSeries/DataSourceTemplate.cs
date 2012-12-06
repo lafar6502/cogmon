@@ -96,6 +96,10 @@ namespace CogMon.Lib.DataSeries
         /// Job options
         /// </summary>
         public Dictionary<string, string> Options { get; set; }
+        /// <summary>
+        /// job group
+        /// </summary>
+        public string JobGroup { get; set; }
     }
 
     public class GetDataSourceTemplateNames

@@ -44,6 +44,9 @@ namespace CogMon.Agent
             _wc.Register(Component.For<BooScriptTask, JobBase>().ImplementedBy<BooScriptTask>().Named("BooScript").LifeStyle.Transient);
             _wc.Register(Component.For<SqlSelectTask, JobBase>().ImplementedBy<SqlSelectTask>().Named("SqlSelect").LifeStyle.Transient);
             _wc.Register(Component.For<WinPerfTask, JobBase>().ImplementedBy<WinPerfTask>().Named("WinPerf").LifeStyle.Transient);
+            _wc.Register(Component.For<AgentPerfCounterTask, JobBase>().ImplementedBy<AgentPerfCounterTask>().Named("AgentPerfCnt").LifeStyle.Transient);
+            _wc.Register(Component.For<AgentPerfCounterTask, JobBase>().ImplementedBy<AgentPerfCounterTask>().Named("ServerPerfCnt").LifeStyle.Transient);
+
             
             _wc.Register(Component.For<IServiceClient>().ImplementedBy<ServiceClient>()
                 .DependsOn(new
@@ -59,6 +62,7 @@ namespace CogMon.Agent
                     BaseDirectory = Path.Combine(bd, "booscripts")
                 }));
             _wc.Register(Component.For<WinPerf>().ImplementedBy<WinPerf>().LifeStyle.Singleton);
+            _wc.Register(Component.For<PerfMon.PerfCounterStore>().ImplementedBy<PerfMon.PerfCounterStore>().LifeStyle.Singleton);
             _wc.Register(Component.For<IStartableService>().ImplementedBy<PerfMon.UDPPerfmonListener>()
                 .LifeStyle.Singleton.DependsOn(new
                 {

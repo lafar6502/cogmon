@@ -63,8 +63,7 @@ namespace CogMon.Agent.PerfMon
         /// <returns></returns>
         public PerfCounterStats GetCurrentValue(bool reset)
         {
-            if (reset) return GetValuesAndReset();
-            throw new NotImplementedException();
+            return GetValues(reset);
         }
 
         protected PerfCounterStats GetValues(bool reset)

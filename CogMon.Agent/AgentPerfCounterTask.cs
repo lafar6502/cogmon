@@ -21,14 +21,15 @@ namespace CogMon.Agent
 
         protected override void Run()
         {
-            if (VariableRegex == null || VariableRegex.Length == 0) throw new Exception("Performance counter names should be passed in VariableRegex");
-            if (Variables != null && Variables.Length > 0 && Variables.Length != VariableRegex.Length) throw new Exception("Number of Variables does not match the length of VariableRegex");
+            //if (VariableRegex == null || VariableRegex.Length == 0) throw new Exception("Performance counter names should be passed in VariableRegex");
+            //if (Variables != null && Variables.Length > 0 && Variables.Length != VariableRegex.Length) throw new Exception("Number of Variables does not match the length of VariableRegex");
             DataRecord dr = new DataRecord { Series = this.DataSeries };
 
-            if (Variables.Length == 0)
+            if (Variables == null || Variables.Length == 0)
             {
+                if (string.IsNullOrEmpty(ScriptName)) throw new Exception("ScriptName parameter should contain perf counter Id if you are not using Variables");
                 var pv = Counters.GetPerfCounterValuesAndReset(this.ScriptName);
-                dr.Data = new double[] { pv.Count, pv.Sum, pv.Avg, pv.Freq, pv.Min, pv.Max, pv.Median, pv.Perc90, pv.Perc95, pv.Perc98 };
+                dr.Data = new double[] { pv.Count, pv.Sum, pv.Min, pv.Max, pv.Median, pv.Perc90, pv.Perc95, pv.Perc98, pv.Avg, pv.Freq };
             }
             else
             {

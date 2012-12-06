@@ -19,8 +19,10 @@ namespace CogMon.Agent.PerfMon
         public void UpdateCounter(string id, string clientAddress, int val)
         {
             string key = string.IsNullOrEmpty(clientAddress) ? id : string.Format("{0}/{1}", id, clientAddress);
-            var pc = GetCachedCounter(key);
+            var pc = GetCachedCounter(id);
             pc.Update(val);
+            var cv = Newtonsoft.Json.JsonConvert.SerializeObject(pc.GetCurrentValue(false));
+            log.Info("updated {0}: {1}: Values: {2}", id, val, cv);
 
         }
 

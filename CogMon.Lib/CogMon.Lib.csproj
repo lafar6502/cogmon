@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AuthToken.cs" />
     <Compile Include="DataRecord.cs" />
+    <Compile Include="DataSeries\CreateDataSeriesForPerfCounter.cs" />
     <Compile Include="DataSeries\CreateDataSeriesFromTemplate.cs" />
     <Compile Include="DataSeries\DataSeriesInfo.cs" />
     <Compile Include="DataSeries\DataSourceTemplate.cs" />

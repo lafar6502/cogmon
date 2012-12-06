@@ -240,6 +240,7 @@ namespace CogMon.Services.RRD
                     sj.VariableNames = new List<string>(rci.Fields.Where(x => x.SeriesType != SeriesTypes.COMPUTE).Select(x => x.Name)).ToArray();
                     sj.VariableRetrieveRegex = vregex;
                     sj.LastModified = DateTime.Now;
+                    sj.Group = SubstTemplate<string>(tpl.JobGroup, null, variables);
                     if (tpl.Options != null)
                     {
                         sj.Options = new Dictionary<string, object>();

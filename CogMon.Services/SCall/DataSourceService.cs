@@ -30,7 +30,8 @@ namespace CogMon.Services.SCall
         IMessageHandlerService<DataRecord>,
         IMessageHandlerService<DrawGraphByDefinition>,
         IMessageHandlerService<ReCreateDataSeries>,
-        IMessageHandlerService<CreateGraphDefinitionFromTemplate>
+        IMessageHandlerService<CreateGraphDefinitionFromTemplate>,
+        IMessageHandlerService<CreateDataSeriesForPerfCounter>
     {
         public IDataSeriesRepository DSRepo { get; set; }
         public IEventAggregator EventAggregator { get; set; }
@@ -159,6 +160,23 @@ namespace CogMon.Services.SCall
         {
             
             throw new NotImplementedException();
+        }
+
+        public object Handle(CreateDataSeriesForPerfCounter message)
+        {
+            var tn = message.ServerSide ? "serverperfcounter" : "clientperfcounter";
+            Dictionary<string, object> vars = new Dictionary<string, object>();
+            vars["Description"] = message.Description;
+            vars["CounterId"] = message.CounterId;
+            vars["JobGroup"] = message.JobGroup;
+            vars["UpdateInterval"] = message.UpdateIntervalSec;
+            
+            var dsi = DSRepo.CreateDataSeriesFromTemplate(new CreateDataSeriesFromTemplate {
+                OverwriteDataSourceId = null,
+                TemplateId = tn,
+                Parameters = vars
+            }, "");
+            return new CreateDataSeriesFromTemplateResponse { Success = true, Series = dsi.Id };
         }
     }
 }

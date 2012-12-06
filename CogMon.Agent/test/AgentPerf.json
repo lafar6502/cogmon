@@ -1,0 +1,10 @@
+﻿{
+    Id: "1239",
+    IntervalSeconds: 60,
+    DataSeries: "1242342",
+    Variables: [],
+    QueryMethod: "AgentPerfCnt",
+	ScriptName: "CO_LogErrors",
+    VersionTag: "1",
+    Group: "WYPAS2"
+}
