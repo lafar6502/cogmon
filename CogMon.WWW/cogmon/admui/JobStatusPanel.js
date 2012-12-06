@@ -28,7 +28,15 @@ Ext.define('CogMon.admui.JobStatusPanel', {
                 {header: 'Agent IP', dataIndex: 'AgentAddress'},
                 {header: 'Error?', dataIndex: 'IsError', xtype: 'booleancolumn', trueText: 'Y', falseText: 'N'},
                 {header: 'Status', dataIndex: 'StatusInfo'}
-            ]
+            ],
+            viewConfig: {
+                getRowClass: function(r, idx, rowParams, store) {
+                    if (r.data.IsError) return 'status_row_error';
+                    if (r.data.StatusInfo == "Not reported yet" && !r.data.IsError) return 'status_row_inactive';
+                    if (r.data.StatusInfo == "OK" && !r.data.IsError) return 'status_row_ok';
+                    return null;
+                }
+            }
         });
         this.callParent(arguments);
     }

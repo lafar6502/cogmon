@@ -133,3 +133,18 @@ textarea
 {
     background-image: url('img/down.png');
 }
+
+.status_row_error 
+{
+    color: #ff0000;
+}
+
+.status_row_ok 
+{
+    color: #00AA00;
+}
+
+.status_row_inactive
+{
+    color: #6060C0;
+}

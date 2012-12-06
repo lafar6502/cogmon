@@ -31,6 +31,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Boo.Lang">
+      <HintPath>..\extlib\Boo.Lang.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.CodeDom">
+      <HintPath>..\extlib\Boo.Lang.CodeDom.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Compiler">
+      <HintPath>..\extlib\Boo.Lang.Compiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Interpreter">
+      <HintPath>..\extlib\Boo.Lang.Interpreter.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Parser">
+      <HintPath>..\extlib\Boo.Lang.Parser.dll</HintPath>
+    </Reference>
     <Reference Include="BosonMVC.Services">
       <HintPath>..\extlib\BosonMVC.Services.dll</HintPath>
     </Reference>
@@ -80,6 +95,7 @@
     </Compile>
     <Compile Include="Database\EventMapReduce.cs" />
     <Compile Include="Database\MongoKeyGen.cs" />
+    <Compile Include="Direct\DataSeriesAPI.cs" />
     <Compile Include="Direct\EventStatAPI.cs" />
     <Compile Include="Direct\GraphAPI.cs">
       <SubType>Code</SubType>
@@ -108,6 +124,7 @@
     <Compile Include="SCall\DataSourceService.cs" />
     <Compile Include="SCall\ScheduleService.cs" />
     <Compile Include="SCall\UtilService.cs" />
+    <Compile Include="Scripting\BooScripter.cs" />
     <Compile Include="UserSessionContext.cs" />
     <Compile Include="User\CogMonAuth.cs" />
     <Compile Include="User\LdapAuth.cs" />

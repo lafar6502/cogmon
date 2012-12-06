@@ -68,6 +68,11 @@ namespace CogMon.Services.Management
                     jsi.DataSeriesId = sj.DataSource;
                     jsi.IntervalSeconds = sj.IntervalSeconds;
                     jsi.Group = sj.Group;
+                    if (jsi.LastRun.HasValue && jsi.IntervalSeconds > 0 && jsi.LastRun.Value.AddSeconds(10 * jsi.IntervalSeconds) < DateTime.Now)
+                    {
+                        jsi.IsError = true;
+                        jsi.StatusInfo = string.Format("Did not receive an update since {0}", jsi.LastRun);
+                    }
                     ret.Add(jsi);
                 }
                 else

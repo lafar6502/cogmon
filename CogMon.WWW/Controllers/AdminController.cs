@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using NLog;
 using CogMon.Services;
+using MongoDB.Driver;
 
 namespace CogMon.WWW.Controllers
 {
@@ -12,6 +13,7 @@ namespace CogMon.WWW.Controllers
     {
         private Logger log = LogManager.GetCurrentClassLogger();
         public IJobStatusTracker JobTracker { get; set; }
+        public MongoDatabase Db { get; set; }
 
         [CogmonAuthorize]
         public ActionResult Index()
@@ -34,6 +36,14 @@ namespace CogMon.WWW.Controllers
         public ActionResult CurrentDataSourcesStatus()
         {
             return new JsonNetResult(JobTracker.GetStatusOfAllDataSeries());
+        }
+
+        public ActionResult GetDataSourceTemplates()
+        {
+            var lst = Db.GetCollection<CogMon.Lib.DataSeries.DataSourceTemplate>().FindAll().ToList();
+            var l2 = lst.Select(x => new { Id = x.Id, Description = x.Description, Variables = x.Variables, Name = x.Name });
+
+            return new JsonNetResult(l2);
         }
     }
 }
