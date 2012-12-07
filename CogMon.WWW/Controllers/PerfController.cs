@@ -10,6 +10,7 @@ using CogMon.Lib.Graph;
 using NLog;
 using System.IO;
 using Newtonsoft.Json;
+using NGinnBPM.MessageBus.Impl;
 
 namespace CogMon.WWW.Controllers
 {
@@ -32,6 +33,12 @@ namespace CogMon.WWW.Controllers
         {
             var res = PerfCounters.GetCurrentStats(id, true);
             return Json(res, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CollectDataJob(string jobId)
+        {
+            
+            throw new NotImplementedException();
         }
         
     }

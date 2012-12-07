@@ -17,4 +17,6 @@ namespace CogMon.Services
         PerfCounterStats GetCurrentStats(string counterId, bool reset);
         IList<string> GetPerfCounterNames();
     }
+
+    
 }

@@ -2,6 +2,7 @@ Ext.define('CogMon.admui.DataSeriesStatusPanel', {
     extend: 'Ext.grid.Panel',
 	requires: [],
 	uses: [],
+    maxHeight: 400,
     alias: 'widget.dataseriesstatuspanel',
     initComponent: function() {
         var st = new Ext.data.JsonStore({
@@ -19,10 +20,10 @@ Ext.define('CogMon.admui.DataSeriesStatusPanel', {
         Ext.apply(this, {
             store: st,
             columns: [
-                {header: 'Series Id', dataIndex: 'SeriesId'},
+                {header: 'Series Id', dataIndex: 'SeriesId', width: 180},
                 {header: 'Description', dataIndex: 'Description'},
-                {header: 'Last update', dataIndex: 'LastUpdate', xtype: 'datecolumn'},
-                {header: 'Last update job Id', dataIndex: 'LastUpdateJob'}
+                {header: 'Last update', dataIndex: 'LastUpdate', xtype: 'datecolumn', format:'Y-m-d H:i:s', width: 180},
+                {header: 'Last update job Id', dataIndex: 'LastUpdateJob', width: 180}
             ]
         });
         this.callParent(arguments);

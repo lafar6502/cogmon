@@ -45,7 +45,7 @@ namespace CogMon.Agent
             _wc.Register(Component.For<SqlSelectTask, JobBase>().ImplementedBy<SqlSelectTask>().Named("SqlSelect").LifeStyle.Transient);
             _wc.Register(Component.For<WinPerfTask, JobBase>().ImplementedBy<WinPerfTask>().Named("WinPerf").LifeStyle.Transient);
             _wc.Register(Component.For<AgentPerfCounterTask, JobBase>().ImplementedBy<AgentPerfCounterTask>().Named("AgentPerfCnt").LifeStyle.Transient);
-            _wc.Register(Component.For<AgentPerfCounterTask, JobBase>().ImplementedBy<AgentPerfCounterTask>().Named("ServerPerfCnt").LifeStyle.Transient);
+            _wc.Register(Component.For<ServerPerfCounterTask, JobBase>().ImplementedBy<ServerPerfCounterTask>().Named("ServerPerfCnt").LifeStyle.Transient);
 
             
             _wc.Register(Component.For<IServiceClient>().ImplementedBy<ServiceClient>()
@@ -63,12 +63,17 @@ namespace CogMon.Agent
                 }));
             _wc.Register(Component.For<WinPerf>().ImplementedBy<WinPerf>().LifeStyle.Singleton);
             _wc.Register(Component.For<PerfMon.PerfCounterStore>().ImplementedBy<PerfMon.PerfCounterStore>().LifeStyle.Singleton);
-            _wc.Register(Component.For<IStartableService>().ImplementedBy<PerfMon.UDPPerfmonListener>()
-                .LifeStyle.Singleton.DependsOn(new
-                {
-                    Port = 29823,
-                    LocalIP = "0.0.0.0"
-                }));
+            string udpIp = ConfigurationManager.AppSettings["UDPPerfMonListener.ListenIP"];
+            string port = ConfigurationManager.AppSettings["UDPPerfMonListener.Port"];
+            if (!string.IsNullOrEmpty(udpIp))
+            {
+                _wc.Register(Component.For<IStartableService>().ImplementedBy<PerfMon.UDPPerfmonListener>()
+                    .LifeStyle.Singleton.DependsOn(new
+                    {
+                        Port = string.IsNullOrEmpty(port) ? 29823 : Int32.Parse(port),
+                        LocalIP = udpIp
+                    }));
+            }
         }
     }
 }

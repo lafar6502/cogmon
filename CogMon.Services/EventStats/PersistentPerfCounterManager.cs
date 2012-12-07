@@ -5,6 +5,7 @@ using System.Text;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using NLog;
+using CogMon.Lib;
 using CogMon.Lib.DataSeries;
 using CogMon.Services.Database;
 using MongoDB.Driver.Builders;
@@ -22,6 +23,10 @@ namespace CogMon.Services.EventStats
                 Query.EQ("_id", id),
                 Update.Push("Data", value).Set("LastUpdate", dt),
                 UpdateFlags.Upsert);
+            
+            /*var r2 = Db.GetCollection<PerfEventAggregator>().FindAndModify(Query.EQ("_id", id), SortBy.Ascending("_id"),
+                Update.Push("Data", value).Set("LastUpdate", dt), Fields.Include(""), true, true);
+            */
             if (!res.UpdatedExisting)
             {
                 Db.GetCollection<PerfEventAggregator>().Update(Query.EQ("_id", id), Update.Set("FrameStart", dt));

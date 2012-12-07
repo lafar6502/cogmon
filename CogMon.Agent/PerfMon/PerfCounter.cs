@@ -25,7 +25,7 @@ namespace CogMon.Agent.PerfMon
             set { if (value != _data.Capacity) _data = new ConcurrentCircularBuffer<int>(value); }
         }
 
-        public ConcurrentCircularBuffer<int> _data = new ConcurrentCircularBuffer<int>(300);
+        public ConcurrentCircularBuffer<int> _data = new ConcurrentCircularBuffer<int>(500);
         private DateTime _lastReset;
         private DateTime _lastUpdate;
         private int _count;
@@ -93,6 +93,12 @@ namespace CogMon.Agent.PerfMon
                 pv.Perc90 = dd[(int)((dd.Length - 1) * 0.90)];
                 pv.Perc95 = dd[(int)((dd.Length - 1) * 0.95)];
                 pv.Perc98 = dd[(int)((dd.Length - 1) * 0.98)];
+            }
+            if (pv.Count == 0)
+            {
+                pv.Min = 0;
+                pv.Max = 0;
+                pv.Freq = 0;
             }
             return pv;
         }

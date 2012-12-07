@@ -18,6 +18,7 @@ namespace CogMon.Agent
         {
             try
             {
+                
                 log.Debug("http request to {0}", this.ScriptName);
                 HttpWebRequest rq = (HttpWebRequest)WebRequest.Create(this.ScriptName);
                 using (var resp = (HttpWebResponse)rq.GetResponse())

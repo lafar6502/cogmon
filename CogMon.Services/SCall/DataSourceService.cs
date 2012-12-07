@@ -31,7 +31,8 @@ namespace CogMon.Services.SCall
         IMessageHandlerService<DrawGraphByDefinition>,
         IMessageHandlerService<ReCreateDataSeries>,
         IMessageHandlerService<CreateGraphDefinitionFromTemplate>,
-        IMessageHandlerService<CreateDataSeriesForPerfCounter>
+        IMessageHandlerService<CreateDataSeriesForPerfCounter>,
+        IMessageHandlerService<CollectServerPerfCounterData>
     {
         public IDataSeriesRepository DSRepo { get; set; }
         public IEventAggregator EventAggregator { get; set; }
@@ -177,6 +178,74 @@ namespace CogMon.Services.SCall
                 Parameters = vars
             }, "");
             return new CreateDataSeriesFromTemplateResponse { Success = true, Series = dsi.Id };
+        }
+
+        public IPerfCounters PerfCounters { get; set; }
+        
+
+        /// <summary>
+        /// Collecting server-side perf counter data and appending it to a RRD
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public object Handle(CollectServerPerfCounterData message)
+        {
+            var job = Db.GetCollection<Dao.ScheduledJob>().FindOneById(message.JobId);
+            if (job == null) throw new Exception("Job not found");
+            if (job.QueryMethod != Lib.Scheduling.QueryType.ServerPerfCnt) throw new Exception("Incorrect job QueryMethod");
+
+            DataRecord dr = new DataRecord { Series = job.DataSource };
+
+            if (job.VariableNames == null || job.VariableNames.Length == 0)
+            {
+                if (string.IsNullOrEmpty(job.ScriptName)) throw new Exception("ScriptName parameter should contain perf counter Id if you are not using Variables");
+                var pv = PerfCounters.GetCurrentStats(job.ScriptName, true);
+                dr.Data = new double[] { pv.Count, pv.Sum, pv.Min, pv.Max, pv.Median, pv.Perc90, pv.Perc95, pv.Perc98, pv.Avg, pv.Freq };
+            }
+            else
+            {
+                if (job.VariableRetrieveRegex == null || job.VariableRetrieveRegex.Length == 0)
+                {
+                    string pcid = job.ScriptName;
+                    var pv = PerfCounters.GetCurrentStats(pcid, true);
+                    dr.DataMap = new Dictionary<string, double>();
+                    for (int i = 0; i < job.VariableNames.Length; i++)
+                    {
+                        var pi = pv.GetType().GetProperty(job.VariableNames[i]);
+                        if (pi == null) throw new Exception("Invalid variable: " + job.VariableNames[i]);
+                        dr.DataMap[job.VariableNames[i]] = Convert.ToDouble(pi.GetValue(pv, null));
+                    }
+                }
+                else if (job.VariableRetrieveRegex.Length != job.VariableNames.Length)
+                {
+                    throw new Exception("job VariableRetrieveRegex length invalid");
+                }
+                else
+                {
+                    Dictionary<string, PerfCounterStats> d = new Dictionary<string, PerfCounterStats>();
+                    dr.DataMap = new Dictionary<string, double>();
+                    for (int i = 0; i < job.VariableNames.Length; i++)
+                    {
+                        var vn = job.VariableRetrieveRegex[i];
+                        int idx = vn.IndexOf('/');
+                        string cid = idx < 0 ? job.ScriptName : vn.Substring(0, idx);
+                        PerfCounterStats pv;
+                        if (!d.TryGetValue(cid, out pv))
+                        {
+                            pv = PerfCounters.GetCurrentStats(cid, true);
+                            d[cid] = pv;
+                        }
+                        string cv = idx < 0 ? vn : vn.Substring(idx + 1);
+                        var pi = typeof(PerfCounterStats).GetProperty(cv);
+                        if (pi == null) throw new Exception("Invalid perf counter statistic: " + vn);
+                        dr.DataMap[job.VariableNames[i]] = Convert.ToDouble(pi.GetValue(pv, null));
+                    }
+                }
+            }
+            DSRepo.AppendData(dr);
+            string addr = RequestContext.CurrentRequest == null ? "" : RequestContext.CurrentRequest.ClientIP;
+            StatusReporter.ReportJobExecuted(message.JobId, addr);
+            return "OK";
         }
     }
 }
