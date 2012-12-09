@@ -22,8 +22,8 @@ Ext.define('CogMon.admui.AgentStatusPanel', {
                 {header: 'IP', dataIndex: 'AgentAddress'},
                 {header: 'Process Id', dataIndex: 'AgentPID'},
                 {header: 'Group', dataIndex: 'Groups'},
-                {header: 'Last seen', dataIndex: 'LastSeen', xtype: 'datecolumn'},
-                {header: 'Status', dataIndex: 'StatusInfo'}
+                {header: 'Last seen', dataIndex: 'LastSeen', xtype: 'datecolumn', format:'Y-m-d H:i:s', width: 200},
+                {header: 'Status', dataIndex: 'StatusInfo', flex: 1}
             ]
         });
         this.callParent(arguments);

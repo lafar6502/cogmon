@@ -13,6 +13,14 @@ Ext.define('CogMon.admui.AdminView', {
         this.add(cp);
     },
     handleNavCommand: function(cmd, item) {
+        if (!Ext.isEmpty(item.command)) {
+            var c = item.command;
+            if (c.name == 'ShowContent') {
+                this.replaceContentPanel(c.viewClass, c.cfg);
+            }
+            else throw "Invalid command name";
+            return;
+        }
         if (cmd == "ShowDataSourceTemplates") {
             this.replaceContentPanel('CogMon.admui.DataSourceTemplateListPanel', {});
         }

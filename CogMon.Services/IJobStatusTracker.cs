@@ -18,6 +18,8 @@ namespace CogMon.Services
         public bool IsError { get; set; }
         public string StatusInfo { get; set; }
         public int IntervalSeconds { get; set; }
+        public int? LastExecTimeMs { get; set; }
+        public string Description { get; set; }
     }
 
     public class DataSeriesStatusInfo

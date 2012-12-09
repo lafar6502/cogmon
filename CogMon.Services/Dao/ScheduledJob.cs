@@ -73,5 +73,7 @@ namespace CogMon.Services.Dao
         /// Last execution time
         /// </summary>
         public DateTime LastRun { get; set; }
+        /// <summary>Job description</summary>
+        public string Description { get; set; }
     }
 }

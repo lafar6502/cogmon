@@ -21,7 +21,7 @@ Ext.define('CogMon.admui.DataSeriesStatusPanel', {
             store: st,
             columns: [
                 {header: 'Series Id', dataIndex: 'SeriesId', width: 180},
-                {header: 'Description', dataIndex: 'Description'},
+                {header: 'Description', dataIndex: 'Description', flex: 1},
                 {header: 'Last update', dataIndex: 'LastUpdate', xtype: 'datecolumn', format:'Y-m-d H:i:s', width: 180},
                 {header: 'Last update job Id', dataIndex: 'LastUpdateJob', width: 180}
             ]

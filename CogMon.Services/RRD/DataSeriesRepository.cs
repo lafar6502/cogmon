@@ -285,7 +285,7 @@ namespace CogMon.Services.RRD
                     var ci = col.Find(x => x.Id == s);
                     if (ci != null)
                     {
-                        dr.Description = ci.Description;
+                        dr.Description = ci.Description; 
                     }
                     ret.Add(dr);
                 }

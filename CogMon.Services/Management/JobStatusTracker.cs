@@ -103,6 +103,7 @@ namespace CogMon.Services.Management
             js.AgentAddress = message.AgentIP;
             js.IsError = false;
             js.LastSuccessfulRun = DateTime.Now;
+            js.LastExecTimeMs = message.ExecTimeMs;
         }
 
         public void Handle(Events.JobFailed message)

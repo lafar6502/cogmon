@@ -13,5 +13,6 @@ namespace CogMon.Services.Events
         public string JobId { get; set; }
         public string AgentIP { get; set; }
         public string DataSourceId { get; set; }
+        public int ExecTimeMs { get; set; }
     }
 }

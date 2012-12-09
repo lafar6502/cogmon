@@ -3,6 +3,7 @@ Ext.define('CogMon.admui.JobStatusPanel', {
 	requires: [],
 	uses: [],
     alias: 'widget.jobstatuspanel',
+    maxHeight: 300,
     initComponent: function() {
         var st = new Ext.data.JsonStore({
             autoDestroy: true,
@@ -14,20 +15,21 @@ Ext.define('CogMon.admui.JobStatusPanel', {
                     type: 'json', idProperty: 'Id'
                 }
             },
-            fields: ['Id', 'DataSeriesId', 'Group', {name: 'LastRun', type: 'date'}, {name: 'LastSuccessfulRun', type: 'date'}, 'AgentAddress', 'IsError', 'StatusInfo', 'IntervalSeconds']
+            fields: ['Id', 'DataSeriesId', 'Group', {name: 'LastRun', type: 'date'}, {name: 'LastSuccessfulRun', type: 'date'}, 'AgentAddress', 'IsError', 'StatusInfo', 'IntervalSeconds', 'LastExecTimeMs']
         });
         Ext.apply(this, {
             store: st,
             columns: [
-                {header: 'Job Id', dataIndex: 'Id'},
+                {header: 'Job Id', dataIndex: 'Id', width: 180},
                 {header: 'Job group', dataIndex: 'Group'},
-                {header: 'Data series', dataIndex: 'DataSeriesId'},
-                {header: 'Last update', dataIndex: 'LastRun', xtype: 'datecolumn'},
-                {header: 'Last successful run', dataIndex: 'LastSuccessfulRun', xtype: 'datecolumn'},
-                {header: 'Interval (s)', dataIndex: 'IntervalSeconds'},
+                {header: 'Data series', dataIndex: 'DataSeriesId', width: 180},
+                {header: 'Last update', dataIndex: 'LastRun', xtype: 'datecolumn', format:'Y-m-d H:i:s', width: 180},
+                {header: 'Last successful run', dataIndex: 'LastSuccessfulRun', xtype: 'datecolumn', format:'Y-m-d H:i:s', width: 180},
+                {header: 'Last execution time (ms)', dataIndex: 'LastExecTimeMs', width: 100},
+                {header: 'Poll interval (s)', dataIndex: 'IntervalSeconds'},
                 {header: 'Agent IP', dataIndex: 'AgentAddress'},
                 {header: 'Error?', dataIndex: 'IsError', xtype: 'booleancolumn', trueText: 'Y', falseText: 'N'},
-                {header: 'Status', dataIndex: 'StatusInfo'}
+                {header: 'Status', dataIndex: 'StatusInfo', flex: 1}
             ],
             viewConfig: {
                 getRowClass: function(r, idx, rowParams, store) {

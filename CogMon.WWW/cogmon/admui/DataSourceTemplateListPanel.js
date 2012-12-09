@@ -1,41 +1,46 @@
-Ext.define('CogMon.admui.JobStatusPanel', {
+Ext.define('CogMon.admui.DataSourceTemplateListPanel', {
     extend: 'Ext.grid.Panel',
 	requires: [],
-	uses: [],
-    alias: 'widget.jobstatuspanel',
+	uses: ['CogMon.admui.CreateDataSeriesFromTemplatePanel'],
+    maxHeight: 300,
+    createDataSource: function() {
+        var sel = this.getSelectionModel().getLastSelected();
+        console.log(sel);
+        if (Ext.isEmpty(sel)) return;
+        CogMon.admui.CreateDataSeriesFromTemplatePanel.showCreateDataSourceWindow(sel.raw, {});
+    },
     initComponent: function() {
-        var st = new Ext.data.JsonStore({
-            autoDestroy: true,
-            autoLoad: true,
-            proxy: {
-                type: 'ajax',
-                url: 'CurrentJobStatus',
-                reader: {
-                    type: 'json', idProperty: 'Id'
-                }
-            },
-            fields: ['Id', 'DataSeriesId', 'Group', {name: 'LastRun', type: 'date'}, {name: 'LastSuccessfulRun', type: 'date'}, 'AgentAddress', 'IsError', 'StatusInfo', 'IntervalSeconds']
+        var me = this;
+        var st = Ext.create('Ext.data.DirectStore', {
+            fields: ["Id", "Name", "Description"],
+			//paramOrder: ['start', 'end'],
+            idProperty: 'Id',
+            autoLoad: false,
+            root: undefined,
+            directFn: RPC.AdminGUI.GetDataSourceTemplates,
+            autoLoad: true
         });
         Ext.apply(this, {
+            dockedItems: [
+                {xtype: 'toolbar',items: [
+                    {text: 'Create data source', icon: '../Content/img/add.png', handler: function() { me.createDataSource(); }},
+                    {text: 'Add template', icon: '../Content/img/add.png'},
+                    {text: 'Edit', icon: '../Content/img/edit.png'}
+                ]}
+            ],
             store: st,
             columns: [
-                {header: 'Job Id', dataIndex: 'Id'},
-                {header: 'Job group', dataIndex: 'Group'},
-                {header: 'Data series', dataIndex: 'DataSeriesId'},
-                {header: 'Last update', dataIndex: 'LastRun', xtype: 'datecolumn'},
-                {header: 'Last successful run', dataIndex: 'LastSuccessfulRun', xtype: 'datecolumn'},
-                {header: 'Interval (s)', dataIndex: 'IntervalSeconds'},
-                {header: 'Agent IP', dataIndex: 'AgentAddress'},
-                {header: 'Error?', dataIndex: 'IsError', xtype: 'booleancolumn', trueText: 'Y', falseText: 'N'},
-                {header: 'Status', dataIndex: 'StatusInfo'}
+                {header: 'Id', dataIndex: 'Id', width: 180},
+                {header: 'Name', dataIndex: 'Name'},
+                {header: 'Description', dataIndex: 'Description', flex: 1}
             ],
             viewConfig: {
-                getRowClass: function(r, idx, rowParams, store) {
+                /*getRowClass: function(r, idx, rowParams, store) {
                     if (r.data.IsError) return 'status_row_error';
                     if (r.data.StatusInfo == "Not reported yet" && !r.data.IsError) return 'status_row_inactive';
                     if (r.data.StatusInfo == "OK" && !r.data.IsError) return 'status_row_ok';
                     return null;
-                }
+                }*/
             }
         });
         this.callParent(arguments);

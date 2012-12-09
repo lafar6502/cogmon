@@ -27,39 +27,47 @@ namespace CogMon.Services.Direct
         public IMessageDispatcher EventDispatcher { get; set; }
 
         [DirectMethod]
-        IList<DataSourceTemplate> GetDataSourceTemplates()
+        public IList<DataSourceTemplate> GetDataSourceTemplates()
         {
             return Db.GetCollection<DataSourceTemplate>().FindAll().ToList();
         }
 
         [DirectMethod]
-        void SaveDataSourceTemplate(DataSourceTemplate tpl)
+        public void SaveDataSourceTemplate(DataSourceTemplate tpl)
         {
             Db.GetCollection<DataSourceTemplate>().Save(tpl);
         }
 
         [DirectMethod]
-        IList<GroupInfo> GetUserGroups()
+        public IList<GroupInfo> GetUserGroups()
         {
             return Db.GetCollection<GroupInfo>().FindAll().ToList();
         }
 
         [DirectMethod]
-        void SaveGroup(GroupInfo gi)
+        public void SaveGroup(GroupInfo gi)
         {
             Db.GetCollection<GroupInfo>().Save(gi);
         }
 
         [DirectMethod]
-        IList<EventCategory> GetEventCategories()
+        public IList<EventCategory> GetEventCategories()
         {
             return Db.GetCollection<EventCategory>().FindAll().ToList();
         }
 
         [DirectMethod]
-        void SaveEventCategory(EventCategory ec)
+        public void SaveEventCategory(EventCategory ec)
         {
             Db.GetCollection<EventCategory>().Save(ec);
+        }
+
+
+
+        [DirectMethod]
+        public DataSeriesInfo CreateDataSeriesFromTemplate(CreateDataSeriesFromTemplate msg)
+        {
+            return DSRepo.CreateDataSeriesFromTemplate(msg, UserSessionContext.CurrentUserIdentity.Name);
         }
     }
 }

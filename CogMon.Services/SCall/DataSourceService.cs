@@ -89,7 +89,7 @@ namespace CogMon.Services.SCall
             AddDataRecord(message.Data);
             if (!string.IsNullOrEmpty(message.JobId))
             {
-                EventDispatcher.Publish(new Events.JobExecuted { AgentIP = addr, DataSourceId = message.Data.Series, JobId = message.JobId });
+                EventDispatcher.Publish(new Events.JobExecuted { AgentIP = addr, DataSourceId = message.Data.Series, JobId = message.JobId, ExecTimeMs = message.JobExecTimeMs });
             }
             return "OK";
         }
