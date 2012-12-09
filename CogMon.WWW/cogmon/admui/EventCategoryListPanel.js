@@ -1,27 +1,27 @@
-Ext.define('CogMon.admui.GroupListPanel', {
+Ext.define('CogMon.admui.EventCategoryListPanel', {
     extend: 'Ext.grid.Panel',
 	requires: [],
 	uses: [],
     initComponent: function() {
         var me = this;
         var st = Ext.create('Ext.data.DirectStore', {
-            fields: ["Id", "Name", "Description"],
+            fields: ["Id", "Name", "Color"],
 			//paramOrder: ['start', 'end'],
             idProperty: 'Id', autoLoad: true,
-            directFn: RPC.AdminGUI.GetUserGroups
+            directFn: RPC.AdminGUI.GetEventCategories
         });
         Ext.apply(this, {
             dockedItems: [
                 {xtype: 'toolbar',items: [
-                    {text: 'Add group', icon: '../Content/img/add.png', handler: function() {
-                        st.add({Id: '', Name: '', Description: ''});
+                    {text: 'Add category', icon: '../Content/img/add.png', handler: function() {
+                        st.add({Id: '', Name: '', Color: ''});
                     }},
                     {text: 'Save modified data', icon: '../Content/img/save.png',
                         handler: function() {
                             st.each(function(r) {
                                 if (r.dirty)
                                 {
-                                    RPC.AdminGUI.SaveGroup(r.data, {
+                                    RPC.AdminGUI.SaveEventCategory(r.data, {
                                         success: function(e, v) {
                                             r.commit();
                                         }
@@ -31,7 +31,7 @@ Ext.define('CogMon.admui.GroupListPanel', {
                             });
                         }
                     },
-                    {text: 'Delete group', icon: '../Content/img/delete.png',
+                    {text: 'Delete category', icon: '../Content/img/delete.png',
                         handler: function() {
                         }
                     }
@@ -41,7 +41,7 @@ Ext.define('CogMon.admui.GroupListPanel', {
             columns: [
                 {header: 'Id', dataIndex: 'Id', width: 180, editor: {xtype:'textfield', allowBlank: false}},
                 {header: 'Name', dataIndex: 'Name', editor: {xtype:'textfield', allowBlank: false}},
-                {header: 'Description', dataIndex: 'Description', flex: 1, editor: 'textfield'}
+                {header: 'Color', dataIndex: 'Color', flex: 1, editor: {xtype:'textfield', allowBlank: false}}
             ],
             selType: 'rowmodel',
             plugins: [

@@ -15,7 +15,7 @@ Ext.define('CogMon.admui.NavPanel', {
                     ]},
                     {text: 'Other', children: [
                         {text: 'User groups', leaf: true, itemId: 'ShowGroups', command: {name: 'ShowContent', viewClass: 'CogMon.admui.GroupListPanel', cfg: {}}},
-                        {text: 'Event categories', leaf: true},
+                        {text: 'Event categories', leaf: true, itemId: 'ShowEventCategories', command: {name: 'ShowContent', viewClass: 'CogMon.admui.EventCategoryListPanel', cfg: {}}},
                         {text: 'Pre-defined GUI portlets', leaf: true}
                     ]}
                 ]
