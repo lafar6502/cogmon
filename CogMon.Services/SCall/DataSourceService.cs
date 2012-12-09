@@ -85,6 +85,7 @@ namespace CogMon.Services.SCall
         public object Handle(UpdateData message)
         {
             string addr = RequestContext.CurrentRequest == null ? "" : RequestContext.CurrentRequest.ClientIP;
+            log.Info("UpdateData job: {0}, addr: {1}, run time: {2}", message.JobId, addr, message.JobExecTimeMs); 
             AddDataRecord(message.Data);
             if (!string.IsNullOrEmpty(message.JobId))
             {

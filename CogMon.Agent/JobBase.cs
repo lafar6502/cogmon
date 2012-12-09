@@ -19,6 +19,7 @@ namespace CogMon.Agent
         
         public IServiceClient CogMon { get; set; }
         private Dictionary<string, object> _jobstate = null;
+        protected DateTime _execStart;
 
         protected Dictionary<string, object> LoadJobState()
         {
@@ -54,6 +55,7 @@ namespace CogMon.Agent
             {
                 log = LogManager.GetLogger("Job" + this.Id);
                 NLog.MappedDiagnosticsContext.Set("jobid", this.Id);
+                _execStart = DateTime.Now;
                 _jobstate = LoadJobState();
                 Run();
                 SaveJobState(_jobstate);
@@ -174,7 +176,8 @@ namespace CogMon.Agent
             CogMon.CallService<string>(new UpdateData
             {
                 Data = dr,
-                JobId = this.Id
+                JobId = this.Id,
+                JobExecTimeMs = _execStart > DateTime.MinValue ? (int) (DateTime.Now - _execStart).TotalMilliseconds : 0
             });
             
         }
@@ -184,11 +187,7 @@ namespace CogMon.Agent
             if (batch == null || batch.Count == 0) return;
             if (batch.Count == 1)
             {
-                CogMon.CallService<string>(new UpdateData
-                {
-                    Data = batch[0],
-                    JobId = this.Id
-                });
+                this.UpdateDataSource(batch[0]);
             }
             else
             {

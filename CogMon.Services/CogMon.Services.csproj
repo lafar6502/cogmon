@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="Database\EventMapReduce.cs" />
     <Compile Include="Database\MongoKeyGen.cs" />
+    <Compile Include="Direct\AdminGUI.cs" />
     <Compile Include="Direct\DataSeriesAPI.cs" />
     <Compile Include="Direct\EventStatAPI.cs" />
     <Compile Include="Direct\GraphAPI.cs">

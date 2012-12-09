@@ -34,17 +34,26 @@ namespace CogMon.Lib
             Ts = ts;
         }
 
-
+        /// <summary>optional timestamp</summary>
         public DateTime? Ts { get; set; }
+        /// <summary>Data source Id </summary>
         public string Series { get; set; }
+        /// <summary>Data in array form (the order of values corresponds to the order of data series in rrd file)</summary>
         public double[] Data { get; set; }
+        /// <summary>Data in name=>value form</summary>
         public Dictionary<string, double> DataMap { get; set; }
     }
 
+    /// <summary>
+    /// Data update message sent by collector agents to CogMon server
+    /// </summary>
     public class UpdateData
     {
         public DataRecord Data { get; set; }
+        /// <summary>Job that collected the data</summary>
         public string JobId { get; set; }
+        /// <summary>Job run time (for detecting slow running jobs)</summary>
+        public int JobExecTimeMs { get; set; }
     }
 
     public class UpdateDataBatch
