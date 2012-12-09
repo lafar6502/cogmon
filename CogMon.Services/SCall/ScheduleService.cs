@@ -19,14 +19,15 @@ namespace CogMon.Services.SCall
     {
         public MongoDatabase Db { get; set; }
         public IDataSeriesRepository DsRepo { get; set; }
-        public IReportCogmonStatus StatusReporter { get; set; }
+        public IMessageDispatcher EventDispatcher { get; set; }
+        
 
         private Logger log = LogManager.GetCurrentClassLogger();
 
         public object Handle(GetActiveScheduledJobs message)
         {
             string addr = RequestContext.CurrentRequest == null ? "" : RequestContext.CurrentRequest.ClientIP;
-            StatusReporter.ReportAgentQuery(addr, message.AgentPID, message.Groups.Length > 0 ? message.Groups[0] : null);
+            EventDispatcher.Publish(new Events.AgentQuery { AgentIP = addr, AgentPID = message.AgentPID, JobGroup = (message.Groups != null && message.Groups.Length > 0) ? message.Groups[0] : null });
             DateTime lm = message.UpdatedAfter.HasValue ? message.UpdatedAfter.Value : new DateTime(2000, 1, 1);
             var l = Db.Find<ScheduledJob>(x => x.Active == true && x.LastModified >= lm && (message.Groups == null || message.Groups.Length == 0 ? x.Group.IsNull() : x.Group.In(message.Groups)));
             //var l = Db.GetCollection<ScheduledJob>().Find(Query.EQ("Active", true));
@@ -59,7 +60,12 @@ namespace CogMon.Services.SCall
         {
             log.Warn("Job {0} failed: {1}", message.JobId, message.ErrorInfo);
             string addr = RequestContext.CurrentRequest == null ? "" : RequestContext.CurrentRequest.ClientIP;
-            StatusReporter.ReportJobFailed(message.JobId, addr, message.ErrorInfo);
+            EventDispatcher.Publish(new Events.JobFailed
+            {
+                AgentIP = addr,
+                ErrorInfo = message.ErrorInfo,
+                JobId = message.JobId
+            });
             return "";
         }
     }

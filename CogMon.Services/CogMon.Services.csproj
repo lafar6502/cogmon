@@ -105,10 +105,15 @@
     <Compile Include="EventStats\DataSeries.cs" />
     <Compile Include="EventStats\EventAggregator.cs" />
     <Compile Include="EventStats\PersistentPerfCounterManager.cs" />
+    <Compile Include="Events\AgentDisappeared.cs" />
+    <Compile Include="Events\AgentQuery.cs" />
+    <Compile Include="Events\JobExecuted.cs" />
+    <Compile Include="Events\JobFailed.cs" />
     <Compile Include="IDataSeriesRepository.cs" />
     <Compile Include="IEventAggregator.cs" />
+    <Compile Include="IJobStatusTracker.cs" />
+    <Compile Include="IMessageDispatcher.cs" />
     <Compile Include="IPerfCounters.cs" />
-    <Compile Include="IReportCogmonStatus.cs" />
     <Compile Include="IUserAuth.cs" />
     <Compile Include="Management\JobStatusTracker.cs" />
     <Compile Include="MongoQuery.cs" />
@@ -131,6 +136,7 @@
     <Compile Include="User\WindowsAuth.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Util\JsonUtil.cs" />
+    <Compile Include="Util\NGinnMessageDispatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CogMon.Lib\CogMon.Lib.csproj">

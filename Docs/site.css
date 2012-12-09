@@ -1,0 +1,52 @@
+ol { counter-reset: item }
+li { display: block }
+li:before { content: counters(item, ".") " "; counter-increment: item }
+
+body {
+    font: 100%/1.2em arial, helvetica, sans-serif;
+}
+ol {
+    width: 40em;
+    margin: 2em;
+    padding: .5em;
+    background: #EEF;
+    list-style: none;
+    counter-reset: item;
+}
+ol li {
+    display: block
+    margin: .5em 0;
+    padding-left: 2em;
+}
+ol li:before {
+    display: inline-block; 
+    margin-left: -2em;
+    margin-right: .5em;
+    text-align: center;
+    content: counters(item, ".") ".";
+    counter-increment: item;
+    background: cyan;
+}
+ol ol {/*resets from parent OL*/
+    width: auto;
+    margin: 0;
+    padding: .5em 0;
+    background: #0F0;
+}
+ol li li:before {/*remove the trailing period*/
+    content: counters(item, ".") " ";
+    background: hotpink;
+}
+ol ol ol {
+    padding: .5em 0 0;
+}
+ol li li {
+    background: #FFF;
+}
+ol li li li{
+    background: yellow;
+}
+ol li li li:before {/*target third level*/
+    background: orange;
+}
+

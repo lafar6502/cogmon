@@ -6,10 +6,11 @@ using NLog;
 using MongoDB.Driver;
 using CogMon.Services.Dao;
 using System.Collections.Concurrent;
+using NGinnBPM.MessageBus;
 
 namespace CogMon.Services.Management
 {
-    public class JobStatusTracker : IReportCogmonStatus, IJobStatusTracker
+    public class JobStatusTracker : IJobStatusTracker
     {
         public MongoDatabase Db { get; set; }
         public IDataSeriesRepository DSRepo { get; set; }
@@ -17,45 +18,8 @@ namespace CogMon.Services.Management
         private ConcurrentDictionary<string, JobStatusInfo> _jobs = new ConcurrentDictionary<string, JobStatusInfo>();
         private ConcurrentDictionary<string, AgentStatusInfo> _agents = new ConcurrentDictionary<string, AgentStatusInfo>();
 
-        public void ReportJobFailed(string jobId, string agentHost, string errorInfo)
-        {
-            var js = _jobs.GetOrAdd(jobId, x => {
-                return new JobStatusInfo { Id = jobId };
-            });
-            js.LastRun = DateTime.Now;
-            js.StatusInfo = errorInfo;
-            if (!js.IsError)
-            {
-                js.IsError = true;
-            }
-            js.AgentAddress = agentHost;
-        }
-
-        public void ReportJobExecuted(string jobId, string agentHost)
-        {
-            var js = _jobs.GetOrAdd(jobId, x =>
-            {
-                return new JobStatusInfo { Id = jobId };
-            });
-            js.LastRun = DateTime.Now;
-            js.StatusInfo = "OK";
-            js.AgentAddress = agentHost;
-            js.IsError = false;
-            js.LastSuccessfulRun = DateTime.Now;
-        }
-
-        public void ReportAgentQuery(string hostAddress, string agentId, string group)
-        {
-            string k = string.Format("{0}_{1}", hostAddress, agentId);
-            var ag = _agents.GetOrAdd(k, x =>
-            {
-                return new AgentStatusInfo { AgentAddress = hostAddress, AgentPID = agentId, Groups = group, Id = k };
-            });
-            ag.LastSeen = DateTime.Now;
-            ag.StatusInfo = "";
-            ag.Groups = group;
-        }
-
+       
+      
         public IEnumerable<JobStatusInfo> GetStatusOfAllJobs()
         {
             List<JobStatusInfo> ret = new List<JobStatusInfo>();
@@ -114,6 +78,69 @@ namespace CogMon.Services.Management
                 ret.Add(st);
             }
             return ret;
+        }
+
+        public void Handle(Events.AgentQuery message)
+        {
+            string k = string.Format("{0}_{1}", message.AgentIP, message.AgentPID);
+            var ag = _agents.GetOrAdd(k, x =>
+            {
+                return new AgentStatusInfo { Id = k, AgentAddress = message.AgentIP, AgentPID = message.AgentPID};
+            });
+            ag.LastSeen = DateTime.Now;
+            ag.StatusInfo = "";
+            ag.Groups = message.JobGroup;
+        }
+
+        public void Handle(Events.JobExecuted message)
+        {
+            var js = _jobs.GetOrAdd(message.JobId, x =>
+            {
+                return new JobStatusInfo { Id = message.JobId};
+            });
+            js.LastRun = DateTime.Now;
+            js.StatusInfo = "OK";
+            js.AgentAddress = message.AgentIP;
+            js.IsError = false;
+            js.LastSuccessfulRun = DateTime.Now;
+        }
+
+        public void Handle(Events.JobFailed message)
+        {
+            var js = _jobs.GetOrAdd(message.JobId, x =>
+            {
+                return new JobStatusInfo { Id = message.JobId };
+            });
+            js.LastRun = DateTime.Now;
+            js.StatusInfo = message.ErrorInfo;
+            if (!js.IsError)
+            {
+                js.IsError = true;
+            }
+            js.AgentAddress = message.AgentIP;
+        }
+    }
+
+
+    public class JobTrackerEventHandler : IMessageConsumer<Events.AgentQuery>,
+        IMessageConsumer<Events.JobExecuted>,
+        IMessageConsumer<Events.JobFailed>
+    {
+        public JobStatusTracker StatusTracker { get; set; }
+
+        public void Handle(Events.AgentQuery message)
+        {
+            StatusTracker.Handle(message);
+        }
+
+        public void Handle(Events.JobExecuted message)
+        {
+            StatusTracker.Handle(message);
+        }
+
+        public void Handle(Events.JobFailed message)
+        {
+            StatusTracker.Handle(message);
         }
     }
 }

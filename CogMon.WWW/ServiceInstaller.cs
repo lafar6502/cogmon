@@ -72,15 +72,18 @@ namespace CogMon.WWW
                 }
             }
             NGinnBPM.MessageBus.Windsor.MessageBusConfigurator.Begin(wc)
-                .RegisterHttpMessageServicesFromAssembly(typeof(DataSeriesRepository).Assembly);
+                .RegisterHttpMessageServicesFromAssembly(typeof(DataSeriesRepository).Assembly)
+                .AddMessageHandlersFromAssembly(typeof(DataSeriesRepository).Assembly);               
             wc.Register(Component.For<MongoKeyGen>().ImplementedBy<MongoKeyGen>().LifeStyle.Singleton);
             MongoDatabase db = MongoDatabase.Create(System.Configuration.ConfigurationManager.ConnectionStrings["cogmon"].ConnectionString);
             wc.Register(Component.For<MongoDatabase>().Instance(db));
             wc.Register(Component.For<IEventAggregator>().ImplementedBy<CogMon.Services.EventStats.SimpleEventAggregator>().LifeStyle.Singleton);
             wc.Register(Component.For<IPerfCounters>().ImplementedBy<CogMon.Services.EventStats.PersistentPerfCounterManager>().LifeStyle.Singleton);
-            wc.Register(Component.For<IReportCogmonStatus, IJobStatusTracker>().ImplementedBy<CogMon.Services.Management.JobStatusTracker>().LifeStyle.Singleton);
+            wc.Register(Component.For<IJobStatusTracker, CogMon.Services.Management.JobStatusTracker>().ImplementedBy<CogMon.Services.Management.JobStatusTracker>().LifeStyle.Singleton);
             CogMon.Services.Database.DatabaseInit.Configure();
             CogMon.Services.Database.DatabaseInit.InitializeCogMonDatabase(db);
+            wc.Register(Component.For<NGinnBPM.MessageBus.Impl.MessageDispatcher>().ImplementedBy<NGinnBPM.MessageBus.Impl.MessageDispatcher>().LifeStyle.Singleton);
+            wc.Register(Component.For<IMessageDispatcher>().ImplementedBy<Services.Util.NGinnMessageDispatcher>().LifeStyle.Singleton);
         }
     }
 }

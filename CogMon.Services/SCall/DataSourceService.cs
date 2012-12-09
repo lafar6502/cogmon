@@ -36,7 +36,7 @@ namespace CogMon.Services.SCall
     {
         public IDataSeriesRepository DSRepo { get; set; }
         public IEventAggregator EventAggregator { get; set; }
-        public IReportCogmonStatus StatusReporter { get; set; }
+        public IMessageDispatcher EventDispatcher { get; set; }
         public MongoDatabase Db { get; set; }
         private Logger log = LogManager.GetCurrentClassLogger();
 
@@ -84,28 +84,23 @@ namespace CogMon.Services.SCall
 
         public object Handle(UpdateData message)
         {
-            if (!string.IsNullOrEmpty(message.JobId)) ReportJobExecuted(message.JobId);
-            Handle(message.Data);
+            string addr = RequestContext.CurrentRequest == null ? "" : RequestContext.CurrentRequest.ClientIP;
+            AddDataRecord(message.Data);
+            if (!string.IsNullOrEmpty(message.JobId))
+            {
+                EventDispatcher.Publish(new Events.JobExecuted { AgentIP = addr, DataSourceId = message.Data.Series, JobId = message.JobId });
+            }
             return "OK";
         }
 
-        protected void ReportJobExecuted(string jobid)
+        
+        public object Handle(DataRecord message)
         {
-            string addr = RequestContext.CurrentRequest == null ? "" : RequestContext.CurrentRequest.ClientIP;
-            StatusReporter.ReportJobExecuted(jobid, addr);
-            /*ThreadPool.QueueUserWorkItem(new WaitCallback(x=> {
-                try
-                {
-                    Db.GetCollection<ScheduledJob>().Update(Query.EQ("_id", jobid), Update.Set("LastRun", DateTime.Now));
-                }
-                catch (Exception ex)
-                {
-                    log.Warn("Failed to update job {0}: {1}", jobid, ex);
-                }
-            }));*/
+            AddDataRecord(message);
+            return "OK";
         }
 
-        public object Handle(DataRecord message)
+        protected void AddDataRecord(DataRecord message)
         {
             if (message.Series.StartsWith("#"))
             {
@@ -116,7 +111,6 @@ namespace CogMon.Services.SCall
             {
                 DSRepo.AppendData(message);
             }
-            return "OK";
         }
 
         public object Handle(DrawGraphByDefinition message)
@@ -244,7 +238,7 @@ namespace CogMon.Services.SCall
             }
             DSRepo.AppendData(dr);
             string addr = RequestContext.CurrentRequest == null ? "" : RequestContext.CurrentRequest.ClientIP;
-            StatusReporter.ReportJobExecuted(message.JobId, addr);
+            EventDispatcher.Publish(new Events.JobExecuted { AgentIP = addr, JobId = message.JobId, DataSourceId = dr.Series });
             return "OK";
         }
     }

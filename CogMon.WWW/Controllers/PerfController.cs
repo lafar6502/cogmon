@@ -32,13 +32,20 @@ namespace CogMon.WWW.Controllers
         public ActionResult ReadCounter(string id)
         {
             var res = PerfCounters.GetCurrentStats(id, true);
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return new JsonNetResult(res);
         }
+
+        public ActionResult AllCounters()
+        {
+            return new JsonNetResult(PerfCounters.GetPerfCounterNames());
+        }
+
+        public IServiceMessageDispatcher Dispatcher { get; set; }
 
         public ActionResult CollectDataJob(string jobId)
         {
-            
-            throw new NotImplementedException();
+            var res = Dispatcher.CallService(new CollectServerPerfCounterData { JobId = jobId });
+            return Content(Convert.ToString(res));
         }
         
     }

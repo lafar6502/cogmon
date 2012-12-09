@@ -1,5 +1,5 @@
 {
 	"TemplateId" : "clientperfcounter",
-	"Parameters" : {"Description" : "Log CO - liczba bledow", "CounterId" : "CO_Log_Errors", "Interval" : "300", "JobGroup" : "WYPAS2"},
+	"Parameters" : {"Description" : "Log CO - liczba bledow", "CounterId" : "CO_App_Errors", "Interval" : "300", "JobGroup" : "SOLR"},
 	"OverwriteRRD" : false
 }
