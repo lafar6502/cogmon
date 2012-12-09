@@ -13,11 +13,15 @@ Ext.define('CogMon.admui.NavPanel', {
                         { text: 'Data source templates', leaf: true, itemId: 'ShowDataSourceTemplates'},
                         { text: 'Graph templates', leaf: true, itemId: 'ShowGraphTemplates'}
                     ]},
-                    {text: 'Other', children: [
+                    {text: 'Other', expanded: true, children: [
+                        {text: 'Users', leaf: true, itemId: 'ShowUsers', command: {}},
                         {text: 'User groups', leaf: true, itemId: 'ShowGroups', command: {name: 'ShowContent', viewClass: 'CogMon.admui.GroupListPanel', cfg: {}}},
                         {text: 'Event categories', leaf: true, itemId: 'ShowEventCategories', command: {name: 'ShowContent', viewClass: 'CogMon.admui.EventCategoryListPanel', cfg: {}}},
-                        {text: 'Pre-defined GUI portlets', leaf: true}
-                    ]}
+                        {text: 'Pre-defined GUI portlets', leaf: true},
+                        {text: 'Script console', leaf: true, itemId: 'ShowConsole', command: {name: 'ShowContent', viewClass: 'CogMon.admui.ScriptConsolePanel', cfg: {}}}
+       
+                    ]},
+                    {text: 'Return to reports', leaf: true, href: '..'}
                 ]
             }
         });

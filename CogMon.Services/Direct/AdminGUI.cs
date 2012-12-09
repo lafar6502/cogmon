@@ -69,5 +69,31 @@ namespace CogMon.Services.Direct
         {
             return DSRepo.CreateDataSeriesFromTemplate(msg, UserSessionContext.CurrentUserIdentity.Name);
         }
+
+        public class EvalResult
+        {
+            public bool Error { get; set; }
+            public object Result { get; set; }
+        }
+
+        public IScriptHost ScriptHost { get; set; }
+        
+        [DirectMethod]
+        public EvalResult EvalScript(string script, bool returnString)
+        {
+            try
+            {
+                var sc = ScriptHost.GetScriptInterpreter(UserSessionContext.CurrentUserIdentity.Name);
+                var res = sc.Eval(script);
+                return new EvalResult { 
+                    Error = false, 
+                    Result = returnString ? (object) Newtonsoft.Json.JsonConvert.SerializeObject(res, Newtonsoft.Json.Formatting.Indented) : res
+                };
+            }
+            catch (Exception ex)
+            {
+                return new EvalResult { Error = true, Result = ex.ToString() };
+            }
+        }
     }
 }

@@ -40,8 +40,16 @@ Ext.define('CogMon.admui.EventCategoryListPanel', {
             store: st,
             columns: [
                 {header: 'Id', dataIndex: 'Id', width: 180, editor: {xtype:'textfield', allowBlank: false}},
-                {header: 'Name', dataIndex: 'Name', editor: {xtype:'textfield', allowBlank: false}},
-                {header: 'Color', dataIndex: 'Color', flex: 1, editor: {xtype:'textfield', allowBlank: false}}
+                {header: 'Color', dataIndex: 'Color', editor: {xtype:'textfield', allowBlank: false},
+                    renderer: function(v, m) {
+                        if (Ext.isString(v) && v.length >= 6)
+                        {
+                            m.style = 'border-bottom: solid 2px #' + v.substring(0,6);
+                        }
+                        return v;
+                    }
+                },
+                {header: 'Name', flex: 1, dataIndex: 'Name', editor: {xtype:'textfield', allowBlank: false}}
             ],
             selType: 'rowmodel',
             plugins: [

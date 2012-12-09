@@ -6,27 +6,28 @@ using NGinnBPM.MessageBus;
 using MongoDB.Driver;
 using Boo.Lang.Interpreter;
 using BL = Boo.Lang;
+using System.Collections.Concurrent;
 
 namespace CogMon.Services.Scripting
 {
-    public interface IEvalScript
-    {
-        object Eval(string script);
-    }
+    
 
-    public class BooScripter
+    public class BooScripter : IScriptHost
     {
         public MongoDatabase Db { get; set; }
         public IServiceResolver ServiceResolver { get; set; }
         public IDataSeriesRepository DSRepo { get; set; }
-        public string InitScriptFile { get; set; }        
+        public string InitScriptFile { get; set; }
+        private ConcurrentDictionary<string, BooEnv> _interpreters = new ConcurrentDictionary<string, BooEnv>();
 
         internal class BooEnv : IEvalScript
         {
             private InteractiveInterpreter _interp;
+            public DateTime CreatedDate { get; set; }
 
             public BooEnv(BooScripter parent)
             {
+                CreatedDate = DateTime.Now;
                 _interp = new InteractiveInterpreter();
                 _interp.Ducky = true;
                 _interp.RememberLastValue = true;
@@ -49,13 +50,32 @@ namespace CogMon.Services.Scripting
         }
 
 
-        public IEvalScript GetScriptInterpreter()
+        public IEvalScript GetScriptInterpreter(string id)
         {
-            var be = new BooEnv(this);
-            if (!string.IsNullOrEmpty(this.InitScriptFile))
+            var en = _interpreters.GetOrAdd(id, x =>
             {
-            }
-            return be;
+                var be = new BooEnv(this);
+                be.Eval(@"
+import System
+import NLog
+import CogMon.Lib
+import CogMon.Lib.DataSeries
+import CogMon.Lib.Scheduling
+import CogMon.Lib.Graph
+import CogMon.Services
+import CogMon.Services.Dao
+import CogMon.Services.Events
+import NGinnBPM.MessageBus
+");
+                if (!string.IsNullOrEmpty(this.InitScriptFile))
+                {
+                    be.Eval(System.IO.File.ReadAllText(this.InitScriptFile, Encoding.UTF8));
+                }
+                return be;
+            });
+            
+            
+            return en;
         }
     }
 }

@@ -84,6 +84,7 @@ namespace CogMon.WWW
             CogMon.Services.Database.DatabaseInit.InitializeCogMonDatabase(db);
             wc.Register(Component.For<NGinnBPM.MessageBus.Impl.MessageDispatcher>().ImplementedBy<NGinnBPM.MessageBus.Impl.MessageDispatcher>().LifeStyle.Singleton);
             wc.Register(Component.For<IMessageDispatcher>().ImplementedBy<Services.Util.NGinnMessageDispatcher>().LifeStyle.Singleton);
+            wc.Register(Component.For<IScriptHost>().ImplementedBy<CogMon.Services.Scripting.BooScripter>().LifeStyle.Singleton);
         }
     }
 }

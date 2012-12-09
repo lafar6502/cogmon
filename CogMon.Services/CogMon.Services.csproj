@@ -115,6 +115,7 @@
     <Compile Include="IJobStatusTracker.cs" />
     <Compile Include="IMessageDispatcher.cs" />
     <Compile Include="IPerfCounters.cs" />
+    <Compile Include="IScriptHost.cs" />
     <Compile Include="IUserAuth.cs" />
     <Compile Include="Management\JobStatusTracker.cs" />
     <Compile Include="MongoQuery.cs" />
