@@ -17,6 +17,7 @@ namespace CogMon.Agent
         public int ScheduleUpdateIntervalSec { get; set; }
         public IServiceClient CogMon { get; set; }
         public IServiceResolver ServiceResolver { get; set; }
+        public PerfMon.PerfCounterStore PerfCounters { get; set; }
 
         private Logger log = LogManager.GetCurrentClassLogger();
         private Timer _scheduler = null;
@@ -152,8 +153,12 @@ namespace CogMon.Agent
         {
             log.Debug("Updating scheduler jobs. group: {0}", this.SchedulerGroup);
             string pid = System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
-
-            var resp = CogMon.CallService<GetActiveScheduledJobsResponse>(new GetActiveScheduledJobs { Groups = string.IsNullOrEmpty(SchedulerGroup) ? (string[]) null : new string[] {SchedulerGroup}, AgentPID = pid });
+            string[] pcl = PerfCounters == null ? null : PerfCounters.GetPerfCounterNames().ToArray();
+            var resp = CogMon.CallService<GetActiveScheduledJobsResponse>(new GetActiveScheduledJobs { 
+                Groups = string.IsNullOrEmpty(SchedulerGroup) ? (string[]) null : new string[] {SchedulerGroup},
+                PerfCounters = pcl,
+                AgentPID = pid 
+            });
             List<SchedTask> lst = new List<SchedTask>();
             var tsks = _tasks;
             

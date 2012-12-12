@@ -21,9 +21,11 @@ namespace CogMon.Agent.PerfMon
             string key = string.IsNullOrEmpty(clientAddress) ? id : string.Format("{0}/{1}", id, clientAddress);
             var pc = GetCachedCounter(id);
             pc.Update(val);
-            var cv = Newtonsoft.Json.JsonConvert.SerializeObject(pc.GetCurrentValue(false));
-            log.Info("updated {0}: {1}: Values: {2}", id, val, cv);
-
+            if (log.IsDebugEnabled)
+            {
+                var cv = Newtonsoft.Json.JsonConvert.SerializeObject(pc.GetCurrentValue(false));
+                log.Debug("updated {0}: {1}: Values: {2}", id, val, cv);
+            }
         }
 
         private PerfCounter GetCachedCounter(string key)
@@ -35,6 +37,11 @@ namespace CogMon.Agent.PerfMon
         {
             var pc = GetCachedCounter(id);
             return pc.GetCurrentValue(true);
+        }
+
+        public IList<string> GetPerfCounterNames()
+        {
+            return new List<string>(_counters.Keys);
         }
     }
 }

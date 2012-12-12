@@ -132,9 +132,10 @@ namespace CogMon.Services.RRD
             }
 
             var variables = new Dictionary<string, object>();
+            /* po co to ?
             variables["step"] = "${step}";
             variables["width"] = "${width}";
-            variables["height"] = "${height}";
+            variables["height"] = "${height}";*/
             foreach (var k in request.Parameters)
             {
                 variables.Remove(k.Key);
@@ -230,7 +231,8 @@ namespace CogMon.Services.RRD
                     {
                         Active = true,
                         DataSource = dsid,
-                        TemplateId = tpl.Id
+                        TemplateId = tpl.Id,
+                        Description = string.Format("Update job {4} for data series {0} ({1}) created from template {2} ({3})", dci.Id, dci.Description, tpl.Id, tpl.Name, tpl.Query.ToString())
                     };
                         
                     sj.Arguments = SubstTemplate<string>(tpl.Arguments, null, variables);

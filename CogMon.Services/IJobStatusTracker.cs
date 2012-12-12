@@ -38,6 +38,7 @@ namespace CogMon.Services
         public string AgentPID { get; set; }
         public DateTime? LastSeen { get; set; }
         public string StatusInfo { get; set; }
+        public string[] PerfCounters { get; set; }
     }
 
     public interface IJobStatusTracker

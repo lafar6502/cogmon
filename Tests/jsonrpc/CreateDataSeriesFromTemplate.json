@@ -1,5 +1,5 @@
 {
 	"TemplateId" : "clientperfcounter",
-	"Parameters" : {"Description" : "Log CO - liczba bledow", "CounterId" : "CO_App_Errors", "Interval" : "300", "JobGroup" : "SOLR"},
+	"Parameters" : {"Description" : "CO WS.SalesRequests - FindRequests", "CounterId" : "STAT.SalesRequestsService_FindRequests", "Interval" : "300", "JobGroup" : "JAGA64"},
 	"OverwriteRRD" : false
 }

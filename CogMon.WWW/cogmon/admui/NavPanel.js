@@ -9,9 +9,9 @@ Ext.define('CogMon.admui.NavPanel', {
                 expanded: true,
                 children: [
                     { text: 'Current status', leaf: true, itemId: 'ShowCurrentStatus'},
-                    { text: 'Templates', expanded: true, children: [
+                    { text: 'Data sources', expanded: true, children: [
                         { text: 'Data source templates', leaf: true, itemId: 'ShowDataSourceTemplates'},
-                        { text: 'Graph templates', leaf: true, itemId: 'ShowGraphTemplates'}
+                        { text: 'RRD data sources', leaf: true, itemId: 'ShowDataSources'}
                     ]},
                     {text: 'Other', expanded: true, children: [
                         {text: 'Users', leaf: true, itemId: 'ShowUsers', command: {}},

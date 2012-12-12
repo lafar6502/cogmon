@@ -30,7 +30,20 @@ Ext.define('CogMon.ConstDictionaries', {
 			{Id: 9, Name: 'TICK'},
 			{Id: 10, Name: 'SHIFT'},
 			{Id: 11, Name: 'TEXTALIGN'}
-		]
+		],
+        QueryType: [
+            {Id: 0, Name: 'HttpGet'},
+            {Id: 1, Name: 'BooScript'},
+            {Id: 2, Name: 'SystemCommand'},
+            {Id: 3, Name: 'SqlSelect'},
+            {Id: 4, Name: 'WinPerf'},
+            {Id: 5, Name: 'LogParse'},
+            {Id: 6, Name: 'MongoMapReduce'},
+            {Id: 7, Name: 'InlineScript'},
+            {Id: 8, Name: 'AgentPerfCnt'},
+            {Id: 9, Name: 'ServerPerfCnt'},
+            {Id: 10, Name: 'SNMP'}
+        ]
 	}
 });
 
@@ -43,6 +56,11 @@ var scf = Ext.create('Ext.data.Store', {
 var scf = Ext.create('Ext.data.Store', {
 	storeId: 'rrdGraphOperations', fields: [{name:'Id', type:'int'}, 'Name'], idProperty: 'Id',
 	data: CogMon.ConstDictionaries.GraphElementType
+});
+
+var scf = Ext.create('Ext.data.Store', {
+	storeId: 'QueryType', fields: [{name:'Id', type:'int'}, 'Name'], idProperty: 'Id',
+	data: CogMon.ConstDictionaries.QueryType
 });
 
 

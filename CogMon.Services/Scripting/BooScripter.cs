@@ -66,6 +66,9 @@ import CogMon.Services
 import CogMon.Services.Dao
 import CogMon.Services.Events
 import NGinnBPM.MessageBus
+import MongoDB.Driver
+import MongoDB.Driver.Builders
+import MongoDB.Bson
 ");
                 if (!string.IsNullOrEmpty(this.InitScriptFile))
                 {

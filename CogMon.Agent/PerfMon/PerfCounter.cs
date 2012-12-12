@@ -100,6 +100,11 @@ namespace CogMon.Agent.PerfMon
                 pv.Max = 0;
                 pv.Freq = 0;
             }
+            else
+            {
+                pv.Avg = (double) pv.Sum / pv.Count;
+                pv.Freq = (double)pv.Count / (pv.EndTime - pv.StartTime).TotalSeconds;
+            }
             return pv;
         }
 

@@ -13,5 +13,6 @@ namespace CogMon.Services.Events
         public string AgentIP { get; set; }
         public string AgentPID { get; set; }
         public string JobGroup { get; set; }
+        public string[] PerfCounters { get; set; }
     }
 }

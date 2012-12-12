@@ -90,6 +90,7 @@ namespace CogMon.Services.Management
             ag.LastSeen = DateTime.Now;
             ag.StatusInfo = "";
             ag.Groups = message.JobGroup;
+            ag.PerfCounters = message.PerfCounters;
         }
 
         public void Handle(Events.JobExecuted message)
