@@ -1,5 +1,5 @@
 {
 	"TemplateId" : "clientperfcounter",
-	"Parameters" : {"Description" : "CO WS.SalesRequests - FindRequests", "CounterId" : "STAT.SalesRequestsService_FindRequests", "Interval" : "300", "JobGroup" : "JAGA64"},
+	"Parameters" : {"Description" : "CO LdapImport - all transactions", "CounterId" : "STAT.LdapImport_ExecTran", "Interval" : "300", "JobGroup" : "JAGA64"},
 	"OverwriteRRD" : false
 }

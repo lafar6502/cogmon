@@ -1,0 +1,50 @@
+<html>
+<head>
+    <link rel="stylesheet" href="site.css"></link>
+</head>
+<body>
+    <h1>Installation and configuration of CogMon</h1>
+    <h2>Prerequisites</h2>
+    <h3>OS</h3>
+    <p>Any Windows system that is capable of running IIS 6.0 or later and .Net 4.0 will be sufficient. 
+    Make sure IIS is installed before proceeding.</p>
+    <h3>MongoDB</h3>
+    <p>Start by downloading MongoDB Windows binary package (32 or 64 bit, depending on your system) from <a href="http://www.mongodb.org/">MongoDB website</a>.
+    The download is a zip archive that should be unpacked to the installation directory (yes, this is a manual installer). Please follow this <a href="http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/">installation procedure</a>
+    and configure MongoDB as a windows service. <br/>
+    Before moving to next steps please start your MongoDB service and test if you can connect to it. There's a very recommended management GUI for MongoDB named MongoVue (can be 
+    downloaded from <a href="http://www.mongovue.com/">here</a>) that will be very useful when working with CogMon, so please install it too.<br/>
+    </p>
+    <h3>.Net framework v 4.0, ASP.Net 4.0 and ASP.Net MVC 3</h3>
+    <p>Install (if you don't already have it) MS .Net Framework v 4.0 (can be downloaded from <a href="http://www.microsoft.com/en-us/download/details.aspx?id=17851">Microsoft's website</a>).
+        Then install <a href="http://www.asp.net/mvc/mvc3">ASP.Net MVC 3</a>
+    </p>
+    <h3>CogMon web application</h3>
+    <p>
+    The CogMon zip file contains three folders - 'www','agent' and 'tools'. Please extract them all to your destination directory - for example c:\cogmon.
+    Then configure the cogmon website in IIS manager setting its root directory to the newly extracted 'www' folder (c:\cogmon\www in our example).
+    Next please open www/web.config file in a text editor and have a look at configuration options. Find the 'connectionStrings' section and configure MongoDB connection
+    string properly (the default connection string <em>mongodb://localhost:27017/cogmon?safe=true</em> should work for a standard local MongoDB installation). Then please open the website in a browser and see if CogMon logon screen is showing up. 
+    </p>
+    <h3>CogMon agent</h3>
+    <p>
+    CogMon Agent program is a Windows service that runs on monitored servers. You'll need to install at least one agent, but additional ones may be installed
+    if necessary. Agent binaries are located in the 'agent' folder of the CogMon binary package and the installation consists of copying that folder to a destination machine.
+    Make sure .Net Framework 4 is installed on that machine.<br/>
+    Agent program needs to be configured by editing the <em>CogMon.Agent.exe.config</em> file.
+    You can check if the agent is running properly by typing
+    <pre>CogMong.Agent.exe -debug</pre> in a command prompt. This will start the agent in a debug mode and will output log messages to the console. There should be no
+    error messages in the output.<br/>
+    
+    After making sure the configuration is correct you can install your Agent as a Windows service by typing
+    <pre>InstallUtil.exe CogMon.Agent.exe</pre> in a command prompt (InstallUtil.exe is a part of .Net framework so look for it in .Net installation directory).
+    
+    </p>
+    <h3>Running CogMon with Windows authentication</h3>
+    <p>
+    By default CogMon runs with Forms authentication. If you want to use Windows domain authentication you can do it by configuring an additional authentication website
+    that is provided in CogMon.WinAuth.WWW folder. Configure that website as a 'sub-application' named 'winauth' under your main CogMon website (e.g. http://localhost/cogmon/winauth)
+    and enable windows authentication for it in IIS configuration (but do not configure windows auth for the main CogMon website, do it only for the 'winauth' subfolder).
+    
+    </p>
+</body>

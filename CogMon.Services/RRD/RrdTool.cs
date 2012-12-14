@@ -37,7 +37,17 @@ namespace CogMon.Services.RRD
                 if (double.IsNaN(v))
                     sb.Append(":U");
                 else
-                    sb.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, ":{0:0.00}", v);
+                {
+
+                    if ((v - Math.Truncate(v)) < 2 * double.Epsilon)
+                    {
+                        sb.AppendFormat(":{0}", (long)v);
+                    }
+                    else
+                    {
+                        sb.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, ":{0:0.00}", v);
+                    }
+                }
             }
             if (rrdUpdateSet)
             {
@@ -67,9 +77,17 @@ namespace CogMon.Services.RRD
             foreach (double v in vals)
             {
                 if (double.IsNaN(v))
+                {
                     sb.Append(":U");
+                }
+                else if ((v - Math.Truncate(v)) < 2 * double.Epsilon)
+                {
+                    sb.AppendFormat(":{0}", (long)v);
+                }
                 else
+                {
                     sb.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, ":{0:0.00}", v);
+                }
             }
             if (rrdUpdateSet)
             {

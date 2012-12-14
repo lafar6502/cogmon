@@ -17,7 +17,13 @@ namespace CogMon.Agent
             psi.RedirectStandardError = true;
             psi.FileName = this.ScriptName;
             psi.Arguments = this.Arguments;
-            
+            if (this.Options != null)
+            {
+                foreach (string k in this.Options.Keys)
+                {
+                    psi.EnvironmentVariables[k] = Convert.ToString(this.Options[k]);
+                }
+            }
             log.Info("Starting {0} {1}", psi.FileName, psi.Arguments);
             string data = null;
             using (var proc = Process.Start(psi))
@@ -37,7 +43,10 @@ namespace CogMon.Agent
                 return;
             }
             var rec = ParseData(new StringReader(data));
-            this.UpdateDataSource(rec);
+            if (rec != null)
+            {
+                this.UpdateDataSource(rec);
+            }
         }
     }
 }
