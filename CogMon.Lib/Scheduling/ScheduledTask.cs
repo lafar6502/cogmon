@@ -37,7 +37,9 @@ namespace CogMon.Lib.Scheduling
         /// Cogmon persistent perf counter
         /// stored in server db
         /// </summary>
-        ServerPerfCnt = 9
+        ServerPerfCnt = 9,
+        /// <summary>ICMP</summary>
+        Ping = 10
     }
 
     /// <summary>

@@ -17,6 +17,11 @@ using CogMon.Services.EventStats;
 
 namespace CogMon.Services.Direct
 {
+    public class SortInfo
+    {
+        public string property { get; set; }
+        public string direction { get; set; }
+    }
     /// <summary>
     /// API for the admin GUI
     /// </summary>
@@ -94,6 +99,23 @@ namespace CogMon.Services.Direct
             {
                 return new EvalResult { Error = true, Result = ex.ToString() };
             }
+        }
+
+        [DirectMethod]
+        public object GetUsersList(int start, int limit, string filter, string sort, string dir)
+        {
+            var query = string.IsNullOrEmpty(filter) ? Query.Exists("_id", true) : Query.Or(Query.Matches("Login", filter), Query.Matches("Name", filter), Query.Matches("Email", filter));
+            var uc = Db.GetCollection<UserInfo>().Find(query).SetSkip(start).SetLimit(limit)
+                .SetFields("Id", "Login", "Active", "Email", "Name", "NeedsSync", "ExtId", "MemberOf", "LastSync");
+            if (!string.IsNullOrEmpty(sort))
+            {
+                uc = uc.SetSortOrder(string.Equals("ASC", dir, StringComparison.InvariantCultureIgnoreCase) ? SortBy.Ascending(sort) : SortBy.Descending(sort));
+            }
+            return new
+            {
+                Total = uc.Count(),
+                Data = uc.ToList()
+            };
         }
     }
 }

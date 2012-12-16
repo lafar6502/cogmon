@@ -14,7 +14,7 @@ Ext.define('CogMon.admui.NavPanel', {
                         { text: 'RRD data sources', leaf: true, itemId: 'ShowDataSources'}
                     ]},
                     {text: 'Other', expanded: true, children: [
-                        {text: 'Users', leaf: true, itemId: 'ShowUsers', command: {}},
+                        {text: 'Users', leaf: true, itemId: 'ShowUsers', command: {name: 'ShowContent', viewClass: 'CogMon.admui.UserListPanel', cfg: {}}},
                         {text: 'User groups', leaf: true, itemId: 'ShowGroups', command: {name: 'ShowContent', viewClass: 'CogMon.admui.GroupListPanel', cfg: {}}},
                         {text: 'Event categories', leaf: true, itemId: 'ShowEventCategories', command: {name: 'ShowContent', viewClass: 'CogMon.admui.EventCategoryListPanel', cfg: {}}},
                         {text: 'Pre-defined GUI portlets', leaf: true},
