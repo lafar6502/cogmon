@@ -1,5 +1,5 @@
 Ext.define('CogMon.admui.UserListPanel', {
-    extend: 'Ext.grid.Panel',
+    extend: 'Ext.panel.Panel',
 	requires: ['Ext.grid.*', 'Ext.data.*','Ext.ux.RowExpander', 'Ext.grid.feature.RowBody','Ext.grid.feature.RowWrap'],
 	uses: [],
     initComponent: function() {
@@ -12,9 +12,28 @@ Ext.define('CogMon.admui.UserListPanel', {
             directFn: RPC.AdminGUI.GetUsersList,
             autoLoad: true, remoteSort: true, remoteFilter: true, simpleSortMode: true
         });
+        var grid = Ext.create('Ext.grid.Panel', {
+            store: st,
+            columns: [
+                {header: 'Id', dataIndex: 'Id', width: 180},
+                {header: 'Login', dataIndex: 'Login'},
+                {header: 'Email', dataIndex: 'Email'},
+                {header: 'Name', dataIndex: 'Name'},
+                {header: 'Active', dataIndex: 'Active'}
+            ],
+            plugins: [
+                {
+                    ptype: 'rowexpander',
+                    rowBodyTpl : [
+                        '<p>Member of: <tpl for="MemberOf">{.}, </tpl></p>'
+                    ]
+                }
+            ]
+        });
+        
+        
         Ext.apply(me, {
-            collapsible: true,
-            animCollapse: false,
+            layout: 'fit',
             dockedItems: [
                 {
                     xtype: 'toolbar',
@@ -32,22 +51,7 @@ Ext.define('CogMon.admui.UserListPanel', {
                     ]
                 }
             ],
-            store: st,
-            columns: [
-                {header: 'Id', dataIndex: 'Id', width: 180},
-                {header: 'Login', dataIndex: 'Login'},
-                {header: 'Email', dataIndex: 'Email'},
-                {header: 'Name', dataIndex: 'Name'},
-                {header: 'Active', dataIndex: 'Active'}
-            ],
-            plugins: [
-                {
-                    ptype: 'rowexpander',
-                    rowBodyTpl : [
-                        '<p>Member of: </p>'
-                    ],expandOnRender: true, expandOnDblClick: false
-                }
-            ]
+            items: grid
         });
         this.callParent(arguments);
     }
