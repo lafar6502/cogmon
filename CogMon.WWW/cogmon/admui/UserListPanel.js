@@ -1,6 +1,6 @@
 Ext.define('CogMon.admui.UserListPanel', {
     extend: 'Ext.grid.Panel',
-	requires: ['Ext.ux.RowExpander'],
+	requires: ['Ext.grid.*', 'Ext.data.*','Ext.ux.RowExpander', 'Ext.grid.feature.RowBody','Ext.grid.feature.RowWrap'],
 	uses: [],
     initComponent: function() {
         var me = this;
@@ -12,7 +12,9 @@ Ext.define('CogMon.admui.UserListPanel', {
             directFn: RPC.AdminGUI.GetUsersList,
             autoLoad: true, remoteSort: true, remoteFilter: true, simpleSortMode: true
         });
-        Ext.apply(this, {
+        Ext.apply(me, {
+            collapsible: true,
+            animCollapse: false,
             dockedItems: [
                 {
                     xtype: 'toolbar',
@@ -28,12 +30,6 @@ Ext.define('CogMon.admui.UserListPanel', {
                             }
                         }
                     ]
-                },
-                {
-                    xtype: 'pagingtoolbar',
-                    store: st,   
-                    dock: 'bottom',
-                    displayInfo: true
                 }
             ],
             store: st,
@@ -46,23 +42,12 @@ Ext.define('CogMon.admui.UserListPanel', {
             ],
             plugins: [
                 {
-                ptype: 'rowexpander',
-                rowBodyTpl : [
-                    '<p>Member of: </p>'
-                ]
-            }
-            ],
-            features: [{
-                ftype: 'rowbody'
-            }],
-            viewConfig: {
-                /*getRowClass: function(r, idx, rowParams, store) {
-                    if (r.data.IsError) return 'status_row_error';
-                    if (r.data.StatusInfo == "Not reported yet" && !r.data.IsError) return 'status_row_inactive';
-                    if (r.data.StatusInfo == "OK" && !r.data.IsError) return 'status_row_ok';
-                    return null;
-                }*/
-            }
+                    ptype: 'rowexpander',
+                    rowBodyTpl : [
+                        '<p>Member of: </p>'
+                    ],expandOnRender: true, expandOnDblClick: false
+                }
+            ]
         });
         this.callParent(arguments);
     }

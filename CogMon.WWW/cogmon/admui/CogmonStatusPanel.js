@@ -7,7 +7,7 @@ Ext.define('CogMon.admui.CogmonStatusPanel', {
             layout:'auto', autoScroll:true,
             defaults: {
                 layout: 'fit',
-                padding: 10,
+                padding: 10
             },
             items: [{
                     title: 'Current agent status',

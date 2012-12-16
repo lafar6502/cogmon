@@ -9,28 +9,28 @@ Ext.define('AppUtil', {
 			if (Ext.isDate(dt)) return dt;
 			if (Ext.isNumber(dt)) {
 				return new Date(dt * 1000);
-			};
+			}
 			if (Ext.isString(dt)) {
 				var re = /((s|e|now|start|end)$|(s|e|now|start|end)?(\+|\-)(\d+)(y|year|years|m|month|months|wk|week|weeks|h|hour|hours|d|day|days)$)/;
 				var m = dt.match(re);
 				if (m) {
 					if (!Ext.isEmpty(m[2]))
 					{
-						if (m[2] == 'now') 
+						if (m[2] === 'now') 
 							refDate = new Date();
 						else 
 							if (!Ext.isDate(refDate)) return null;
 						return refDate;
 					}
-					if (!Ext.isEmpty(m[3]) && m[3] != 'now') 
+					if (!Ext.isEmpty(m[3]) && m[3] !== 'now') 
 					{
 						if (!Ext.isDate(refDate)) return null;
 					}
 					else refDate = new Date();
-					var num = (m[4] == '-' ? -1 : 1) * Ext.Number.from(m[5]);
+					var num = (m[4] === '-' ? -1 : 1) * Ext.Number.from(m[5]);
 					return AppUtil.moveDateByRange(refDate, num, m[6].charAt(0));
 				}
-				alert('parsing date: ' + dt);
+				//alert('parsing date: ' + dt);
 				return Ext.Date.parse(dt, 'd/m/Y g:i', false);
 			}
 			return null;
@@ -41,15 +41,15 @@ Ext.define('AppUtil', {
 			if (Ext.isString(start)) {
 				if (start.match(/^s|e|start|end/))
 				{
-					if (Ext.isString(end) && end.match(/^s|e|start|end/)) return Array(null, null);
+					if (Ext.isString(end) && end.match(/^s|e|start|end/)) return [null, null];
 					ed = AppUtil.parseGraphDate(end, null);
 					sd = AppUtil.parseGraphDate(start, ed);
-					return Array(sd, ed);
+					return [sd, ed];
 				}
 			}
 			sd = AppUtil.parseGraphDate(start, null);
 			ed = AppUtil.parseGraphDate(end, sd);
-			return Array(sd, ed);
+			return [sd, ed];
 		},
 		moveDateByRange: function(dt, num, unit) {
 			var intervals = {
@@ -62,7 +62,7 @@ Ext.define('AppUtil', {
 			var u = intervals[unit];
 			if (Ext.isEmpty(u)) {
 				u = unit;
-			} else if (unit == 'wk') {
+			} else if (unit === 'wk') {
 				num = num * 7;
 			}
 			return Ext.Date.add(dt, u, num);
