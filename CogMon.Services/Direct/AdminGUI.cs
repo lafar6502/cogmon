@@ -117,5 +117,17 @@ namespace CogMon.Services.Direct
                 Data = uc.ToList()
             };
         }
+
+        [DirectMethod]
+        public UserInfo SaveUser(UserInfo ui)
+        {
+            if (string.IsNullOrEmpty(ui.Id))
+            {
+                Db.GetCollection<UserInfo>().Save(ui, MongoInsertOptions
+            }
+            else
+            {
+            }
+        }
     }
 }
