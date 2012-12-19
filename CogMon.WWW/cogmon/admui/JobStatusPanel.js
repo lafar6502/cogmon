@@ -1,10 +1,11 @@
 Ext.define('CogMon.admui.JobStatusPanel', {
     extend: 'Ext.grid.Panel',
-	requires: [],
+	requires: ['CogMon.admui.ScheduledJobEditorPanel'],
 	uses: [],
     alias: 'widget.jobstatuspanel',
     maxHeight: 300,
     initComponent: function() {
+        var me = this;
         var st = new Ext.data.JsonStore({
             autoDestroy: true,
             autoLoad: true,
@@ -38,7 +39,20 @@ Ext.define('CogMon.admui.JobStatusPanel', {
                     if (r.data.StatusInfo == "OK" && !r.data.IsError) return 'status_row_ok';
                     return null;
                 }
-            }
+            },
+            dockedItems: [
+                {xtype: 'toolbar',
+                    items: [
+                        {text: 'Edit job', 
+                            handler: function() { 
+                                var sj = me.getSelectionModel().getLastSelected();
+                                if (Ext.isEmpty(sj)) return;
+                                CogMon.admui.ScheduledJobEditorPanel.showJobEditorWindow(sj.data.Id, {});
+                            }
+                        }
+                    ]
+                }
+            ]
         });
         this.callParent(arguments);
     }

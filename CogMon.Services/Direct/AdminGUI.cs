@@ -133,5 +133,19 @@ namespace CogMon.Services.Direct
                     .Set("MemberOf", MongoDB.Bson.BsonArray.Create(ui.MemberOf)).Set("ExtId", ui.ExtId));
             }
         }
+
+
+        [DirectMethod]
+        public ScheduledJob GetJobDetails(string id)
+        {
+            return Db.GetCollection<ScheduledJob>().FindOneById(id);
+        }
+
+        [DirectMethod]
+        public void UpdateJob(ScheduledJob sj)
+        {
+            sj.LastModified = DateTime.Now;
+            Db.GetCollection<ScheduledJob>().Save(sj);
+        }
     }
 }
