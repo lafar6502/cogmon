@@ -5,7 +5,7 @@ Ext.define('CogMon.admui.UserListPanel', {
     initComponent: function() {
         var me = this;
         var st = Ext.create('Ext.data.DirectStore', {
-            fields: ['Id', 'Login', 'Email', 'Name', 'Active', 'MemberOf', 'ExtId', 'LastSync'],
+            fields: ['Id', 'Login', 'Email', 'Name', 'Active', 'MemberOf', 'ExtId', 'LastSync', 'NeedsSync'],
 			paramOrder: ['start', 'limit', 'filter', 'sort', 'dir'],
             idProperty: 'Id', totalProperty: 'Total',
             root: 'Data',
@@ -21,6 +21,7 @@ Ext.define('CogMon.admui.UserListPanel', {
                 {header: 'Name', dataIndex: 'Name'},
                 {header: 'Active', dataIndex: 'Active'},
                 {header: 'External Id', dataIndex: 'ExtId'},
+                {header: 'Needs sync', dataIndex: 'NeedsSync'},
                 {header: 'Last sync', dataIndex: 'LastSync'}
             ],
             plugins: [
@@ -47,8 +48,11 @@ Ext.define('CogMon.admui.UserListPanel', {
                             handler: function() {
                                 var ur = grid.getSelectionModel().getLastSelected();
                                 if (Ext.isEmpty(ur)) return;
-                                console.log(ur);
-                                CogMon.admui.UserEditPanel.openEditorWindow(ur.data, {});
+                                CogMon.admui.UserEditPanel.openEditorWindow(ur.data, {
+                                    saved: function() {
+                                        st.load();
+                                    }
+                                });
                             }
                         },
                         {xtype: 'tbfill'},

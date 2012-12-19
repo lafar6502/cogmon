@@ -119,14 +119,18 @@ namespace CogMon.Services.Direct
         }
 
         [DirectMethod]
-        public UserInfo SaveUser(UserInfo ui)
+        public void SaveUser(UserInfo ui)
         {
             if (string.IsNullOrEmpty(ui.Id))
             {
-                Db.GetCollection<UserInfo>().Save(ui, MongoInsertOptions
+                Db.GetCollection<UserInfo>().Save(ui);
             }
             else
             {
+                Db.GetCollection<UserInfo>().Update(Query.EQ("_id", ui.Id),
+                    Update.Set("Name", ui.Name).Set("Email", ui.Email).Set("Login", ui.Login)
+                    .Set("NeedsSync", ui.NeedsSync).Set("Active", ui.Active)
+                    .Set("MemberOf", MongoDB.Bson.BsonArray.Create(ui.MemberOf)).Set("ExtId", ui.ExtId));
             }
         }
     }
