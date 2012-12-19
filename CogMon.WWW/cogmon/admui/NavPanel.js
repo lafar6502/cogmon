@@ -11,7 +11,7 @@ Ext.define('CogMon.admui.NavPanel', {
                     { text: 'Current status', leaf: true, itemId: 'ShowCurrentStatus'},
                     { text: 'Data sources', expanded: true, children: [
                         { text: 'Data source templates', leaf: true, itemId: 'ShowDataSourceTemplates'},
-                        { text: 'RRD data sources', leaf: true, itemId: 'ShowDataSources'}
+                        { text: 'RRD data sources', leaf: true, itemId: 'ShowDataSources', command: {name: 'ShowContent', viewClass: 'CogMon.admui.RrdDataSourceListPanel', cfg: {}}} 
                     ]},
                     {text: 'Other', expanded: true, children: [
                         {text: 'Users', leaf: true, itemId: 'ShowUsers', command: {name: 'ShowContent', viewClass: 'CogMon.admui.UserListPanel', cfg: {}}},

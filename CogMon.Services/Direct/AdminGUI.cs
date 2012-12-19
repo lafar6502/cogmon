@@ -147,5 +147,29 @@ namespace CogMon.Services.Direct
             sj.LastModified = DateTime.Now;
             Db.GetCollection<ScheduledJob>().Save(sj);
         }
+
+        [DirectMethod]
+        public IList<DataSourceCreationInfo> GetRRDDataSources(int start, int limit, string sort, string dir, string filter)
+        {
+            var query = string.IsNullOrEmpty(filter) ?
+                Query.Exists("_id", true) :
+                Query.Or(Query.Matches("Description", filter), Query.EQ("TemplateId", filter), Query.EQ("Id", filter));
+            var c = Db.GetCollection<DataSourceCreationInfo>().Find(query)
+                .SetSkip(start).SetLimit(limit);
+            if (!string.IsNullOrEmpty(sort))
+            {
+                c.SetSortOrder(string.Equals(dir, "ASC", StringComparison.InvariantCultureIgnoreCase) ? SortBy.Ascending(dir) : SortBy.Descending(dir));
+            }
+            return c.ToList();
+        }
+
+        [DirectMethod]
+        public object GetRRDDetails(string id)
+        {
+            DataSeriesInfo dsi;
+            return DSRepo.GetDataSeries(id, true);
+        }
+
+        
     }
 }
