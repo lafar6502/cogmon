@@ -43,6 +43,13 @@ Ext.define('CogMon.ConstDictionaries', {
             {Id: 8, Name: 'AgentPerfCnt'},
             {Id: 9, Name: 'ServerPerfCnt'},
             {Id: 10, Name: 'SNMP'}
+        ],
+        RRDFieldType: [
+            {Id: 0, Name: 'GAUGE'},
+            {Id: 1, Name: 'COUNTER'},
+            {Id: 2, Name: 'DERIVE'},
+            {Id: 3, Name: 'ABSOLUTE'},
+            {Id: 4, Name: 'COMPUTE'}
         ]
 	}
 });

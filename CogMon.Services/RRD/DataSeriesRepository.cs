@@ -156,6 +156,14 @@ namespace CogMon.Services.RRD
                 dci.CreatedDate = DateTime.Now;
                 dci.Description = SubstTemplate<string>(tpl.Description, null, variables);
                 dci.Variables = variables;
+                if (UserSessionContext.CurrentUserInfo != null)
+                {
+                    dci.CreatedBy = new IdLabel
+                    {
+                        Id = UserSessionContext.CurrentUserInfo.Id,
+                        Name = UserSessionContext.CurrentUserInfo.Login
+                    };
+                }
             }
             else
             {

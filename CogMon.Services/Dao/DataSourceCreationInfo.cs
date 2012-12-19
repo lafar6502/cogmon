@@ -13,6 +13,7 @@ namespace CogMon.Services.Dao
         public string Id { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
+        public Lib.IdLabel CreatedBy { get; set; }
         public Dictionary<string, object> Variables { get; set; }
         public string TemplateId { get; set; }
         /// <summary>

@@ -170,6 +170,16 @@ namespace CogMon.Services.Direct
             return DSRepo.GetDataSeries(id, true);
         }
 
+        public class CreateRRDDataSourceRequest : RRD.RrdCreateInfo
+        {
+            public string Description { get;set;}
+        }
+
+        [DirectMethod]
+        public object CreateRRDDataSource(CreateRRDDataSourceRequest rq)
+        {
+            throw new NotImplementedException();
+        }
         
     }
 }
