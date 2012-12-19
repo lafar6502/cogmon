@@ -7,7 +7,7 @@ Ext.define('CogMon.admui.UserEditPanel', {
 		openEditorWindow: function(user, cfg) {
 			if (Ext.isEmpty(cfg)) cfg = {};
             var w = Ext.create('Ext.window.Window', {
-                width: 400, autoHeight: true,
+                width: 450, autoHeight: true, title: 'Edit user information',
                 layout: 'fit',
                 items: Ext.create('CogMon.admui.UserEditPanel', {
                     itemId: 'userpnl', 
@@ -81,6 +81,7 @@ Ext.define('CogMon.admui.UserEditPanel', {
         
 		Ext.apply(this, {
 			groupStore: gst,
+            defaults: {anchor: '100%'},
 			items: [
                 {xtype: 'hiddenfield', name: 'Id'},
                 {xtype: 'textfield', name: 'Login', allowBlank: false, fieldLabel: 'Login'},
@@ -90,7 +91,7 @@ Ext.define('CogMon.admui.UserEditPanel', {
                 {xtype: 'checkbox', name: 'NeedsSync', fieldLabel: 'Re-sync', inputValue: true},
                 {xtype: 'textfield', name: 'ExtId', fieldLabel: 'External ID'},
                 {
-                    xtype: 'grid', height:100, selType: 'checkboxmodel', multiSelect: true, anchor: '100% -150', itemId: 'groups',
+                    xtype: 'grid', height:200, selType: 'checkboxmodel', multiSelect: true, anchor: '100% -150', itemId: 'groups',
                     store: gst,
                     columns: [
                         {header: 'Group Name', dataIndex: 'Name', flex: 1}

@@ -41,7 +41,15 @@ Ext.define('CogMon.admui.UserListPanel', {
                 {
                     xtype: 'toolbar',
                     items: [
-                        {xtype: 'button', text: 'Create new', icon: '../Content/img/add.png'},
+                        {xtype: 'button', text: 'Create new', icon: '../Content/img/add.png',
+                            handler: function() {
+                                CogMon.admui.UserEditPanel.openEditorWindow({Active: true, MemberOf: ['ALL']}, {
+                                    saved: function() {
+                                        st.load();
+                                    }
+                                });
+                            }
+                        },
                         {xtype: 'button', text: 'Delete', icon: '../Content/img/delete.png'},
                         {xtype: 'button', text: 'Set password'},
                         {xtype: 'button', text: 'Edit', icon: '../Content/img/edit.png',
