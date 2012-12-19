@@ -1,8 +1,8 @@
 Ext.define('CogMon.admui.ScheduledJobEditorPanel', {
     extend: 'Ext.form.Panel',
-	requires: [],
+	requires: ['Ext.form.field.*'],
 	uses: [],
-    defaults: {padding: 5},
+    
     autoScroll: true,
     frame: true,
     statics: {
@@ -97,13 +97,13 @@ Ext.define('CogMon.admui.ScheduledJobEditorPanel', {
             {xtype: 'hiddenfield', name: 'Id'},
             {xtype: 'hiddenfield', name: 'TemplateId'},
             {xtype: 'textfield', fieldLabel: 'Description', name: 'Description'},
-            {xtype: 'checkbox', fieldLabel: 'Active', name: 'Active', inputValue: true},
             {xtype: 'combobox', store: scf, name: 'QueryMethod', valueField: 'Id', displayField: 'Name', fieldLabel: 'Query method'},
             {xtype: 'textfield', fieldLabel: 'Poll interval (s)', name: 'IntervalSeconds', allowBlank: false},
             {xtype: 'textfield', fieldLabel: 'Data source Id', name: 'DataSource', allowBlank: true},
             {xtype: 'textfield', fieldLabel: 'Script name', name: 'ScriptName', allowBlank: true},
             {xtype: 'textfield', fieldLabel: 'Arguments', name: 'Arguments', allowBlank: true},
             {xtype: 'textfield', fieldLabel: 'Job group', name: 'Group', allowBlank: true},
+            {xtype: 'checkbox', name: 'Active', fieldLabel: 'Active', inputValue: true},
             {xtype: 'label', text: 'Data source variables'},
             {
                 xtype: 'grid', store: vs, itemId: 'variableGrid', height: 200,
