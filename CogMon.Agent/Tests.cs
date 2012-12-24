@@ -32,5 +32,25 @@ namespace CogMon.Agent
                 .FinishConfiguration();
             wc.Resolve<JobScheduler>().RunTask(st);
         }
+
+        public static void TestJob(string jobId)
+        {
+            var wc = new Castle.Windsor.WindsorContainer();
+            ServiceConfigurator.Begin(wc)
+                .FinishConfiguration();
+            var js = wc.Resolve<JobScheduler>();
+            js.TestJobId = jobId;
+            foreach (var st in wc.ResolveAll<NGinnBPM.MessageBus.Impl.IStartableService>())
+            {
+                st.Start();
+            }
+            Console.WriteLine("Testing job {0}. Hit enter to stop", jobId);
+            Console.ReadLine();
+            foreach (var st in wc.ResolveAll<NGinnBPM.MessageBus.Impl.IStartableService>())
+            {
+                st.Stop();
+            }
+            wc.Dispose();
+        }
     }
 }

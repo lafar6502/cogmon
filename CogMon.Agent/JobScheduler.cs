@@ -25,6 +25,9 @@ namespace CogMon.Agent
 
         public string SchedulerGroup { get; set; }
 
+        /// <summary>Id of job to be run in debug mode (for testing purposes)</summary>
+        public string TestJobId { get; set; }
+
         public JobScheduler()
         {
             ScheduleUpdateIntervalSec = 300;
@@ -119,7 +122,7 @@ namespace CogMon.Agent
 
         void _scheduler_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            log.Debug("Scheduler...");
+            //log.Trace("Scheduler...");
             var tsks = _tasks;
             if (tsks == null) return;
             System.Threading.Tasks.Parallel.ForEach(tsks.Where(x => x.NextTrigger <= DateTime.Now), x => RunTask(x));
@@ -164,6 +167,7 @@ namespace CogMon.Agent
             
             foreach (var t in resp.Tasks)
             {
+                if (!string.IsNullOrEmpty(TestJobId) && t.Id != TestJobId) continue;
                 SchedTask pt = tsks.FirstOrDefault(x => x.Id == t.Id);
                 if (pt != null)
                 {
@@ -177,7 +181,7 @@ namespace CogMon.Agent
                 };
                 lst.Add(pt);
             }
-            log.Debug("Updated job list: {0}", lst.Count);
+            log.Debug("Updated job list: {0} jobs", lst.Count);
             _tasks = lst;
         }
     

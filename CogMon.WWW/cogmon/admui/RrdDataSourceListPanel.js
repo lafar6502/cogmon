@@ -29,7 +29,7 @@ Ext.define('CogMon.admui.RrdDataSourceListPanel', {
             border: false,
             dockedItems: [
                 {xtype: 'toolbar',items: [   
-                    {text: 'Create new RRD', handler: function() {
+                    {text: 'Create new RRD', icon: '../Content/img/add.png', handler: function() {
                         CogMon.admui.RrdDataSourceEditPanel.openEditorWindow({});
                     }}
                 ]},

@@ -98,13 +98,13 @@ Ext.define('CogMon.admui.ScheduledJobEditorPanel', {
             {xtype: 'hiddenfield', name: 'TemplateId'},
             {xtype: 'textfield', fieldLabel: 'Description', name: 'Description'},
             {xtype: 'combobox', store: scf, name: 'QueryMethod', valueField: 'Id', displayField: 'Name', fieldLabel: 'Query method'},
-            {xtype: 'textfield', fieldLabel: 'Poll interval (s)', name: 'IntervalSeconds', allowBlank: false},
+            {xtype: 'numberfield', fieldLabel: 'Poll interval (s)', name: 'IntervalSeconds', allowBlank: false},
             {xtype: 'textfield', fieldLabel: 'Data source Id', name: 'DataSource', allowBlank: true},
             {xtype: 'textfield', fieldLabel: 'Script name', name: 'ScriptName', allowBlank: true},
             {xtype: 'textfield', fieldLabel: 'Arguments', name: 'Arguments', allowBlank: true},
             {xtype: 'textfield', fieldLabel: 'Job group', name: 'Group', allowBlank: true},
             {xtype: 'checkbox', name: 'Active', fieldLabel: 'Active', inputValue: true},
-            {xtype: 'label', text: 'Data source variables'},
+            
             {
                 xtype: 'grid', store: vs, itemId: 'variableGrid', height: 200,
                 selType: 'cellmodel',
@@ -117,11 +117,13 @@ Ext.define('CogMon.admui.ScheduledJobEditorPanel', {
                 ],
                 dockedItems: [
                     {xtype: 'toolbar', items: [
-                        {text: 'Add', handler: function() {
+                        {xtype: 'tbtext', text: 'Data source variables'},
+                        {xtype: 'tbfill'},
+                        {text: 'Add', icon: '../Content/img/add.png', handler: function() {
                             var gr = me.down('#variableGrid');
                             gr.store.add({Variable: '', VariableRegex: ''});
                         }},
-                        {text: 'Remove', handler: function() {
+                        {text: 'Remove', icon: '../Content/img/delete.png', handler: function() {
                             var gr = me.down('#variableGrid');
                             var s = gr.getSelectionModel().getLastSelected();
                             if (!Ext.isEmpty(s)) gr.store.remove(s);
@@ -129,19 +131,20 @@ Ext.define('CogMon.admui.ScheduledJobEditorPanel', {
                     ]}
                 ]
             },
-            {xtype: 'label', text: 'Options'},
             {
                 xtype: 'propertygrid', height: 180, itemId: 'optionsGrid', 
                 dockedItems: [
                     {xtype: 'toolbar', items: [
-                        {text: 'Add', handler: function() {
+                        {xtype: 'tbtext', text: 'Options'},
+                        {xtype: 'tbfill'},
+                        {text: 'Add', icon: '../Content/img/add.png', handler: function() {
                             var gr = me.down('#optionsGrid');
                             Ext.MessageBox.prompt("Add option", "Please specify option name", function(b, v) {
                                 if (b != "ok") return;
                                 gr.store.add({name: v, value: ''});
                             });
                         }},
-                        {text: 'Remove', handler: function() {
+                        {text: 'Remove', icon: '../Content/img/delete.png', handler: function() {
                             var gr = me.down('#optionsGrid');
                             var s = gr.getSelectionModel().getLastSelected();
                             if (!Ext.isEmpty(s)) gr.removeProperty(s.data.name);

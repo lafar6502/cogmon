@@ -19,15 +19,18 @@ namespace CogMon.Agent
                 if (args[0] == "-debug")
                 {
                     Debug(args);
-                    return;
                 }
-                if (args[0] == "-testTask")
+                else if (args[0] == "-testTask")
                 {
                     if (args.Length < 2) throw new Exception("Task file name missing");
                     TestTask(args[1]);
-                    return;
                 }
-                throw new Exception("Invalid arguments");
+                else if (args[0] == "-testJob")
+                {
+                    if (args.Length < 2) throw new Exception("Job ID missing");
+                    TestJob(args[1]);
+                }
+                else throw new Exception("Invalid arguments");
             }
             
             ServiceBase[] ServicesToRun;
@@ -55,6 +58,13 @@ namespace CogMon.Agent
             Console.WriteLine("Enter to continue with {0}", fileName);
             Console.ReadLine();
             Tests.TestTask(fileName);
+        }
+
+        static void TestJob(string jobId)
+        {
+            Console.WriteLine("Hit Enter to run job ", jobId);
+            Console.ReadLine();
+            Tests.TestJob(jobId);
         }
     }
 }
