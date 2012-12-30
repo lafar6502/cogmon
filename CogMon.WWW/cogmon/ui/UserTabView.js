@@ -1,7 +1,7 @@
 ﻿Ext.define('CogMon.ui.UserTabView', {
     extend: 'Ext.tab.Panel',
 	requires: [],
-	uses: ['CogMon.ui.RrdGraphPortlet', 'CogMon.ui.DashboardPortalPanel', 'Ext.app.PortalPanel', 'CogMon.ui.DashboardConfigurablePage'],
+	uses: ['CogMon.ui.RrdGraphPortlet', 'CogMon.ui.DashboardPortalPanel', 'Ext.app.PortalPanel', 'CogMon.ui.DashboardConfigurablePage', 'CogMon.ui.DashboardConfigurablePageWithEvents'],
 
     //shows a page with given page Id
     //loads it if not visible, otherwise just makes it active
@@ -44,7 +44,7 @@
 			me.setActiveTab(pc);
 		}
 		else if (pc.Id) {
-			var pg = Ext.create('widget.dashboardconfigurablepage', {
+			var pg = Ext.create('widget.dashboardconfigurablepagewevents', {
 				pageConfig: pc,
 				title: pc.Title,
 				itemId: pc.Id,
