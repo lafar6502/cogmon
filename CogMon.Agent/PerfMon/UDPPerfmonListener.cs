@@ -46,23 +46,34 @@ namespace CogMon.Agent.PerfMon
             IPEndPoint remote = null;
             var ret = cli.EndReceive(ar, ref remote);
             string data = Encoding.UTF8.GetString(ret);
-            log.Debug("From {0}: {1}", remote, data);
+            if (log.IsDebugEnabled) log.Debug("From {0}: {1}", remote, data);
             if (Counters != null)
             {
-                int idx = data.IndexOf(':');
-                if (idx < 0)
+                System.IO.StringReader sr = new System.IO.StringReader(data);
+                string line;
+                while((line = sr.ReadLine()) != null)
                 {
-                    log.Info("Invalid data from {0}: {1}", remote, data);
-                    return;
+                    line = line.Trim();
+                    if (line.Length == 0) continue;
+                    int idx = line.LastIndexOf(':');
+                    if (idx < 0)
+                    {
+                        log.Info("Invalid data from {0}: {1}", remote, line);
+                        continue;
+                    }
+                    string iv = line.Substring(idx + 1);
+                    double v;
+                    if (!Double.TryParse(iv, System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out v))
+                    {
+                        log.Info("Invalid data from {0}: {1}", remote, line);
+                        continue;
+                    }
+                    string cname = line.Substring(0, idx).Trim();
+                    if (cname.Length > 0)
+                    {
+                        Counters.UpdateCounter(cname, remote.Address.ToString(), (int)v);
+                    }
                 }
-                string iv = data.Substring(idx + 1);
-                int v;
-                if (!Int32.TryParse(iv, out v))
-                {
-                    log.Info("Invalid data from {0}: {1}", remote, data);
-                    return;
-                }
-                Counters.UpdateCounter(data.Substring(0, idx), remote.Address.ToString(), v);
             }
             else
             {

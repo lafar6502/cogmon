@@ -6,7 +6,6 @@
 Ext.define('Ext.app.PortalPanel', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.portalpanel',
-
     requires: [
         'Ext.layout.container.Column',
 
@@ -18,7 +17,8 @@ Ext.define('Ext.app.PortalPanel', {
     bodyCls: 'x-portal-body',
     defaultType: 'portalcolumn',
     autoScroll: true,
-
+    border: false,
+    
     manageHeight: false,
 
     initComponent : function() {

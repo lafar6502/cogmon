@@ -58,6 +58,9 @@
 	initComponent: function() {
 		var me = this;
 		Ext.apply(me, {
+            frame: false,
+            border: false,
+            bodyBorder: false,
 			items: [
 			]
 		});

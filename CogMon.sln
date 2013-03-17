@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CogMon.Agent", "CogMon.Agent\CogMon.Agent.csproj", "{EE6EFD29-51E4-4308-96E3-6B16248A6B3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CogMon.WWW", "CogMon.WWW\CogMon.WWW.csproj", "{FDFB15AC-CFD1-4ED8-A15B-8C70F3902748}"

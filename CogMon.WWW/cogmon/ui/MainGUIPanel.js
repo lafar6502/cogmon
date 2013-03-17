@@ -21,6 +21,7 @@ Ext.define('CogMon.ui.MainGUIPanel', {
 		var me = this;
 		Ext.apply(me, {
             border: false,
+            bodyBorder: false,
             layout: {
                 type: 'border',
                 align: 'stretch'

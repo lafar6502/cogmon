@@ -117,7 +117,7 @@
 		me.editable = pc.Editable;
         me.setPageId(pc.Id);
         me.setPageConfig(pc);
-		me.setTitle(pc.Title);
+		//me.setTitle(pc.Title);
         var rendered = !Ext.isEmpty(this.getEl());
         if (rendered) {
             me.remove('#mainp');
