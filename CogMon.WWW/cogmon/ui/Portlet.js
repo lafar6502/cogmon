@@ -4,6 +4,7 @@ Ext.define('CogMon.ui.Portlet', {
     autoRefreshInterval: 180,
     startTime: 'e-1d',
     endTime: 'now',
+    eventCategories: "",
     title: 'Graph',
 	step: null,
 	editable: true,
@@ -11,10 +12,17 @@ Ext.define('CogMon.ui.Portlet', {
     setStartTime: function(v) { this.startTime = v; },
     getEndTime: function() { return this.endTime; },
     setEndTime: function(v) { this.endTime = v; },
+    setEventCategories: function(v) {this.eventCategories = v; },
+    getEventCategories: function() { return this.eventCategories; },
     setDateRange: function(start, end, suppressNotification) {
         this.setStartTime(start);
         this.setEndTime(end);
 		if (!suppressNotification) this.fireEvent('daterangechanged', this, start, end);
+    },
+    setGraphParams: function(start, end, eventCategories) {
+        this.setStartTime(start);
+        this.setEndTime(end);
+        this.setEventCategories(eventCategories);
     },
 	setupConfigPropertyGrid: function(gcfg) {
 		return Ext.apply(gcfg, {

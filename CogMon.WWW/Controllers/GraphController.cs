@@ -56,7 +56,8 @@ namespace CogMon.WWW.Controllers
                 Width = w,
                 Height = h,
                 Step = step,
-                SkipElements = skipList
+                SkipElements = skipList,
+                EventCategories = ParseEventCategories(eventCategories)
             };
             Response.ContentType = "image/png";
             var expireTime = TimeSpan.FromSeconds(300);
@@ -169,6 +170,15 @@ namespace CogMon.WWW.Controllers
             }
         }
 
+        protected List<string> ParseEventCategories(string cats)
+        {
+            if (string.IsNullOrEmpty(cats)) return null;
+            var l = new List<string>();
+            l.AddRange(cats.Split(','));
+            l.Sort();
+            return l;
+        }
+
         public ActionResult GraphInfo(string definitionId, string startTime, string endTime, int? w, int? h, string eventCategories, string skipElements, int? step)
         {
             string key = GraphInfoKey(definitionId, startTime, endTime, w, h, eventCategories, skipElements, step);
@@ -192,7 +202,8 @@ namespace CogMon.WWW.Controllers
                     Width = w,
                     Height = h,
                     Step = step,
-                    SkipElements = skipList
+                    SkipElements = skipList,
+                    EventCategories = ParseEventCategories(eventCategories)
                 };
                 ii = DataSeriesRepo.CreateGraph(definitionId, ops, null);
                 HttpContext.Cache.Add(key, ii, null, DateTime.Now.AddSeconds(300 + 60), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Default, null);

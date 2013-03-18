@@ -9,11 +9,18 @@ Ext.define('CogMon.ui.RrdGraphPortlet', {
 	hideElements: "",
 	editable: true,
     frame: false,
+    eventCategories: "",
     setDateRange: function(start, end, suppressNotification) {
         this.setStartTime(start);
         this.setEndTime(end);
         this.setupContentLoader();
 		if (!suppressNotification) this.fireEvent('daterangechanged', this, start, end);
+    },
+    setGraphParams: function(start, end, eventCategories) {
+        this.setStartTime(start);
+        this.setEndTime(end);
+        this.setEventCategories(eventCategories);
+        this.setupContentLoader();
     },
 	getImageParams : function() {
 		var mh = this.getHeight() < 100 ? 100 : this.getHeight();
@@ -25,6 +32,7 @@ Ext.define('CogMon.ui.RrdGraphPortlet', {
 			definitionId: this.graphDefinitionId,
 			startTime: this.getStartTime(),
 			endTime: this.getEndTime(),
+            eventCategories: this.getEventCategories(),
 			skipElements: he
 		};
 		if (!Ext.isEmpty(this.step)) 

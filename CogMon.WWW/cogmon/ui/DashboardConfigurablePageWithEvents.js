@@ -286,10 +286,18 @@
     onDateRangeUpdated: function() {
         var end = this.down('#dateTo').getValue();
         var start = this.down('#dateFrom').getValue();
+        var eventCats = this.getSelectedEventCategories();
         var l = Ext.ComponentQuery.query('.portlet', this);
         for (var i=0; i<l.length; i++) {
-            l[i].setDateRange(start, end);
+            l[i].setGraphParams(start, end, eventCats);
         }
+    },
+    getSelectedEventCategories: function() {
+        var eg = this.down('#eventsp');
+        var sel = eg.getSelectionModel().getSelection();
+        console.log(sel);
+        var rt = sel.map(function(x) { return x.data.Id });
+        return rt.join(',');
     },
 	initComponent: function() {
 		var me = this;
@@ -417,7 +425,13 @@
             items: [
                 null, 
                 {
-                    xtype: 'eventcategoryselectgrid', region: 'east', width: 200, collapsible: true, itemId: 'eventsp',  split: true, collapsed: true,  title: 'Event selection'
+                    xtype: 'eventcategoryselectgrid', region: 'east', width: 200, collapsible: true, itemId: 'eventsp',  split: true, collapsed: true,  title: 'Event selection',
+                    listeners: {
+                        selectionchange: function(g, sel) {
+                            console.log(sel);
+                            me.onDateRangeUpdated();
+                        }
+                    }
                 }
             ]
         };

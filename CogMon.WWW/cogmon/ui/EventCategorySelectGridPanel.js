@@ -12,19 +12,21 @@ Ext.define('CogMon.ui.EventCategorySelectGridPanel', {
         Ext.apply(this, {
             store: st,            
             columns: [
-                {header: 'Color', dataIndex: 'Color', editor: {xtype:'textfield', allowBlank: false},
-                    renderer: function(v, m) {
-                        if (Ext.isString(v) && v.length >= 6)
+                {
+                    header: 'Name', flex: 1, dataIndex: 'Name', 
+                    renderer: function(v, m, r) {
+                        var c = r.data.Color;
+                        if (Ext.isString(c) && c.length >= 6)
                         {
-                            m.style = 'border-bottom: solid 2px #' + v.substring(0,6);
+                            m.style = 'border-bottom: solid 2px #' + c.substring(0,6);
                         }
                         return v;
                     }
-                },
-                {header: 'Name', flex: 1, dataIndex: 'Name', editor: {xtype:'textfield', allowBlank: false}}
+                }
             ],
             selType: 'checkboxmodel'
         });
+        
         this.callParent(arguments);
     },
     alias: 'widget.eventcategoryselectgrid'

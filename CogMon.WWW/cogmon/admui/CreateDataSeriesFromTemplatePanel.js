@@ -4,7 +4,7 @@ Ext.define('CogMon.admui.CreateDataSeriesFromTemplatePanel', {
 	uses: [],
     defaults: {padding: 5},
     autoScroll: true,
-    frame: true,
+    frame: false,
     statics: {
         showCreateDataSourceWindow: function(template, cfg) {
             if (Ext.isString(template)) {
