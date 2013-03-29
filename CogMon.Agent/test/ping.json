@@ -1,0 +1,8 @@
+{
+    Id: "ping",
+    IntervalSeconds: 60,
+    DataSeries: "4fd825729f942127984ff2e4",
+    Variables: [],
+    QueryMethod: "Ping",
+    Arguments: "onet.pl"
+}

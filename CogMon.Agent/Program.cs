@@ -30,7 +30,12 @@ namespace CogMon.Agent
                     if (args.Length < 2) throw new Exception("Job ID missing");
                     TestJob(args[1]);
                 }
-                else throw new Exception("Invalid arguments");
+                else
+                {
+                    Console.WriteLine("Invalid arguments specified.");
+                    Console.WriteLine("Possible options: \n-debug\n-testTask [task json file]\n-testJob [jobId]");
+                }
+                return;
             }
             
             ServiceBase[] ServicesToRun;

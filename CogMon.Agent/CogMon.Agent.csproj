@@ -101,6 +101,7 @@
     <Compile Include="BooScript\ScriptDSLBase.cs" />
     <Compile Include="BooScript\ScriptDSLEngine.cs" />
     <Compile Include="AgentPerfCounterTask.cs" />
+    <Compile Include="PingTask.cs" />
     <Compile Include="ServerPerfCounterTask.cs" />
     <Compile Include="InlineScriptTask.cs" />
     <Compile Include="LogGrepTask.cs" />

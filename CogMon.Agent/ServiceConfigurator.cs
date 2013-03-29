@@ -46,7 +46,7 @@ namespace CogMon.Agent
             _wc.Register(Component.For<WinPerfTask, JobBase>().ImplementedBy<WinPerfTask>().Named("WinPerf").LifeStyle.Transient);
             _wc.Register(Component.For<AgentPerfCounterTask, JobBase>().ImplementedBy<AgentPerfCounterTask>().Named("AgentPerfCnt").LifeStyle.Transient);
             _wc.Register(Component.For<ServerPerfCounterTask, JobBase>().ImplementedBy<ServerPerfCounterTask>().Named("ServerPerfCnt").LifeStyle.Transient);
-
+            _wc.Register(Component.For<PingTask, JobBase>().ImplementedBy<PingTask>().Named("Ping").LifeStyle.Transient);
             
             _wc.Register(Component.For<IServiceClient>().ImplementedBy<ServiceClient>()
                 .DependsOn(new

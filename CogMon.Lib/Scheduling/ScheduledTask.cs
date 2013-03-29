@@ -38,7 +38,7 @@ namespace CogMon.Lib.Scheduling
         /// stored in server db
         /// </summary>
         ServerPerfCnt = 9,
-        /// <summary>ICMP</summary>
+        /// <summary>ICMP or http ping</summary>
         Ping = 10
     }
 

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using NLog;
 using System.Timers;
 using CogMon.Lib.Scheduling;
-using System.Timers;
+
 
 namespace CogMon.Agent
 {
