@@ -1,0 +1,5 @@
+install: create default user on installation
+install: insert default data (data source templates, graph, etc)
+
+3. Create a default user page with a default graph for the admin account (auto-create a default data source for localhost)
+

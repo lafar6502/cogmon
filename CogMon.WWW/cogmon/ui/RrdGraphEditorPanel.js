@@ -83,6 +83,8 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 	},
 	getCurrentGraphDefinition: function() {
 		var v = this.getForm().getValues();
+        if (Ext.isEmpty(v.EventCategories)) v.EventCategories = [];
+        if (Ext.isEmpty(v.ACL)) v.ACL = [];
 		v.Id = this.graphDefinitionId;
 		v.Defs = Ext.Array.map(this.defStore.getRange(), function(x) { return x.data; });
 		v.CVDefs = Ext.Array.map(this.cdefStore.getRange(), function(x) { return x.data; });
@@ -149,7 +151,11 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 					  anyMatch: true,
 					  value   : this.getValue()
 				  });
-				}
+				}, 
+                blur: function() {
+                    console.log('editor blur');
+                    dataSrcSt.clearFilter();
+                }
 			}
 		};
 		Ext.apply(this, {

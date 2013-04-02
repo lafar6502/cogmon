@@ -44,8 +44,16 @@ namespace CogMon.Agent.PerfMon
                 cli.BeginReceive(new AsyncCallback(DoReceive), cli);
             }
             IPEndPoint remote = null;
-            var ret = cli.EndReceive(ar, ref remote);
-            string data = Encoding.UTF8.GetString(ret);
+            string data = null;
+            try
+            {
+                var ret = cli.EndReceive(ar, ref remote);
+                data = Encoding.UTF8.GetString(ret);
+            }
+            catch (ObjectDisposedException)
+            {
+                return;
+            }
             if (log.IsDebugEnabled) log.Debug("From {0}: {1}", remote, data);
             if (Counters != null)
             {
