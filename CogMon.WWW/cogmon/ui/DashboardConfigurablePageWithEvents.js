@@ -20,7 +20,7 @@
     savePage : function() {
 		RPC.UserGui.SavePage(this.pageConfig, {
 			success: function(ret, e) {
-				console.log('page saved: ' + e.status);
+				//console.log('page saved: ' + e.status);
 			}
 		});
     },
@@ -178,7 +178,7 @@
                 }
             }
             if (!Ext.isEmpty(pcol.Config)) Ext.apply(col, pcol.Config);
-			console.log('col cfg: ' + Ext.encode(pcol.Config));
+			//console.log('col cfg: ' + Ext.encode(pcol.Config));
             pcfg.items.push(col);
             
         }
@@ -241,7 +241,7 @@
 					CogMon.ui.DetailedGraphViewPanel.showDetailedGraphWindow(pc);
 				},
 				configchanged : function(p, cfg) {
-					console.log('portlet config changed: ' + Ext.encode(cfg));
+					//console.log('portlet config changed: ' + Ext.encode(cfg));
 					var pid = p.itemId;
 					if (!Ext.isEmpty(pid)) {
 						RPC.UserGui.UpdatePortletConfig(me.pageId, pid, cfg, {});
@@ -295,9 +295,13 @@
     getSelectedEventCategories: function() {
         var eg = this.down('#eventsp');
         var sel = eg.getSelectionModel().getSelection();
-        console.log(sel);
-        var rt = sel.map(function(x) { return x.data.Id });
-        return rt.join(',');
+        if (Ext.isEmpty(sel)) return "";
+        var rt = "";
+        for(var i=0; i<sel.length; i++) {
+            if (rt.length > 0) rt = rt + ",";
+            rt = rt + x.data.Id;
+        }
+        return rt;
     },
 	initComponent: function() {
 		var me = this;
@@ -362,7 +366,7 @@
 									handler: function() {
                                         CogMon.ui.AddDataSeriesPortletPanel.showSelectionWindow({
                                             callback: function(s) {
-                                                console.log('sel: ' + Ext.encode(s));
+                                                //console.log('sel: ' + Ext.encode(s));
                                                 me.addPortlet(s);
                                             }
                                         });
@@ -428,7 +432,7 @@
                     xtype: 'eventcategoryselectgrid', region: 'east', width: 200, collapsible: true, itemId: 'eventsp',  split: true, collapsed: true,  title: 'Event selection',
                     listeners: {
                         selectionchange: function(g, sel) {
-                            console.log(sel);
+                            //console.log(sel);
                             me.onDateRangeUpdated();
                         }
                     }
@@ -437,7 +441,7 @@
         };
         Ext.apply(me, mecfg);
 		me.on('activate', function(t) {
-			console.log('Activate ' + me.getPageId() + ', visible: ' + me.isVisible(true));
+			//console.log('Activate ' + me.getPageId() + ', visible: ' + me.isVisible(true));
 			if (me.isVisible(true))
 			{
 				me.onDateRangeUpdated();

@@ -138,7 +138,8 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 		var defCdefSt = Ext.create('Ext.data.ArrayStore', {fields: [{name:'v', type: 'boolean'}, 'name'], data: [[true, 'CDEF'], [false, 'VDEF']], idProperty: 'v'});
 		var cfst = Ext.create('Ext.data.Store', {fields:['Id', 'Name'], data: CogMon.ConstDictionaries.RrdConsolidationFunction, autoDestroy: true});
 		var cfst2 = Ext.create('Ext.data.Store', {fields:['Id', 'Name'], data: CogMon.ConstDictionaries.RrdConsolidationFunction, autoDestroy: true});
-		
+		var gvariableStore = Ext.create('Ext.data.ArrayStore', {fields: ['name'], data: [], idProperty: 'name'});
+        
 		var dsedit = {
 			xtype: 'combobox', store: dataSrcSt, valueField: 'Id', displayField: 'Description', allowBlank: false, queryMode: 'local', typeAhead: true, minChars: 2,
 			listeners: {
@@ -153,7 +154,6 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 				  });
 				}, 
                 blur: function() {
-                    console.log('editor blur');
                     dataSrcSt.clearFilter();
                 }
 			}
@@ -263,7 +263,12 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 									})
 								]
 							}
-						]
+						],
+                        listeners: {
+                            deactivate: function() { 
+                                aaaaa dupa console.log('ds deactivate');
+                            }
+                        }
 					},
 					{
 						title: 'CDEF/VDEF',  
@@ -477,6 +482,7 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 							xtype: 'toolbar', items: [
 								{text: 'Update graph',
 									handler: function() {
+                                        alert('not implemented');
 									}
 								}
 							]
@@ -485,7 +491,6 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 							activate: function() {
 								this.getForm().reset();
 								this.getForm().setValues({'json': Ext.encode(me.getCurrentGraphDefinition())});
-								console.log('json tab activated');
 							}
 						}
 						
