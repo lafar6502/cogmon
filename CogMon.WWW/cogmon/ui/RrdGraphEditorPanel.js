@@ -138,8 +138,19 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 		var defCdefSt = Ext.create('Ext.data.ArrayStore', {fields: [{name:'v', type: 'boolean'}, 'name'], data: [[true, 'CDEF'], [false, 'VDEF']], idProperty: 'v'});
 		var cfst = Ext.create('Ext.data.Store', {fields:['Id', 'Name'], data: CogMon.ConstDictionaries.RrdConsolidationFunction, autoDestroy: true});
 		var cfst2 = Ext.create('Ext.data.Store', {fields:['Id', 'Name'], data: CogMon.ConstDictionaries.RrdConsolidationFunction, autoDestroy: true});
-		var gvariableStore = Ext.create('Ext.data.ArrayStore', {fields: ['name'], data: [], idProperty: 'name'});
-        
+		var gvariableStore = Ext.create('Ext.data.JsonStore', {fields: ['variable', 'type', 'label'], data: [], idProperty: 'variable'});
+        var updateVariableStore = function() {
+            vars = [];
+            defSt.each(function(r) {
+                if (Ext.isEmpty(r.data.Variable)) return;
+                vars.push({variable: r.data.Variable, type: 'DEF', label: r.data.Variable + ' (DEF)'});
+            });
+            cdefSt.each(function(r) {
+                if (Ext.isEmpty(r.data.Variable)) return;
+                vars.push({variable: r.data.Variable, type: r.data.CDEF ? 'CDEF' : 'VDEF', label: r.data.Variable + (r.data.CDEF ? ' (CDEF)' : ' (VDEF)')});
+            });
+            gvariableStore.loadData(vars, false);
+        };
 		var dsedit = {
 			xtype: 'combobox', store: dataSrcSt, valueField: 'Id', displayField: 'Description', allowBlank: false, queryMode: 'local', typeAhead: true, minChars: 2,
 			listeners: {
@@ -266,7 +277,7 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 						],
                         listeners: {
                             deactivate: function() { 
-                                aaaaa dupa console.log('ds deactivate');
+                                updateVariableStore();
                             }
                         }
 					},
@@ -318,7 +329,12 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 									}
 								}
 							]
-						}]
+						}],
+                        listeners: {
+                            deactivate: function() { 
+                                updateVariableStore();
+                            }
+                        }
 					},
 					{
 						title: 'Graph elements',  
@@ -336,7 +352,10 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 									return v2;
 								}
 							},
-							{dataIndex: 'Value', header: 'Value', editor: 'textfield', sortable: false},
+							{
+                                dataIndex: 'Value', header: 'Value', 
+                                editor: {xtype: 'combobox', store: gvariableStore, allowBlank: false, triggerAction: 'all', queryMode: 'local', valueField: 'variable', displayField: 'label'}, 
+                                sortable: false},
 							{
 								dataIndex: 'Color', header: 'Color', editor: 'textfield', sortable: false,
 								renderer: function(v, m) {
