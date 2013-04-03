@@ -112,6 +112,47 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 			}
 		});
 	},
+    runDefaultDSGraphGenerator: function() {
+        var me = this;
+        var dataSrcSt = Ext.create('Ext.data.DirectStore', {
+			directFn: RPC.UserGui.GetRrdDataSources,
+			fields: ['Id', 'Description'], idProperty: 'Id', autoDestroy: true, autoLoad: true
+		});
+        var w = Ext.create('Ext.window.Window', {
+            modal: true, layout: 'fit', title: 'Auto-create graph definition for RRD', 
+            items: {
+                xtype: 'form', frame: false, fieldDefaults: {labelAlign: 'top'}, padding: 5, border: false, itemId: 'theForm',
+                items: [
+                    {
+                        name: 'dsId', xtype: 'combobox', width: 260, store: dataSrcSt, valueField: 'Id', displayField: 'Description', allowBlank: false, queryMode: 'local', typeAhead: true, minChars: 2, fieldLabel: 'Select data source (RRD)'
+                    }
+                ]
+            },
+            buttons: [
+                {text: 'Ok', handler:function() {
+                    var v = w.down('#theForm').getForm().getValues();
+                    if (!Ext.isEmpty(v.dsId)) {
+                        RPC.UserGui.GetDefaultGraphDefinitionForDataSource(v.dsId, {
+                            success: function(ret, e) {
+                                if (e.status) {
+                                    me.loadGraphDefinition(ret);
+                                    Ext.Msg.alert('Success', 'Graph definition updated');
+                                }
+                                else {
+                                    Ext.Msg.alert('Error', 'Graph definition not updated');
+                                }
+                            }
+                        });
+                    }
+                    w.close();
+                }},
+                {text: 'Cancel', handler: function() {
+                    w.close();
+                }}
+            ]
+        });
+        w.show();
+    },
 	initComponent: function() {
 		var me = this;
 		var defSt = Ext.create('Ext.data.JsonStore', {
@@ -254,7 +295,13 @@ Ext.define('CogMon.ui.RrdGraphEditorPanel', {
 													me.defStore.add(Ext.decode(Ext.encode(v[0].data)));
 												}
 											}
-										}
+										},
+                                        {
+                                            text: 'Auto-create graph', itemId: 'auto_graph_btn', scope: this, 
+                                            handler: function() {
+                                                me.runDefaultDSGraphGenerator();
+                                            }
+                                        }
 									]
 								}],
 								store: defSt,

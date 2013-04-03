@@ -603,6 +603,43 @@ namespace CogMon.Services.Direct
             return Db.GetCollection<GraphDefinition>().FindOneById(definitionId);
         }
 
+        protected string GetColor(int i, int alpha)
+        {
+            
+            int p1 = 17;
+            int p2 = 139;
+            int p3 = 271;
+            int r = p1 * (i + 13);
+            int g = p2 * (i + 19);
+            int b = p3 * (i + 98);
+            return string.Format("{0:X2}{1:X2}{2:X2}{3:X2}", r % 256, g % 256, b % 256, alpha % 256);
+        }
+
+        [DirectMethod]
+        public GraphDefinition GetDefaultGraphDefinitionForDataSource(string dsId)
+        {
+            var ds = DSRepo.GetDataSeries(dsId, true);
+            GraphDefinition gd = new GraphDefinition();
+            gd.Defs = new List<DEF>();
+            gd.CVDefs = new List<CVDEF>();
+            gd.Elements = new List<GraphElement>();
+            gd.ACL = new List<string>();
+            gd.EventCategories = new List<string>();
+            gd.OwnerId = UserSessionContext.CurrentUserInfo.Id;
+            gd.Title = ds.Description;
+            gd.AdditionalCmdParams = "--full-size";
+            for (int i=0; i < ds.Fields.Count; i++)
+            {
+                var fld = ds.Fields[i];
+                string vn = fld.Name;
+                gd.Defs.Add(new DEF { DataSourceId = ds.Id, Field = fld.Name, Variable = vn, CF = ConsolidationFunction.AVERAGE });
+                gd.CVDefs.Add(new CVDEF { CDEF = false, Expression = string.Format("{0},LAST", vn), Variable = vn + "_last" });
+                gd.Elements.Add(new GraphElement { Op = GraphOperation.LINE2, Value = vn, Color = GetColor(i, 0xa0), Legend = string.IsNullOrEmpty(fld.Description) ? fld.Name : fld.Description, Params = "" });
+                gd.Elements.Add(new GraphElement { Op = GraphOperation.GPRINT, Value = vn + "_last", Params = "%1.1lf \\l"});
+            }
+            return gd;
+        }
+
         [DirectMethod]
         public GraphDefinition SaveGraphDefinition(GraphDefinition gd)
         {
