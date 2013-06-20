@@ -7,10 +7,12 @@ Ext.Loader.setConfig({
 		'Ext.ux' : 'ux'
 	}
 });
-google.load('visualization', '1.0', {'packages':['corechart', 'charteditor']});
-google.setOnLoadCallback(function() {
-    console.log('google vis api loaded');
-});
+if (!Ext.isEmpty(google)) {
+    google.load('visualization', '1.0', { 'packages': ['corechart', 'charteditor'] });
+    google.setOnLoadCallback(function () {
+        console.log('google vis api loaded');
+    });
+}
 Ext.onReady(function() {
 	Ext.tip.QuickTipManager.init();
 	RPC.UserGui.GetUserInfo({
