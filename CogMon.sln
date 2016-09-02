@@ -1,6 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ABF119A2-12C2-4293-80E9-13069F978C3A}"
+	ProjectSection(SolutionItems) = preProject
+		TODO.txt = TODO.txt
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CogMon.Agent", "CogMon.Agent\CogMon.Agent.csproj", "{EE6EFD29-51E4-4308-96E3-6B16248A6B3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CogMon.WWW", "CogMon.WWW\CogMon.WWW.csproj", "{FDFB15AC-CFD1-4ED8-A15B-8C70F3902748}"
@@ -12,11 +19,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeTesting", "SomeTesting\SomeTesting.csproj", "{99C615B8-4138-40D8-B0DF-29EE0AF84FF6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CogMon.WinAuth.WWW", "CogMon.WinAuth.WWW\CogMon.WinAuth.WWW.csproj", "{C18FEDD2-8E34-4D0D-9334-AEF987029FE0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ABF119A2-12C2-4293-80E9-13069F978C3A}"
-	ProjectSection(SolutionItems) = preProject
-		TODO.txt = TODO.txt
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
