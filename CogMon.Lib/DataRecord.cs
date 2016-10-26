@@ -42,6 +42,11 @@ namespace CogMon.Lib
         public double[] Data { get; set; }
         /// <summary>Data in name=>value form</summary>
         public Dictionary<string, double> DataMap { get; set; }
+        /// <summary>
+        /// extra tags for the data point,
+        /// used only in influx
+        /// </summary>
+        public Dictionary<string, object> Tags { get; set; }
     }
 
     /// <summary>

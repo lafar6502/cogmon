@@ -36,6 +36,7 @@ namespace CogMon.Agent
                 .DependsOn(new 
                 {
                     CogMonUrl = ConfigurationManager.AppSettings["CogMon.Url"],
+                    JobsFile = ConfigurationManager.AppSettings["JobsFile"],
                     ScheduleUpdateIntervalSec = 200,
                     SchedulerGroup = gn
                 }));
@@ -72,6 +73,29 @@ namespace CogMon.Agent
                     {
                         Port = string.IsNullOrEmpty(port) ? 29823 : Int32.Parse(port),
                         LocalIP = udpIp
+                    }));
+            }
+            string influx = ConfigurationManager.AppSettings["InfluxDbUrl"];
+            if (!string.IsNullOrEmpty(influx))
+            {
+                _wc.Register(Component.For<ITimeSeriesDatabase>().ImplementedBy<Influx>()
+                    .LifeStyle.Singleton
+                    .DependsOn(new
+                    {
+                        ServiceUrl = influx,
+                        User = ConfigurationManager.AppSettings["InfluxUser"],
+                        Password = ConfigurationManager.AppSettings["InfluxPassword"],
+                        DbName = ConfigurationManager.AppSettings["InfluxDbName"],
+                        InfluxVersion = ConfigurationManager.AppSettings["InfluxVersion"]
+                    }));
+                
+            }
+            else
+            {
+                _wc.Register(Component.For<ITimeSeriesDatabase>().ImplementedBy<CogmonDataService>().LifeStyle.Singleton
+                    .DependsOn(new
+                    {
+
                     }));
             }
         }

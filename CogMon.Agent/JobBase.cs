@@ -16,8 +16,9 @@ namespace CogMon.Agent
     public abstract class JobBase : ScheduledTask
     {
         protected Logger log = LogManager.GetCurrentClassLogger();
-        
-        public IServiceClient CogMon { get; set; }
+
+        public ITimeSeriesDatabase TsDb { get; set; }
+
         private Dictionary<string, object> _jobstate = null;
         protected DateTime _execStart;
 
@@ -151,7 +152,9 @@ namespace CogMon.Agent
                     }
                 }
             }
-            if (flds.Count == vals.Count)
+            var dm = System.Configuration.ConfigurationManager.AppSettings["DataMap"];
+            bool d = "true".Equals(dm, StringComparison.InvariantCultureIgnoreCase);
+            if (flds.Count == vals.Count || (flds.Count > 0 && d))
             {
                 dr.DataMap = new Dictionary<string, double>();
                 for (int i = 0; i < flds.Count; i++)
@@ -173,30 +176,34 @@ namespace CogMon.Agent
 
         protected void UpdateDataSource(DataRecord dr)
         {
-            CogMon.CallService<string>(new UpdateData
-            {
-                Data = dr,
-                JobId = this.Id,
-                JobExecTimeMs = _execStart > DateTime.MinValue ? (int) (DateTime.Now - _execStart).TotalMilliseconds : 0
-            });
+            UpdateDataSource(new DataRecord[] { dr });
             
         }
 
-        protected void UpdateDataSource(IList<DataRecord> batch)
+        protected void UpdateDataSource(IEnumerable<DataRecord> batch)
         {
-            if (batch == null || batch.Count == 0) return;
-            if (batch.Count == 1)
+            foreach(var dr in batch)
             {
-                this.UpdateDataSource(batch[0]);
+                dr.Tags = GetTags();
             }
-            else
+            log.Info("Job {0} Updating ds {1}, tags: {2}", this.Id, this.DataSeries, string.Join(", ", GetTags().Keys));
+            TsDb.UpdateDataSource(batch);
+        }
+
+        protected Dictionary<string, object> GetTags()
+        {
+            var dic = new Dictionary<string, object>();
+            if (this.Options != null)
             {
-                CogMon.CallService<string>(new UpdateDataBatch
+                foreach(var kv in this.Options)
                 {
-                    Data = batch.ToArray(),
-                    JobId = this.Id
-                });
+                    if (kv.Key.StartsWith("~"))
+                    {
+                        dic[kv.Key.Substring(1)] = kv.Value;
+                    }
+                }
             }
+            return dic;
         }
 
 
