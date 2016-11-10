@@ -1,0 +1,15 @@
+﻿{
+  "DataSource" : "grop_stats_100845",
+  "Active" : true,
+  "IntervalSeconds" : 30,
+  "QueryMethod" : "HttpGet",
+  "ScriptName" : "http://co/ws/webboo.aspx?h=group_status2&group=100845",
+  "Arguments" : "",
+  "ErrorInfo" : null,
+  "VariableNames" : ["opencrq", "qlen", "actusers", "handling", "pickup", "working", "overdue"],
+  "VariableRetrieveRegex" : null,
+  "Options" : {
+  },
+  "Group" : "SOLR",
+  "Description" : "group stats via webboo script"
+}

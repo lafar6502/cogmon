@@ -1,0 +1,18 @@
+﻿{
+  "Active" : true,
+  "Arguments" : null,
+  "DataSource" : "mq",
+  "ErrorInfo" : null,
+  "IntervalSeconds" : 300,
+  "Options" : {
+    "mq_table" : "MQ_Atmosfera",
+    "cstring" : "atmodb_mq",
+    "~host": "CO",
+    "~queue": "MQ_Atmosfera"
+  },
+  "QueryMethod" : "BooScript",
+  "ScriptName" : "nginn_mq.boo",
+  "VariableNames" : ["queue_length", "new_messages", "errors", "avg_latency_ms", "messages_handled"],
+  "VariableRetrieveRegex" : null,
+  "Group" : "WYPAS4"
+}

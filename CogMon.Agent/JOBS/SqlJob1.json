@@ -1,0 +1,14 @@
+﻿{
+  "DataSource" : "group_queue_109093",
+  "TemplateId" : "201204191323gstat1",
+  "Active" : true,
+  "IntervalSeconds" : 300,
+  "QueryMethod" : "SqlSelect",
+  "ScriptName" : "    select * from    (    select top 1 queue_time_sec / (3600.0) as queue_time95_h    from    (    select top 5 percent DATEDIFF(SS, cl_resume_date, getdate()) as queue_time_sec    from CRQIncident with(nolock)    where assignee_group=109093 and status  in( 2002,2003,2004,2005,2006,2007)    and assignee = assignee_group    order by 1 desc    ) t    order by queue_time_sec    ) w1,    (    select top 1 proc_time_sec / (3600.0) as proc_time95_h    from    (    select top 5 percent DATEDIFF(SS, cl_resume_date, getdate()) as proc_time_sec    from CRQIncident with(nolock)    where assignee_group=109093 and status  in( 2002,2003,2004,2005,2006,2007)    order by 1 desc    ) t    order by proc_time_sec    ) w2,    (    select count(*) as opencrq, sum(case when assignee = assignee_group then 1 else 0 end) as in_queue    from CRQIncident with(nolock)    where assignee_group=109093 and status  in( 2002,2003,2004,2005,2006,2007)    ) w3  ",
+  "Arguments" : "atmodb",
+  "VariableNames" : ["queue_time95_h", "proc_time95_h", "opencrq", "in_queue"],
+  "VariableRetrieveRegex" : null,
+  "Options" : { },
+  "Group" : "SOLR",
+  "Description" : "SQL script job example"
+}

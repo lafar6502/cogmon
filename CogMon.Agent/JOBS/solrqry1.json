@@ -1,0 +1,15 @@
+﻿{
+  "Active" : true,
+  "Arguments" : null,
+  "DataSource" : "solr_doctypes",
+  "Group" : "SOLR",
+  "IntervalSeconds" : 3,
+  "Options": {
+
+  },
+    "QueryMethod": "BooScript",
+    "ScriptName": "doc_types_solr.boo",
+    "TemplateId": "4fbe94029f942111f0586529",
+    "VariableNames": [ "UM01", "UM04", "UM13", "RO09", "PI02", "PI03", "WN01", "WN02", "WN04", "RZ01", "RZ02", "OTHER" ],
+    "VariableRetrieveRegex": null
+  }

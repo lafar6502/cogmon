@@ -1,0 +1,23 @@
+﻿{
+  "Active" : true,
+  "Arguments" : null,
+  "DataSource" : "MachinePerf",
+  "ErrorInfo" : null,
+  "Group" : "SOLR",
+  "IntervalSeconds" : 300,
+
+  "Options": {
+
+  },
+    "QueryMethod": "WinPerf",
+    "ScriptName": null,
+    "Variables": [ "cpu", "avg_read_q", "avg_write_q", "disk_ops_s", "perc_disk_time", "mem_faults", "mem_avail" ],
+  "VariableRegex": [
+    "category=Processor;counter=% Processor Time;instance=_Total",
+    "category=PhysicalDisk;counter=Avg. Disk Read Queue Length;instance=_Total",
+    "category=PhysicalDisk;counter=Avg. Disk Write Queue Length;instance=_Total",
+    "category=PhysicalDisk;counter=Disk Transfers/sec;instance=_Total",
+    "category=PhysicalDisk;counter=% Disk Time;instance=_Total",
+    "category=Memory;counter=Page Faults/sec;instance=", 
+    "category=Memory;counter=Available MBytes;instance=" ]
+  }

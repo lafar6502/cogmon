@@ -15,7 +15,7 @@ namespace CogMon.Agent
         {
             if (args.Length > 0)
             {
-                NLog.Config.SimpleConfigurator.ConfigureForConsoleLogging(NLog.LogLevel.Debug);
+                //NLog.Config.SimpleConfigurator.ConfigureForConsoleLogging(NLog.LogLevel.Debug);
                 if (args[0] == "-debug")
                 {
                     Debug(args);

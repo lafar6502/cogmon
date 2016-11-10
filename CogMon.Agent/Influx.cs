@@ -17,6 +17,7 @@ namespace CogMon.Agent
         public string ServiceUrl { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
+        public bool NaNToZero { get; set; }
         /// <summary>
         /// database name
         /// </summary>
@@ -45,7 +46,7 @@ namespace CogMon.Agent
             if (dr.DataMap == null) throw new Exception("DataMap required");
             var f = new Dictionary<string, object>(dr.DataMap.Count);
 
-            foreach (var kv in dr.DataMap) f[kv.Key] = kv.Value;
+            foreach (var kv in dr.DataMap) f[kv.Key] = Double.IsNaN(kv.Value) ? (NaNToZero ? 0 : kv.Value) : kv.Value;
 
             return new Point
             {

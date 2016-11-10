@@ -1,0 +1,13 @@
+﻿{
+  "Active" : true,
+  "Arguments" : null,
+  "DataSource" : "co_apphealth",
+  "ErrorInfo" : null,
+  "Group" : "SOLR",
+  "IntervalSeconds" : 9,
+  "Options": { },
+  "QueryMethod" : "HttpGet",
+  "ScriptName" : "http://co:9011/health?httpstatus=1",
+  "VariableNames" : ["co_latency", "no_latency"],
+  "VariableRetrieveRegex" : ["latency\\.CO_indexer=(\\d+)", "latency\\.NO_indexer=(\\d+)"],
+}

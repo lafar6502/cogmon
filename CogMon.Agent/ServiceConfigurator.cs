@@ -29,17 +29,34 @@ namespace CogMon.Agent
             {
                 gn = gn.Replace("${machinename}", Environment.MachineName);
             }
-
+            var cu = ConfigurationManager.AppSettings["CogMon.Url"];
             if (_wc.GetService<IServiceResolver>() == null) _wc.Register(Component.For<IServiceResolver>().ImplementedBy<WindsorServiceResolver>().LifeStyle.Singleton);
-            _wc.Register(Component.For<JobScheduler, IStartableService>().ImplementedBy<JobScheduler>()
-                .LifeStyle.Singleton
-                .DependsOn(new 
-                {
-                    CogMonUrl = ConfigurationManager.AppSettings["CogMon.Url"],
-                    JobsFile = ConfigurationManager.AppSettings["JobsFile"],
-                    ScheduleUpdateIntervalSec = 200,
-                    SchedulerGroup = gn
-                }));
+            if (!string.IsNullOrEmpty(cu))
+            {
+                _wc.Register(Component.For<JobScheduler, IStartableService>().ImplementedBy<JobScheduler>()
+                    .LifeStyle.Singleton
+                    .DependsOn(new
+                    {
+                        CogMonUrl = ConfigurationManager.AppSettings["CogMon.Url"],
+                        ScheduleUpdateIntervalSec = 200,
+                        SchedulerGroup = gn
+                    }));
+            }
+            else
+            {
+                var jd = ConfigurationManager.AppSettings["JobDirectory"];
+                if (string.IsNullOrEmpty(jd)) jd = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JOBS");
+                if (!Directory.Exists(jd)) throw new Exception("JOBS directory does not exist and cogmon url not configured: " + jd);
+                _wc.Register(Component.For<FileJobScheduler, IStartableService>().ImplementedBy<FileJobScheduler>()
+                    .LifeStyle.Singleton
+                    .DependsOn(new
+                    {
+                        BaseDir = jd,
+                        ScheduleUpdateIntervalSec = 60,
+                        SchedulerGroup = gn
+                    }));
+            }
+            
             _wc.Register(Component.For<HttpGetTask, JobBase>().ImplementedBy<HttpGetTask>().Named("HttpGet").LifeStyle.Transient);
             _wc.Register(Component.For<RunProcTask, JobBase>().ImplementedBy<RunProcTask>().Named("SystemCommand").LifeStyle.Transient);
             _wc.Register(Component.For<BooScriptTask, JobBase>().ImplementedBy<BooScriptTask>().Named("BooScript").LifeStyle.Transient);
@@ -68,7 +85,7 @@ namespace CogMon.Agent
             string port = ConfigurationManager.AppSettings["UDPPerfMonListener.Port"];
             if (!string.IsNullOrEmpty(udpIp))
             {
-                _wc.Register(Component.For<IStartableService>().ImplementedBy<PerfMon.UDPPerfmonListener>()
+                _wc.Register(Component.For<IStartableService>().ImplementedBy<PerfMon.UDPPerfmonListener2>()
                     .LifeStyle.Singleton.DependsOn(new
                     {
                         Port = string.IsNullOrEmpty(port) ? 29823 : Int32.Parse(port),
@@ -86,7 +103,8 @@ namespace CogMon.Agent
                         User = ConfigurationManager.AppSettings["InfluxUser"],
                         Password = ConfigurationManager.AppSettings["InfluxPassword"],
                         DbName = ConfigurationManager.AppSettings["InfluxDbName"],
-                        InfluxVersion = ConfigurationManager.AppSettings["InfluxVersion"]
+                        InfluxVersion = ConfigurationManager.AppSettings["InfluxVersion"],
+                        NaNToZero = string.Equals(ConfigurationManager.AppSettings["NaNToZero"], "true", StringComparison.InvariantCultureIgnoreCase)
                     }));
                 
             }

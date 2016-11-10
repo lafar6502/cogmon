@@ -39,7 +39,7 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.ServiceName = "CogMonAgent";
+            this.serviceInstaller1.ServiceName = "AtmoPerfAgent";
             // 
             // ProjectInstaller
             // 
