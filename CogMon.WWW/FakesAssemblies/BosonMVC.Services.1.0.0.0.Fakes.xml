@@ -1,0 +1,1151 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BosonMVC.Services.1.0.0.0.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils">
+            <summary>Shim type of BosonMVC.Services.DirectHandler.DirectHandlerUtils</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.#ctor(BosonMVC.Services.DirectHandler.DirectHandlerUtils)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.Constructor">
+            <summary>Sets the shim of DirectHandlerUtils.DirectHandlerUtils()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.DefaultExecuteActionMethodDirectRequestIDirectAction">
+            <summary>Sets the shim of DirectHandlerUtils.DefaultExecuteActionMethod(DirectRequest drq, IDirectAction ida)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.GetSerializerSettings">
+            <summary>Sets the shim of DirectHandlerUtils.GetSerializerSettings()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.OutputDirectAPIHttpContextTextWriterIKernel">
+            <summary>Sets the shim of DirectHandlerUtils.OutputDirectAPI(HttpContext ctx, TextWriter tw, IKernel serviceLocator)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.ProcessRequestDirectRequestIKernel">
+            <summary>Sets the shim of DirectHandlerUtils.ProcessRequest(DirectRequest drq, IKernel serviceLocator)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.ProcessRequestHttpContextIKernel">
+            <summary>Sets the shim of DirectHandlerUtils.ProcessRequest(HttpContext context, IKernel serviceLocator)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectHandlerUtils.StaticConstructor">
+            <summary>Sets the shim of DirectHandlerUtils.DirectHandlerUtils()</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute">
+            <summary>Shim type of BosonMVC.Services.DirectHandler.DirectMethodAttribute</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.#ctor(BosonMVC.Services.DirectHandler.DirectMethodAttribute)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.AllInstances.IsFormGet">
+            <summary>Sets the shim of DirectMethodAttribute.get_IsForm()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.AllInstances.IsFormSetBoolean">
+            <summary>Sets the shim of DirectMethodAttribute.set_IsForm(Boolean value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.AllInstances.PassRawParamsGet">
+            <summary>Sets the shim of DirectMethodAttribute.get_PassRawParams()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.AllInstances.PassRawParamsSetBoolean">
+            <summary>Sets the shim of DirectMethodAttribute.set_PassRawParams(Boolean value)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.Constructor">
+            <summary>Sets the shim of DirectMethodAttribute.DirectMethodAttribute()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.IsFormGet">
+            <summary>Sets the shim of DirectMethodAttribute.get_IsForm()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.IsFormSetBoolean">
+            <summary>Sets the shim of DirectMethodAttribute.set_IsForm(Boolean value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.PassRawParamsGet">
+            <summary>Sets the shim of DirectMethodAttribute.get_PassRawParams()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectMethodAttribute.PassRawParamsSetBoolean">
+            <summary>Sets the shim of DirectMethodAttribute.set_PassRawParams(Boolean value)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest">
+            <summary>Shim type of BosonMVC.Services.DirectHandler.DirectRequest</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.#ctor(BosonMVC.Services.DirectHandler.DirectRequest)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.ActionGet">
+            <summary>Sets the shim of DirectRequest.get_Action()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.ActionSetString">
+            <summary>Sets the shim of DirectRequest.set_Action(String value)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.ActionGet">
+            <summary>Sets the shim of DirectRequest.get_Action()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.ActionSetString">
+            <summary>Sets the shim of DirectRequest.set_Action(String value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.DataGet">
+            <summary>Sets the shim of DirectRequest.get_Data()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.DataSetObjectArray">
+            <summary>Sets the shim of DirectRequest.set_Data(Object[] value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.IsFormGet">
+            <summary>Sets the shim of DirectRequest.get_IsForm()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.IsFormSetBoolean">
+            <summary>Sets the shim of DirectRequest.set_IsForm(Boolean value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.IsUploadGet">
+            <summary>Sets the shim of DirectRequest.get_IsUpload()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.IsUploadSetBoolean">
+            <summary>Sets the shim of DirectRequest.set_IsUpload(Boolean value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.MethodGet">
+            <summary>Sets the shim of DirectRequest.get_Method()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.MethodSetString">
+            <summary>Sets the shim of DirectRequest.set_Method(String value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.TransactionIdGet">
+            <summary>Sets the shim of DirectRequest.get_TransactionId()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.TransactionIdSetInt32">
+            <summary>Sets the shim of DirectRequest.set_TransactionId(Int32 value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.TypeGet">
+            <summary>Sets the shim of DirectRequest.get_Type()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.AllInstances.TypeSetString">
+            <summary>Sets the shim of DirectRequest.set_Type(String value)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.Constructor">
+            <summary>Sets the shim of DirectRequest.DirectRequest()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.DataGet">
+            <summary>Sets the shim of DirectRequest.get_Data()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.DataSetObjectArray">
+            <summary>Sets the shim of DirectRequest.set_Data(Object[] value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.IsFormGet">
+            <summary>Sets the shim of DirectRequest.get_IsForm()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.IsFormSetBoolean">
+            <summary>Sets the shim of DirectRequest.set_IsForm(Boolean value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.IsUploadGet">
+            <summary>Sets the shim of DirectRequest.get_IsUpload()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.IsUploadSetBoolean">
+            <summary>Sets the shim of DirectRequest.set_IsUpload(Boolean value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.MethodGet">
+            <summary>Sets the shim of DirectRequest.get_Method()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.MethodSetString">
+            <summary>Sets the shim of DirectRequest.set_Method(String value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.TransactionIdGet">
+            <summary>Sets the shim of DirectRequest.get_TransactionId()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.TransactionIdSetInt32">
+            <summary>Sets the shim of DirectRequest.set_TransactionId(Int32 value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.TypeGet">
+            <summary>Sets the shim of DirectRequest.get_Type()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectRequest.TypeSetString">
+            <summary>Sets the shim of DirectRequest.set_Type(String value)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse">
+            <summary>Shim type of BosonMVC.Services.DirectHandler.DirectResponse</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.#ctor(BosonMVC.Services.DirectHandler.DirectResponse)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.ActionGet">
+            <summary>Sets the shim of DirectResponse.get_Action()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.ActionSetString">
+            <summary>Sets the shim of DirectResponse.set_Action(String value)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.ActionGet">
+            <summary>Sets the shim of DirectResponse.get_Action()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.ActionSetString">
+            <summary>Sets the shim of DirectResponse.set_Action(String value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.ExceptionMessageGet">
+            <summary>Sets the shim of DirectResponse.get_ExceptionMessage()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.ExceptionMessageSetString">
+            <summary>Sets the shim of DirectResponse.set_ExceptionMessage(String value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.IsUploadGet">
+            <summary>Sets the shim of DirectResponse.get_IsUpload()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.IsUploadSetBoolean">
+            <summary>Sets the shim of DirectResponse.set_IsUpload(Boolean value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.MethodGet">
+            <summary>Sets the shim of DirectResponse.get_Method()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.MethodSetString">
+            <summary>Sets the shim of DirectResponse.set_Method(String value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.ResultGet">
+            <summary>Sets the shim of DirectResponse.get_Result()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.ResultSetObject">
+            <summary>Sets the shim of DirectResponse.set_Result(Object value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.TransactionIdGet">
+            <summary>Sets the shim of DirectResponse.get_TransactionId()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.TransactionIdSetInt32">
+            <summary>Sets the shim of DirectResponse.set_TransactionId(Int32 value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.TypeGet">
+            <summary>Sets the shim of DirectResponse.get_Type()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.AllInstances.TypeSetString">
+            <summary>Sets the shim of DirectResponse.set_Type(String value)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.ConstructorDirectRequest">
+            <summary>Sets the shim of DirectResponse.DirectResponse(DirectRequest request)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.ExceptionMessageGet">
+            <summary>Sets the shim of DirectResponse.get_ExceptionMessage()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.ExceptionMessageSetString">
+            <summary>Sets the shim of DirectResponse.set_ExceptionMessage(String value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.IsUploadGet">
+            <summary>Sets the shim of DirectResponse.get_IsUpload()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.IsUploadSetBoolean">
+            <summary>Sets the shim of DirectResponse.set_IsUpload(Boolean value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.MethodGet">
+            <summary>Sets the shim of DirectResponse.get_Method()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.MethodSetString">
+            <summary>Sets the shim of DirectResponse.set_Method(String value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.ResultGet">
+            <summary>Sets the shim of DirectResponse.get_Result()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.ResultSetObject">
+            <summary>Sets the shim of DirectResponse.set_Result(Object value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.TransactionIdGet">
+            <summary>Sets the shim of DirectResponse.get_TransactionId()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.TransactionIdSetInt32">
+            <summary>Sets the shim of DirectResponse.set_TransactionId(Int32 value)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.TypeGet">
+            <summary>Sets the shim of DirectResponse.get_Type()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimDirectResponse.TypeSetString">
+            <summary>Sets the shim of DirectResponse.set_Type(String value)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController">
+            <summary>Shim type of BosonMVC.Services.DirectHandler.ExtDirectController</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.#ctor(BosonMVC.Services.DirectHandler.ExtDirectController)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.AllInstances.ExecuteRequestContext">
+            <summary>Sets the shim of ExtDirectController.Execute(RequestContext requestContext)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.AllInstances.ServiceLocatorGet">
+            <summary>Sets the shim of ExtDirectController.get_ServiceLocator()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.AllInstances.ServiceLocatorSetIKernel">
+            <summary>Sets the shim of ExtDirectController.set_ServiceLocator(IKernel value)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.Bind(System.Web.Mvc.IController)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.Constructor">
+            <summary>Sets the shim of ExtDirectController.ExtDirectController()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.ExecuteRequestContext">
+            <summary>Sets the shim of ExtDirectController.Execute(RequestContext requestContext)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.ServiceLocatorGet">
+            <summary>Sets the shim of ExtDirectController.get_ServiceLocator()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectController.ServiceLocatorSetIKernel">
+            <summary>Sets the shim of ExtDirectController.set_ServiceLocator(IKernel value)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler">
+            <summary>Shim type of BosonMVC.Services.DirectHandler.ExtDirectHandler</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.#ctor(BosonMVC.Services.DirectHandler.ExtDirectHandler)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.APINamespaceGet">
+            <summary>Sets the shim of ExtDirectHandler.get_APINamespace()</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.AllInstances.APINamespaceGet">
+            <summary>Sets the shim of ExtDirectHandler.get_APINamespace()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.AllInstances.IsReusableGet">
+            <summary>Sets the shim of ExtDirectHandler.get_IsReusable()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.AllInstances.ProcessRequestHttpContext">
+            <summary>Sets the shim of ExtDirectHandler.ProcessRequest(HttpContext context)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.AllInstances.ServiceLocatorGet">
+            <summary>Sets the shim of ExtDirectHandler.get_ServiceLocator()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.AllInstances.ServiceLocatorSetIWindsorContainer">
+            <summary>Sets the shim of ExtDirectHandler.set_ServiceLocator(IWindsorContainer value)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.Bind(System.Web.IHttpHandler)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.Bind(System.Web.SessionState.IRequiresSessionState)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.Constructor">
+            <summary>Sets the shim of ExtDirectHandler.ExtDirectHandler()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.CurrentHttpContextGet">
+            <summary>Sets the shim of ExtDirectHandler.get_CurrentHttpContext()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.IsReusableGet">
+            <summary>Sets the shim of ExtDirectHandler.get_IsReusable()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.ProcessRequestHttpContext">
+            <summary>Sets the shim of ExtDirectHandler.ProcessRequest(HttpContext context)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.ServiceLocatorGet">
+            <summary>Sets the shim of ExtDirectHandler.get_ServiceLocator()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.ShimExtDirectHandler.ServiceLocatorSetIWindsorContainer">
+            <summary>Sets the shim of ExtDirectHandler.set_ServiceLocator(IWindsorContainer value)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.StubDirectHandlerUtils">
+            <summary>Stub type of BosonMVC.Services.DirectHandler.DirectHandlerUtils</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectHandlerUtils.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectHandlerUtils.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectHandlerUtils.InitializeStub">
+            <summary>Initializes a new instance of type StubDirectHandlerUtils</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectHandlerUtils.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectHandlerUtils.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute">
+            <summary>Stub type of BosonMVC.Services.DirectHandler.DirectMethodAttribute</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.Equals(System.Object)">
+            <summary>Sets the stub of Attribute.Equals(Object obj)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.EqualsObject">
+            <summary>Sets the stub of Attribute.Equals(Object obj)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.GetHashCode">
+            <summary>Sets the stub of Attribute.GetHashCode()</summary>
+        </member>
+        <member name="F:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.GetHashCode01">
+            <summary>Sets the stub of Attribute.GetHashCode()</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.InitializeStub">
+            <summary>Initializes a new instance of type StubDirectMethodAttribute</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.IsDefaultAttribute">
+            <summary>Sets the stub of Attribute.IsDefaultAttribute()</summary>
+        </member>
+        <member name="F:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.IsDefaultAttribute01">
+            <summary>Sets the stub of Attribute.IsDefaultAttribute()</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.Match(System.Object)">
+            <summary>Sets the stub of Attribute.Match(Object obj)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.MatchObject">
+            <summary>Sets the stub of Attribute.Match(Object obj)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.TypeId">
+            <summary>Sets the stub of Attribute.get_TypeId()</summary>
+        </member>
+        <member name="F:BosonMVC.Services.DirectHandler.Fakes.StubDirectMethodAttribute.TypeIdGet">
+            <summary>Sets the stub of Attribute.get_TypeId()</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.StubDirectRequest">
+            <summary>Stub type of BosonMVC.Services.DirectHandler.DirectRequest</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectRequest.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectRequest.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectRequest.InitializeStub">
+            <summary>Initializes a new instance of type StubDirectRequest</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectRequest.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectRequest.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.StubDirectResponse">
+            <summary>Stub type of BosonMVC.Services.DirectHandler.DirectResponse</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectResponse.#ctor(BosonMVC.Services.DirectHandler.DirectRequest)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectResponse.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubDirectResponse.InitializeStub">
+            <summary>Initializes a new instance of type StubDirectResponse</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectResponse.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubDirectResponse.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectController">
+            <summary>Stub type of BosonMVC.Services.DirectHandler.ExtDirectController</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectController.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectController.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectController.Execute(System.Web.Routing.RequestContext)">
+            <summary>Sets the stub of ExtDirectController.Execute(RequestContext requestContext)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectController.ExecuteRequestContext">
+            <summary>Sets the stub of ExtDirectController.Execute(RequestContext requestContext)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectController.InitializeStub">
+            <summary>Initializes a new instance of type StubExtDirectController</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectController.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectController.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectHandler">
+            <summary>Stub type of BosonMVC.Services.DirectHandler.ExtDirectHandler</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectHandler.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectHandler.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectHandler.InitializeStub">
+            <summary>Initializes a new instance of type StubExtDirectHandler</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectHandler.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.DirectHandler.Fakes.StubExtDirectHandler.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.StubIDirectAction">
+            <summary>Stub type of BosonMVC.Services.DirectHandler.IDirectAction</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubIDirectAction.#ctor">
+            <summary>Initializes a new instance of type StubIDirectAction</summary>
+        </member>
+        <member name="T:BosonMVC.Services.DirectHandler.Fakes.StubIDirectActionDynamic">
+            <summary>Stub type of BosonMVC.Services.DirectHandler.IDirectActionDynamic</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubIDirectActionDynamic.#ctor">
+            <summary>Initializes a new instance of type StubIDirectActionDynamic</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubIDirectActionDynamic.BosonMVC#Services#DirectHandler#IDirectActionDynamic#Execute(System.String,System.Object[])">
+            <summary>Sets the stub of IDirectActionDynamic.Execute(String methodName, Object[] args)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubIDirectActionDynamic.BosonMVC#Services#DirectHandler#IDirectActionDynamic#GetMethodNames">
+            <summary>Sets the stub of IDirectActionDynamic.GetMethodNames()</summary>
+        </member>
+        <member name="M:BosonMVC.Services.DirectHandler.Fakes.StubIDirectActionDynamic.BosonMVC#Services#DirectHandler#IDirectActionDynamic#GetMethodParameters(System.String)">
+            <summary>Sets the stub of IDirectActionDynamic.GetMethodParameters(String methodName)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.DirectHandler.Fakes.StubIDirectActionDynamic.ExecuteStringObjectArray">
+            <summary>Sets the stub of IDirectActionDynamic.Execute(String methodName, Object[] args)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.DirectHandler.Fakes.StubIDirectActionDynamic.GetMethodNames">
+            <summary>Sets the stub of IDirectActionDynamic.GetMethodNames()</summary>
+        </member>
+        <member name="F:BosonMVC.Services.DirectHandler.Fakes.StubIDirectActionDynamic.GetMethodParametersString">
+            <summary>Sets the stub of IDirectActionDynamic.GetMethodParameters(String methodName)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.ShimAuthHttpModule">
+            <summary>Shim type of BosonMVC.Services.AuthHttpModule</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimAuthHttpModule.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimAuthHttpModule.#ctor(BosonMVC.Services.AuthHttpModule)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.ShimAuthHttpModule.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimAuthHttpModule.AllInstances.Dispose">
+            <summary>Sets the shim of AuthHttpModule.Dispose()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimAuthHttpModule.AllInstances.GetAuthService">
+            <summary>Sets the shim of AuthHttpModule.GetAuthService()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimAuthHttpModule.AllInstances.InitHttpApplication">
+            <summary>Sets the shim of AuthHttpModule.Init(HttpApplication context)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimAuthHttpModule.AllInstances.context_PostAuthenticateRequestObjectEventArgs">
+            <summary>Sets the shim of AuthHttpModule.context_PostAuthenticateRequest(Object sender, EventArgs e)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimAuthHttpModule.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimAuthHttpModule.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimAuthHttpModule.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimAuthHttpModule.Bind(System.Web.IHttpModule)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimAuthHttpModule.Constructor">
+            <summary>Sets the shim of AuthHttpModule.AuthHttpModule()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimAuthHttpModule.Dispose">
+            <summary>Sets the shim of AuthHttpModule.Dispose()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimAuthHttpModule.GetAuthService">
+            <summary>Sets the shim of AuthHttpModule.GetAuthService()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimAuthHttpModule.InitHttpApplication">
+            <summary>Sets the shim of AuthHttpModule.Init(HttpApplication context)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimAuthHttpModule.context_PostAuthenticateRequestObjectEventArgs">
+            <summary>Sets the shim of AuthHttpModule.context_PostAuthenticateRequest(Object sender, EventArgs e)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.ShimCallbackResult">
+            <summary>Shim type of BosonMVC.Services.CallbackResult</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimCallbackResult.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimCallbackResult.#ctor(BosonMVC.Services.CallbackResult)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.ShimCallbackResult.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimCallbackResult.AllInstances.ExecuteResultControllerContext">
+            <summary>Sets the shim of CallbackResult.ExecuteResult(ControllerContext context)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimCallbackResult.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimCallbackResult.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimCallbackResult.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimCallbackResult.ConstructorActionResultAction">
+            <summary>Sets the shim of CallbackResult.CallbackResult(ActionResult wrap, Action act)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimCallbackResult.ExecuteResultControllerContext">
+            <summary>Sets the shim of CallbackResult.ExecuteResult(ControllerContext context)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.ShimStaticFileHandler">
+            <summary>Shim type of BosonMVC.Services.StaticFileHandler</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimStaticFileHandler.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimStaticFileHandler.#ctor(BosonMVC.Services.StaticFileHandler)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.ShimStaticFileHandler.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.AllInstances.BeginProcessRequestHttpContextAsyncCallbackObject">
+            <summary>Sets the shim of StaticFileHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.AllInstances.EndProcessRequestIAsyncResult">
+            <summary>Sets the shim of StaticFileHandler.EndProcessRequest(IAsyncResult result)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.AllInstances.IsReusableGet">
+            <summary>Sets the shim of StaticFileHandler.get_IsReusable()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.AllInstances.ProcessRequestHttpContext">
+            <summary>Sets the shim of StaticFileHandler.ProcessRequest(HttpContext context)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.BeginProcessRequestHttpContextAsyncCallbackObject">
+            <summary>Sets the shim of StaticFileHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimStaticFileHandler.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimStaticFileHandler.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimStaticFileHandler.Bind(System.Web.IHttpAsyncHandler)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimStaticFileHandler.Bind(System.Web.IHttpHandler)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.Constructor">
+            <summary>Sets the shim of StaticFileHandler.StaticFileHandler()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.EndProcessRequestIAsyncResult">
+            <summary>Sets the shim of StaticFileHandler.EndProcessRequest(IAsyncResult result)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.EnsureProperRequestHttpRequest">
+            <summary>Sets the shim of StaticFileHandler.EnsureProperRequest(HttpRequest request)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.IsReusableGet">
+            <summary>Sets the shim of StaticFileHandler.get_IsReusable()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.ProcessRequestHttpContext">
+            <summary>Sets the shim of StaticFileHandler.ProcessRequest(HttpContext context)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimStaticFileHandler.StaticConstructor">
+            <summary>Sets the shim of StaticFileHandler.StaticFileHandler()</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.ShimWindsorControllerFactory">
+            <summary>Shim type of BosonMVC.Services.WindsorControllerFactory</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.#ctor(BosonMVC.Services.WindsorControllerFactory)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.AllInstances.GetControllerInstanceRequestContextType">
+            <summary>Sets the shim of WindsorControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.AllInstances.ReleaseControllerIController">
+            <summary>Sets the shim of WindsorControllerFactory.ReleaseController(IController controller)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.Bind(System.Web.Mvc.IControllerFactory)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.ConstructorIWindsorContainer">
+            <summary>Sets the shim of WindsorControllerFactory.WindsorControllerFactory(IWindsorContainer wc)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.GetControllerInstanceRequestContextType">
+            <summary>Sets the shim of WindsorControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.RegisterControllersFromAssemblyAssemblyIWindsorContainer">
+            <summary>Sets the shim of WindsorControllerFactory.RegisterControllersFromAssembly(Assembly asm, IWindsorContainer wc)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorControllerFactory.ReleaseControllerIController">
+            <summary>Sets the shim of WindsorControllerFactory.ReleaseController(IController controller)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.ShimWindsorServiceResolver">
+            <summary>Shim type of BosonMVC.Services.WindsorServiceResolver</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.#ctor(BosonMVC.Services.WindsorServiceResolver)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.AllInstances.GetAllInstancesOf1``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{BosonMVC.Services.WindsorServiceResolver,System.Collections.Generic.ICollection{``0}})">
+            <summary>Sets the shim of WindsorServiceResolver.GetAllInstances()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.AllInstances.GetAllInstancesType">
+            <summary>Sets the shim of WindsorServiceResolver.GetAllInstances(Type t)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.AllInstances.GetInstanceOf1``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{BosonMVC.Services.WindsorServiceResolver,``0})">
+            <summary>Sets the shim of WindsorServiceResolver.GetInstance()</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.AllInstances.GetInstanceOf1String``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{BosonMVC.Services.WindsorServiceResolver,System.String,``0})">
+            <summary>Sets the shim of WindsorServiceResolver.GetInstance(String name)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.AllInstances.GetInstanceType">
+            <summary>Sets the shim of WindsorServiceResolver.GetInstance(Type t)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.AllInstances.GetInstanceTypeString">
+            <summary>Sets the shim of WindsorServiceResolver.GetInstance(Type t, String name)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.Bind(BosonMVC.Services.IServiceResolver)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.ConstructorIKernel">
+            <summary>Sets the shim of WindsorServiceResolver.WindsorServiceResolver(IKernel kernel)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.GetAllInstancesOf1``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.Collections.Generic.ICollection{``0}})">
+            <summary>Sets the shim of WindsorServiceResolver.GetAllInstances()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.GetAllInstancesType">
+            <summary>Sets the shim of WindsorServiceResolver.GetAllInstances(Type t)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.GetInstanceOf1``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{``0})">
+            <summary>Sets the shim of WindsorServiceResolver.GetInstance()</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.GetInstanceOf1String``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,``0})">
+            <summary>Sets the shim of WindsorServiceResolver.GetInstance(String name)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.GetInstanceType">
+            <summary>Sets the shim of WindsorServiceResolver.GetInstance(Type t)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.ShimWindsorServiceResolver.GetInstanceTypeString">
+            <summary>Sets the shim of WindsorServiceResolver.GetInstance(Type t, String name)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.StubAuthHttpModule">
+            <summary>Stub type of BosonMVC.Services.AuthHttpModule</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubAuthHttpModule.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubAuthHttpModule.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubAuthHttpModule.InitializeStub">
+            <summary>Initializes a new instance of type StubAuthHttpModule</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubAuthHttpModule.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubAuthHttpModule.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.StubCallbackResult">
+            <summary>Stub type of BosonMVC.Services.CallbackResult</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubCallbackResult.#ctor(System.Web.Mvc.ActionResult,System.Action)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubCallbackResult.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubCallbackResult.ExecuteResult(System.Web.Mvc.ControllerContext)">
+            <summary>Sets the stub of CallbackResult.ExecuteResult(ControllerContext context)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.Fakes.StubCallbackResult.ExecuteResultControllerContext">
+            <summary>Sets the stub of CallbackResult.ExecuteResult(ControllerContext context)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubCallbackResult.InitializeStub">
+            <summary>Initializes a new instance of type StubCallbackResult</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubCallbackResult.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubCallbackResult.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.StubIServiceResolver">
+            <summary>Stub type of BosonMVC.Services.IServiceResolver</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubIServiceResolver.#ctor">
+            <summary>Initializes a new instance of type StubIServiceResolver</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubIServiceResolver.BosonMVC#Services#IServiceResolver#GetAllInstances(System.Type)">
+            <summary>Sets the stub of IServiceResolver.GetAllInstances(Type t)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubIServiceResolver.BosonMVC#Services#IServiceResolver#GetAllInstances``1">
+            <summary>Sets the stub of IServiceResolver.GetAllInstances()</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubIServiceResolver.BosonMVC#Services#IServiceResolver#GetInstance``1">
+            <summary>Sets the stub of IServiceResolver.GetInstance()</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubIServiceResolver.BosonMVC#Services#IServiceResolver#GetInstance(System.Type)">
+            <summary>Sets the stub of IServiceResolver.GetInstance(Type t)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubIServiceResolver.BosonMVC#Services#IServiceResolver#GetInstance(System.Type,System.String)">
+            <summary>Sets the stub of IServiceResolver.GetInstance(Type t, String name)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubIServiceResolver.BosonMVC#Services#IServiceResolver#GetInstance``1(System.String)">
+            <summary>Sets the stub of IServiceResolver.GetInstance(String name)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubIServiceResolver.GetAllInstancesOf1``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.Collections.Generic.ICollection{``0}})">
+            <summary>Sets stubs of GetAllInstances()</summary>
+        </member>
+        <member name="F:BosonMVC.Services.Fakes.StubIServiceResolver.GetAllInstancesType">
+            <summary>Sets the stub of IServiceResolver.GetAllInstances(Type t)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubIServiceResolver.GetInstanceOf1``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{``0})">
+            <summary>Sets stubs of GetInstance()</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubIServiceResolver.GetInstanceOf1String``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,``0})">
+            <summary>Sets stubs of GetInstance(String name)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.Fakes.StubIServiceResolver.GetInstanceType">
+            <summary>Sets the stub of IServiceResolver.GetInstance(Type t)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.Fakes.StubIServiceResolver.GetInstanceTypeString">
+            <summary>Sets the stub of IServiceResolver.GetInstance(Type t, String name)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.StubStaticFileHandler">
+            <summary>Stub type of BosonMVC.Services.StaticFileHandler</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubStaticFileHandler.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubStaticFileHandler.BeginProcessRequest(System.Web.HttpContext,System.AsyncCallback,System.Object)">
+            <summary>Sets the stub of StaticFileHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.Fakes.StubStaticFileHandler.BeginProcessRequestHttpContextAsyncCallbackObject">
+            <summary>Sets the stub of StaticFileHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubStaticFileHandler.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubStaticFileHandler.EndProcessRequest(System.IAsyncResult)">
+            <summary>Sets the stub of StaticFileHandler.EndProcessRequest(IAsyncResult result)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.Fakes.StubStaticFileHandler.EndProcessRequestIAsyncResult">
+            <summary>Sets the stub of StaticFileHandler.EndProcessRequest(IAsyncResult result)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubStaticFileHandler.InitializeStub">
+            <summary>Initializes a new instance of type StubStaticFileHandler</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubStaticFileHandler.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubStaticFileHandler.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.StubWindsorControllerFactory">
+            <summary>Stub type of BosonMVC.Services.WindsorControllerFactory</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubWindsorControllerFactory.#ctor(Castle.Windsor.IWindsorContainer)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubWindsorControllerFactory.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubWindsorControllerFactory.CreateController(System.Web.Routing.RequestContext,System.String)">
+            <summary>Sets the stub of DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.Fakes.StubWindsorControllerFactory.CreateControllerRequestContextString">
+            <summary>Sets the stub of DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubWindsorControllerFactory.GetControllerInstance(System.Web.Routing.RequestContext,System.Type)">
+            <summary>Sets the stub of WindsorControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.Fakes.StubWindsorControllerFactory.GetControllerInstanceRequestContextType">
+            <summary>Sets the stub of WindsorControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubWindsorControllerFactory.GetControllerType(System.Web.Routing.RequestContext,System.String)">
+            <summary>Sets the stub of DefaultControllerFactory.GetControllerType(RequestContext requestContext, String controllerName)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.Fakes.StubWindsorControllerFactory.GetControllerTypeRequestContextString">
+            <summary>Sets the stub of DefaultControllerFactory.GetControllerType(RequestContext requestContext, String controllerName)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubWindsorControllerFactory.InitializeStub">
+            <summary>Initializes a new instance of type StubWindsorControllerFactory</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubWindsorControllerFactory.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubWindsorControllerFactory.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubWindsorControllerFactory.ReleaseController(System.Web.Mvc.IController)">
+            <summary>Sets the stub of WindsorControllerFactory.ReleaseController(IController controller)</summary>
+        </member>
+        <member name="F:BosonMVC.Services.Fakes.StubWindsorControllerFactory.ReleaseControllerIController">
+            <summary>Sets the stub of WindsorControllerFactory.ReleaseController(IController controller)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Fakes.StubWindsorServiceResolver">
+            <summary>Stub type of BosonMVC.Services.WindsorServiceResolver</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubWindsorServiceResolver.#ctor(Castle.MicroKernel.IKernel)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubWindsorServiceResolver.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Fakes.StubWindsorServiceResolver.InitializeStub">
+            <summary>Initializes a new instance of type StubWindsorServiceResolver</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubWindsorServiceResolver.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Fakes.StubWindsorServiceResolver.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Util.Fakes.ShimLRUCache`1">
+            <summary>Shim type of BosonMVC.Services.Util.LRUCache`1</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.#ctor(BosonMVC.Services.Util.LRUCache{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.AddIndexOf1StringLRUCacheGetKeyFuncOfT0M0LRUCacheLoadItemFuncOfT0M0``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,BosonMVC.Services.Util.LRUCache{`0}.GetKeyFunc{``0},BosonMVC.Services.Util.LRUCache{`0}.LoadItemFunc{``0},BosonMVC.Services.Util.LRUCache{`0}.IIndex{``0}})">
+            <summary>Sets the shim of LRUCache`1.AddIndex(String indexName, GetKeyFunc`1&lt;!0,!!0&gt; getKey, LoadItemFunc`1&lt;!0,!!0&gt; loadItem)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.AddItemT0">
+            <summary>Sets the shim of LRUCache`1.AddItem(!0 item)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.AllInstances.AddIndexOf1StringLRUCacheGetKeyFuncOfT0M0LRUCacheLoadItemFuncOfT0M0``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{BosonMVC.Services.Util.LRUCache{`0},System.String,BosonMVC.Services.Util.LRUCache{`0}.GetKeyFunc{``0},BosonMVC.Services.Util.LRUCache{`0}.LoadItemFunc{``0},BosonMVC.Services.Util.LRUCache{`0}.IIndex{``0}})">
+            <summary>Sets the shim of LRUCache`1.AddIndex(String indexName, GetKeyFunc`1&lt;!0,!!0&gt; getKey, LoadItemFunc`1&lt;!0,!!0&gt; loadItem)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.AllInstances.AddItemT0">
+            <summary>Sets the shim of LRUCache`1.AddItem(!0 item)</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.AllInstances.Clear">
+            <summary>Sets the shim of LRUCache`1.Clear()</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.AllInstances.GetIndexOf1String``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{BosonMVC.Services.Util.LRUCache{`0},System.String,BosonMVC.Services.Util.LRUCache{`0}.IIndex{``0}})">
+            <summary>Sets the shim of LRUCache`1.GetIndex(String indexName)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.AllInstances.GetValueOf1StringM0``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{BosonMVC.Services.Util.LRUCache{`0},System.String,``0,`0})">
+            <summary>Sets the shim of LRUCache`1.GetValue(String indexName, !!0 key)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.Clear">
+            <summary>Sets the shim of LRUCache`1.Clear()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.ConstructorInt32TimeSpanTimeSpanLRUCacheIsValidOfT0">
+            <summary>Sets the shim of LRUCache`1.LRUCache`1(Int32 capacity, TimeSpan minAge, TimeSpan maxAge, IsValid&lt;!0&gt; isValid)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.GetIndexOf1String``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,BosonMVC.Services.Util.LRUCache{`0}.IIndex{``0}})">
+            <summary>Sets the shim of LRUCache`1.GetIndex(String indexName)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimLRUCache`1.GetValueOf1StringM0``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,``0,`0})">
+            <summary>Sets the shim of LRUCache`1.GetValue(String indexName, !!0 key)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Util.Fakes.ShimRWLock">
+            <summary>Shim type of BosonMVC.Services.Util.RWLock</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimRWLock.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimRWLock.#ctor(BosonMVC.Services.Util.RWLock)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Util.Fakes.ShimRWLock.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimRWLock.AllInstances.Dispose">
+            <summary>Sets the shim of RWLock.Dispose()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimRWLock.AllInstances.StatusGet">
+            <summary>Sets the shim of RWLock.get_Status()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimRWLock.AllInstances.StatusSetRWLockStatus">
+            <summary>Sets the shim of RWLock.set_Status(RWLockStatus value)</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimRWLock.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimRWLock.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimRWLock.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.ShimRWLock.Bind(System.IDisposable)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimRWLock.Dispose">
+            <summary>Sets the shim of RWLock.Dispose()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimRWLock.StaticConstructor">
+            <summary>Sets the shim of RWLock.RWLock()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimRWLock.StatusGet">
+            <summary>Sets the shim of RWLock.get_Status()</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.ShimRWLock.StatusSetRWLockStatus">
+            <summary>Sets the shim of RWLock.set_Status(RWLockStatus value)</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Util.Fakes.StubLRUCache`1">
+            <summary>Stub type of BosonMVC.Services.Util.LRUCache`1</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.StubLRUCache`1.#ctor(System.Int32,System.TimeSpan,System.TimeSpan,BosonMVC.Services.Util.LRUCache{`0}.IsValid)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.StubLRUCache`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.StubLRUCache`1.InitializeStub">
+            <summary>Initializes a new instance of type StubLRUCache</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.StubLRUCache`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.StubLRUCache`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:BosonMVC.Services.Util.Fakes.StubRWLock">
+            <summary>Stub type of BosonMVC.Services.Util.RWLock</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.StubRWLock.#ctor(System.Threading.ReaderWriterLock,BosonMVC.Services.Util.RWLockStatus,System.Int32)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.StubRWLock.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="M:BosonMVC.Services.Util.Fakes.StubRWLock.InitializeStub">
+            <summary>Initializes a new instance of type StubRWLock</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.StubRWLock.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:BosonMVC.Services.Util.Fakes.StubRWLock.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+    </members>
+</doc>

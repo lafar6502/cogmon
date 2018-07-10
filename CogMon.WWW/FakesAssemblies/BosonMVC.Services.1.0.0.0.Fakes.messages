@@ -1,0 +1,26 @@
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate stub for BosonMVC.Services.DirectHandler.ResultConverter: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate stub for BosonMVC.Services.IAuthenticationService: method System.Security.Principal.IPrincipal BosonMVC.Services.IAuthenticationService.GetAuthenticatedUser(System.String userId, System.String authType) unstubbable: method is abstract and could not be stubbed, type System.Security.Principal.IPrincipal is not available in the target framework version.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate stub for BosonMVC.Services.Util.RWLockStatus: type is a value type.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate stub for BosonMVC.Services.MimeMapping: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate stub for BosonMVC.Services.HttpAsyncResult: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate stub for BosonMVC.Services.DirectHandler.RequestDataConverter: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.DirectHandler.ResultConverter: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.IAuthenticationService: type is an interface.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.Util.LRUCache`1+GetKeyFunc`1: type is a delegate.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.Util.LRUCache`1+IIndex: type is an interface.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.Util.LRUCache`1+IIndex`1: type is an interface.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.Util.LRUCache`1+INode: type is an interface.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.Util.LRUCache`1+Index`1: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.Util.LRUCache`1+IsValid: type is a delegate.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.Util.LRUCache`1+LifespanMgr: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.Util.LRUCache`1+LoadItemFunc`1: type is a delegate.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.Util.RWLockStatus: type is an enum.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.Util.RWLock+DoWorkFunc`1: type is a delegate.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.IServiceResolver: type is an interface.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.StaticFileHandler+CachedContent: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.StaticFileHandler+ResponseCompressionType: type is an enum.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.MimeMapping: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.HttpAsyncResult: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.DirectHandler.RequestDataConverter: type is not visible to exported or assembly(BosonMVC.Services.1.0.0.0.Fakes).
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.DirectHandler.IDirectAction: type is an interface.
+C:\devs\cogmon\CogMon.WWW\Fakes\BosonMVC.Services.fakes : warning : Cannot generate shim for BosonMVC.Services.DirectHandler.IDirectActionDynamic: type is an interface.

@@ -64,7 +64,7 @@ namespace CogMon.Agent
             {
                 var dr = batch.First();
                 var cli = GetInflux();
-                var resp = cli.Client.WriteAsync(DbName, batch.Select(toInfluxPoint));
+                var resp = cli.Client.WriteAsync(batch.Select(toInfluxPoint), DbName);
                 resp.Wait();
 
                 log.Debug("Updated data source {0}, tags: [{1}], data: [{2}], {3} points", dr.Series, 
