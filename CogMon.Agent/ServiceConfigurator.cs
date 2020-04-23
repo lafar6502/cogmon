@@ -9,6 +9,7 @@ using NGinnBPM.MessageBus.Impl;
 using NGinnBPM.MessageBus.Windsor;
 using NGinnBPM.MessageBus;
 using System.IO;
+using NGinnBPM.MessageBus.Impl.HttpService;
 
 namespace CogMon.Agent
 {
@@ -65,14 +66,19 @@ namespace CogMon.Agent
             _wc.Register(Component.For<AgentPerfCounterTask, JobBase>().ImplementedBy<AgentPerfCounterTask>().Named("AgentPerfCnt").LifeStyle.Transient);
             _wc.Register(Component.For<ServerPerfCounterTask, JobBase>().ImplementedBy<ServerPerfCounterTask>().Named("ServerPerfCnt").LifeStyle.Transient);
             _wc.Register(Component.For<PingTask, JobBase>().ImplementedBy<PingTask>().Named("Ping").LifeStyle.Transient);
+
+            var cogurl = ConfigurationManager.AppSettings["CogMon.Url"];
+            if (!string.IsNullOrEmpty(cogurl))
+            {
+                _wc.Register(Component.For<IServiceClient>().ImplementedBy<ServiceClient>()
+                    .DependsOn(new
+                    {
+                        BaseUrl = ConfigurationManager.AppSettings["CogMon.Url"],
+                        UserName = ConfigurationManager.AppSettings["CogMon.User"],
+                        Password = ConfigurationManager.AppSettings["CogMon.Password"]
+                    }));
+            }
             
-            _wc.Register(Component.For<IServiceClient>().ImplementedBy<ServiceClient>()
-                .DependsOn(new
-                {
-                    BaseUrl = ConfigurationManager.AppSettings["CogMon.Url"],
-                    UserName = ConfigurationManager.AppSettings["CogMon.User"],
-                    Password = ConfigurationManager.AppSettings["CogMon.Password"]
-                }));
             _wc.Register(Component.For<BooScript.IRunScript>().ImplementedBy<BooScript.BooScriptManager>()
                 .LifeStyle.Singleton
                 .DependsOn(new
@@ -92,6 +98,7 @@ namespace CogMon.Agent
                         LocalIP = udpIp
                     }));
             }
+
             string influx = ConfigurationManager.AppSettings["InfluxDbUrl"];
             if (!string.IsNullOrEmpty(influx))
             {
@@ -108,7 +115,7 @@ namespace CogMon.Agent
                     }));
                 
             }
-            else
+            else if (!string.IsNullOrEmpty(cogurl))
             {
                 _wc.Register(Component.For<ITimeSeriesDatabase>().ImplementedBy<CogmonDataService>().LifeStyle.Singleton
                     .DependsOn(new
@@ -116,6 +123,40 @@ namespace CogMon.Agent
 
                     }));
             }
+            else
+            {
+                _wc.Register(Component.For<ITimeSeriesDatabase, LastValueTsDatabase>().ImplementedBy<LastValueTsDatabase>().LifeStyle.Singleton);
+            }
+            var locUrl = ConfigurationManager.AppSettings["HttpListenAddress"];
+            if (!string.IsNullOrEmpty(locUrl))
+            {
+                ConfigureHttpListener(locUrl);
+            }
+        }
+
+        protected ServiceConfigurator ConfigureHttpListener(string listenAddress)
+        {
+            string endpoint = listenAddress.Replace("+", Environment.MachineName);
+
+            _wc.Register(Component.For<IStartableService>().ImplementedBy<NGinnBPM.MessageBus.Impl.HttpService.HttpServer>()
+                .DependsOn(new { ListenAddress = listenAddress }).LifeStyle.Singleton);
+            
+            _wc.Register(Component.For<MasterDispatcherServlet>().ImplementedBy<MasterDispatcherServlet>().LifeStyle.Singleton);
+            
+            _wc.Register(Component.For<IServlet>()
+                .ImplementedBy<StaticResourceServlet>()
+                .LifeStyle.Singleton
+                .DependsOn(new
+                {
+                    MatchUrl = @"(^/index.htm$|^/rc/(?<id>.+)?)",
+                    SourceAssembly = typeof(IMessageBus).Assembly,
+                    ResourcePrefix = "CogMon.Agent.StaticRC"
+                }));
+
+            _wc.Register(Component.For<IServlet>()
+                .ImplementedBy<LocalDataSourceServlet>().LifeStyle.Singleton);
+
+            return this;
         }
     }
 }

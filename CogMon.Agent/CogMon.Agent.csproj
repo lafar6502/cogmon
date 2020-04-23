@@ -141,6 +141,8 @@
     <Compile Include="IDataSeriesDatabase.cs" />
     <Compile Include="Influx.cs" />
     <Compile Include="FileJobScheduler.cs" />
+    <Compile Include="LastValueTsDatabase.cs" />
+    <Compile Include="LocalDataSourceServlet.cs" />
     <Compile Include="PerfMon\UDPPerfmonListener2.cs" />
     <Compile Include="PingTask.cs" />
     <Compile Include="ServerPerfCounterTask.cs" />
@@ -213,7 +215,9 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="StaticRC\index.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
