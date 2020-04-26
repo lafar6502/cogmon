@@ -10,7 +10,7 @@ namespace CogMon.Agent
 {
     public class LocalDataSourceServlet : IServlet
     {
-        public string MatchUrl { get; set; } = @"(^/series/(?<id>.+)?)";
+        public string MatchUrl { get; set; } = @"(^/series$|^/series/(?<id>.+)?)";
 
         public LastValueTsDatabase TheDb { get; set; }
 

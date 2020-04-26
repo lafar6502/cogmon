@@ -10,13 +10,15 @@ using NGinnBPM.MessageBus.Windsor;
 using NGinnBPM.MessageBus;
 using System.IO;
 using NGinnBPM.MessageBus.Impl.HttpService;
+using NLog;
+using MongoDB.Driver.Linq;
 
 namespace CogMon.Agent
 {
     public class ServiceConfigurator
     {
         private IWindsorContainer _wc;
-
+        private static Logger log = LogManager.GetCurrentClassLogger();
         public static ServiceConfigurator Begin(IWindsorContainer wc)
         {
             return new ServiceConfigurator { _wc = wc };
@@ -102,6 +104,7 @@ namespace CogMon.Agent
             string influx = ConfigurationManager.AppSettings["InfluxDbUrl"];
             if (!string.IsNullOrEmpty(influx))
             {
+                log.Info("Configuring influx recipient {0}", influx);
                 _wc.Register(Component.For<ITimeSeriesDatabase>().ImplementedBy<Influx>()
                     .LifeStyle.Singleton
                     .DependsOn(new
@@ -117,6 +120,7 @@ namespace CogMon.Agent
             }
             else if (!string.IsNullOrEmpty(cogurl))
             {
+                log.Info("Configuring cogmon recipient {0}", cogurl);
                 _wc.Register(Component.For<ITimeSeriesDatabase>().ImplementedBy<CogmonDataService>().LifeStyle.Singleton
                     .DependsOn(new
                     {
@@ -125,6 +129,7 @@ namespace CogMon.Agent
             }
             else
             {
+                log.Info("Configuring local series store");
                 _wc.Register(Component.For<ITimeSeriesDatabase, LastValueTsDatabase>().ImplementedBy<LastValueTsDatabase>().LifeStyle.Singleton);
             }
             var locUrl = ConfigurationManager.AppSettings["HttpListenAddress"];

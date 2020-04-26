@@ -3,7 +3,7 @@
   "Arguments" : null,
   "DataSource" : "MachinePerf",
   "ErrorInfo" : null,
-  "Group" : "SOLR",
+  "Group" : "WYPAS5",
   "IntervalSeconds" : 300,
 
   "Options": {

@@ -104,7 +104,7 @@ namespace CogMon.Agent
         public void Start()
         {
             Stop();
-            log.Info("Starting scheduler");
+            log.Info("Starting scheduler at {0}, group {1}", this.BaseDir, this.SchedulerGroup);
             _updater = new Timer(this.ScheduleUpdateIntervalSec * 1000);
             _updater.Elapsed += new ElapsedEventHandler(_updater_Elapsed);
             _updater.AutoReset = true;
