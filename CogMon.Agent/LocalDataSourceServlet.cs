@@ -20,17 +20,26 @@ namespace CogMon.Agent
 
         public void HandleRequest(IRequestContext ctx)
         {
-            ctx.ResponseContentType = "application/json";
+            ctx.ResponseContentType = "text/plain";
             if (ctx.UrlVariables.ContainsKey("id") && !string.IsNullOrEmpty(ctx.UrlVariables["id"]))
             {
                 var dr = TheDb.GetLastStatus(ctx.UrlVariables["id"]);
-                var json = JsonConvert.SerializeObject(dr);
-                ctx.Output.Write(json);
+                foreach(var kv in dr.DataMap)
+                {
+                    ctx.Output.Write(kv.Key);
+                    ctx.Output.Write(":");
+                    ctx.Output.Write(kv.Value);
+                    ctx.Output.Write(" ");
+                }
+                ctx.Output.WriteLine();
             }
             else
             {
                 var dss = TheDb.DataSources;
-                ctx.Output.Write(JsonConvert.SerializeObject(dss));
+                foreach(var ds in dss)
+                {
+                    ctx.Output.WriteLine(ds);
+                }
             }
         }
     }
