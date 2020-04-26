@@ -184,7 +184,7 @@ namespace CogMon.Agent
         {
             foreach(var dr in batch)
             {
-                if (string.IsNullOrEmpty(dr.Series)) dr.Series = this.DataSeries;
+                if (string.IsNullOrEmpty(dr.Series)) dr.Series = this.DataSeries ?? this.Id;
                 dr.Tags = GetTags();
             }
             log.Info("Job {0} Updating ds {1}, tags: {2}", this.Id, this.DataSeries, string.Join(", ", GetTags().Keys));

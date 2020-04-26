@@ -10,14 +10,18 @@ namespace CogMon.Agent
 {
     public class LocalDataSourceServlet : IServlet
     {
+        public LocalDataSourceServlet(LastValueTsDatabase db) : base()
+        {
+            TheDb = db;
+        }
         public string MatchUrl { get; set; } = @"(^/series$|^/series/(?<id>.+)?)";
 
-        public LastValueTsDatabase TheDb { get; set; }
+        private LastValueTsDatabase TheDb { get; set; }
 
         public void HandleRequest(IRequestContext ctx)
         {
             ctx.ResponseContentType = "application/json";
-            if (ctx.UrlVariables.ContainsKey("id"))
+            if (ctx.UrlVariables.ContainsKey("id") && !string.IsNullOrEmpty(ctx.UrlVariables["id"]))
             {
                 var dr = TheDb.GetLastStatus(ctx.UrlVariables["id"]);
                 var json = JsonConvert.SerializeObject(dr);
