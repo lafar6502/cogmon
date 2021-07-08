@@ -204,6 +204,12 @@ namespace CogMon.Agent
                     }
                 }
             }
+            var ht = System.Configuration.ConfigurationManager.AppSettings["AutoHostTag"];
+            if (!dic.ContainsKey("host") && ht != null && (string.Equals("1", ht) || "true".Equals(ht, StringComparison.InvariantCultureIgnoreCase)))
+            {
+                dic["host"] = Environment.MachineName;
+                
+            }
             return dic;
         }
 
