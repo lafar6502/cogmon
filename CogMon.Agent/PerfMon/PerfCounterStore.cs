@@ -33,6 +33,12 @@ namespace CogMon.Agent.PerfMon
             return _counters.GetOrAdd(key, x => new PerfCounter { Id = x });
         }
 
+        public PerfCounter TryGetCounter(string key)
+        {
+            PerfCounter pc;
+            return _counters.TryGetValue(key, out pc) ? pc : null;
+        }
+
         public PerfCounterStats GetPerfCounterValuesAndReset(string id)
         {
             var pc = GetCachedCounter(id);

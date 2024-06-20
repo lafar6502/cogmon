@@ -167,3 +167,4 @@ logs/
 GraphData/
 dist/
 packages/
+.vs

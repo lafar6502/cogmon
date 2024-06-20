@@ -1,0 +1,10 @@
+﻿{
+  "Active": true,
+  "Arguments": null,
+  "DataSource": "co_apphealth",
+  "ErrorInfo": null,
+  "Group": "COGITPC1",
+  "IntervalSeconds": 15,
+  "Options": {},
+  "QueryMethod": "ServerPerfCnt"
+}

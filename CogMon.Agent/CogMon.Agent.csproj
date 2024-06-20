@@ -142,6 +142,7 @@
     <Compile Include="Influx.cs" />
     <Compile Include="FileJobScheduler.cs" />
     <Compile Include="LastValueTsDatabase.cs" />
+    <Compile Include="PerfCountersServlet.cs" />
     <Compile Include="LocalDataSourceServlet.cs" />
     <Compile Include="PerfMon\UDPPerfmonListener2.cs" />
     <Compile Include="PingTask.cs" />
@@ -189,6 +190,9 @@
     </None>
     <None Include="booscripts\Test1.boo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="JOBS\Errors.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="JOBS\job1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

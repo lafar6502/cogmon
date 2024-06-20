@@ -12,6 +12,7 @@ using System.IO;
 using NGinnBPM.MessageBus.Impl.HttpService;
 using NLog;
 using MongoDB.Driver.Linq;
+using NGinnBPM.MessageBus.Perf;
 
 namespace CogMon.Agent
 {
@@ -160,7 +161,8 @@ namespace CogMon.Agent
 
             _wc.Register(Component.For<IServlet>()
                 .ImplementedBy<LocalDataSourceServlet>().LifeStyle.Singleton);
-
+            _wc.Register(Component.For<IServlet>()
+                .ImplementedBy<PerfCountersServlet>().LifeStyle.Singleton);
             return this;
         }
     }
