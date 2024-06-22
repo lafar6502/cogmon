@@ -33,12 +33,18 @@ namespace CogMon.Agent
                 }
                 else if (args[0] == "-listPerfCounters")
                 {
-                    ListPerfCounters();
+                    string catName = null;
+                    if (args.Length > 1 && args[1] != "*") catName = args[1];
+                    ListPerfCounters(catName, args.Length > 2 ? args[2] : null);
+                }
+                else if (args[0] == "-listPerfCounterCategories")
+                {
+                    ListPerfCounterCategories();
                 }
                 else
                 {
                     Console.WriteLine("Invalid arguments specified.");
-                    Console.WriteLine("Possible options: \n-debug\n-testTask [task json file]\n-testJob [jobId]");
+                    Console.WriteLine("Possible options: \n-debug\n-testTask [task json file]\n-testJob [jobId]\r\n-listPerfCounters\r\n-listPerfCounterCategories");
                 }
                 return;
             }
@@ -51,18 +57,52 @@ namespace CogMon.Agent
             ServiceBase.Run(ServicesToRun);
         }
 
-
-        static void ListPerfCounters(string searchStr = null)
+        static void ListPerfCounterCategories()
+        {
+            foreach(var c in PerformanceCounterCategory.GetCategories().OrderBy(x => x.CategoryName))
+            {
+                Console.WriteLine(c.CategoryName);
+            }
+        }
+        static void ListPerfCounters(IEnumerable<PerformanceCounter> counters)
+        {
+            foreach(var counter in counters)
+            {
+                var s = WinPerf.GetPerfCounterKey(counter.CategoryName, counter.CounterName, counter.InstanceName, counter.MachineName);
+                Console.WriteLine(s);
+            }
+        }
+        static void ListPerfCounters(string categoryName = null, string searchStr = null)
         {
             var lst = PerformanceCounterCategory
             .GetCategories()
-            .Select(cat => cat.GetInstanceNames().Any() ? cat.GetInstanceNames().Select(i => cat.GetCounters(i)).SelectMany(counter => counter) : cat.GetCounters("")).SelectMany(counter => counter)
-            .Where(x => searchStr == null || (x.InstanceName.Contains(searchStr) || x.CounterName.Contains(searchStr)))
-            .Select(counter => string.Format("{0} : {1}.{2}", counter.InstanceName, counter.CategoryName, counter.CounterName));
-
-            foreach(var s in lst)
+            .Where(x => x.CategoryName != "Thread")
+            .Where(x => categoryName == null || categoryName.Equals(x.CategoryName, StringComparison.InvariantCultureIgnoreCase));
+            foreach(var cat in lst)
             {
-                Console.WriteLine(s);
+                var insts = cat.GetInstanceNames();
+                //Console.WriteLine("** " + cat.CategoryName + ": " + insts.Length + " instances");
+                PerformanceCounter[] cnts;
+                if (insts.Any())
+                {
+                    foreach (var instName in insts)
+                    {
+                        try
+                        {
+                            cnts = cat.GetCounters(instName);
+                            ListPerfCounters(cnts.Where(x => searchStr == null || (x.InstanceName.IndexOf(searchStr, StringComparison.InvariantCultureIgnoreCase) >= 0  || x.CounterName.IndexOf(searchStr, StringComparison.InvariantCultureIgnoreCase) >= 0)));
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.Error.WriteLine(";Error getting instance " + instName + ":" + ex.Message);
+                        }
+                    }
+                }
+                else
+                {
+                    cnts = cat.GetCounters();
+                    ListPerfCounters(cnts.Where(x => searchStr == null || (x.InstanceName.IndexOf(searchStr, StringComparison.InvariantCultureIgnoreCase) >= 0 || x.CounterName.IndexOf(searchStr, StringComparison.InvariantCultureIgnoreCase) >= 0)));
+                }
             }
 
         }

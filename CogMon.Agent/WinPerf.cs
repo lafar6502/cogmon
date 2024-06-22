@@ -18,7 +18,7 @@ namespace CogMon.Agent
         private Logger log = LogManager.GetCurrentClassLogger();
         
 
-        private string GetPerfCounterKey(string categoryName, string counterName, string counterInstance, string machineName)
+        public static string GetPerfCounterKey(string categoryName, string counterName, string counterInstance, string machineName)
         {
             var sb = new StringBuilder();
             if (!string.IsNullOrEmpty(categoryName)) sb.AppendFormat("category={0};", categoryName);
