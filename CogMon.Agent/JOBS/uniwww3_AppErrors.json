@@ -1,0 +1,13 @@
+﻿{
+  "Active": true,
+  "Arguments": null,
+  "DataSource": "co_apphealth",
+  "DataSeries": "uniwww3",
+  "ErrorInfo": null,
+  "Group": "uniwww3",
+  "IntervalSeconds": 60,
+  "Options": {},
+  "QueryMethod": "AgentPerfCnt",
+  "Variables": ["Errors_Lunex", "Timeouts_Lunex"],
+  "VariableRegex": [ "Errors_Lunex/Count", "Timeouts_Lunex/Count" ]
+}

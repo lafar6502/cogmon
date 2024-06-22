@@ -59,6 +59,7 @@ namespace CogMon.Agent
                         int idx = vn.IndexOf('/');
                         string cid = idx < 0 ? this.ScriptName : vn.Substring(0, idx);
                         PerfCounterStats pv;
+                        if (cid == null) throw new Exception("Counter name missing - either put it in ScriptName field or in the VariableRegex like 'CounterName/Field'");
                         if (!d.TryGetValue(cid, out pv))
                         {
                             pv = Counters.GetPerfCounterValuesAndReset(cid);

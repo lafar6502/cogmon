@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
@@ -30,6 +31,10 @@ namespace CogMon.Agent
                     if (args.Length < 2) throw new Exception("Job ID missing");
                     TestJob(args[1]);
                 }
+                else if (args[0] == "-listPerfCounters")
+                {
+                    ListPerfCounters();
+                }
                 else
                 {
                     Console.WriteLine("Invalid arguments specified.");
@@ -46,6 +51,21 @@ namespace CogMon.Agent
             ServiceBase.Run(ServicesToRun);
         }
 
+
+        static void ListPerfCounters(string searchStr = null)
+        {
+            var lst = PerformanceCounterCategory
+            .GetCategories()
+            .Select(cat => cat.GetInstanceNames().Any() ? cat.GetInstanceNames().Select(i => cat.GetCounters(i)).SelectMany(counter => counter) : cat.GetCounters("")).SelectMany(counter => counter)
+            .Where(x => searchStr == null || (x.InstanceName.Contains(searchStr) || x.CounterName.Contains(searchStr)))
+            .Select(counter => string.Format("{0} : {1}.{2}", counter.InstanceName, counter.CategoryName, counter.CounterName));
+
+            foreach(var s in lst)
+            {
+                Console.WriteLine(s);
+            }
+
+        }
         static void Debug(string[] args)
         {
             

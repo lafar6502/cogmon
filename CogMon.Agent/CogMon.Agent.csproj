@@ -154,6 +154,7 @@
     <Compile Include="PerfMon\PerfCounterStore.cs" />
     <Compile Include="PerfMon\UDPPerfmonListener.cs" />
     <Compile Include="Tools\HttpUtil.cs" />
+    <Compile Include="Tools\ProcessUtil.cs" />
     <Compile Include="WinPerf.cs" />
     <Compile Include="WinPerfTask.cs" />
     <Compile Include="SqlSelectTask.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceConfigurator.cs" />
     <Compile Include="Tests.cs" />
+    <Compile Include="ZabbixSenderService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CogMon.Lib\CogMon.Lib.csproj">
@@ -190,6 +192,9 @@
     </None>
     <None Include="booscripts\Test1.boo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="JOBS\uniwww3_AppErrors.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="JOBS\Errors.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -221,6 +226,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="StaticRC\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="zabbix_sender.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,9 +2,12 @@
   "Active": true,
   "Arguments": null,
   "DataSource": "co_apphealth",
+  "DataSeries": "uniwww1",
   "ErrorInfo": null,
-  "Group": "COGITPC1",
+  "Group": "COGITPC",
   "IntervalSeconds": 15,
   "Options": {},
-  "QueryMethod": "ServerPerfCnt"
+  "QueryMethod": "AgentPerfCnt",
+  "Variables": ["Errors_Aliplast", "test1"],
+  "VariableRegex": [ "Errors_Aliplast/Count", "Errors_Aliplast/Count" ]
 }

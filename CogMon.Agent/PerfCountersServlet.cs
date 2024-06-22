@@ -15,7 +15,7 @@ namespace CogMon.Agent
         {
             TheDb = db;
         }
-        public string MatchUrl { get; set; } = @"(^/perf$|^/perf/(?<id>.+)?)";
+        public string MatchUrl { get; set; } = @"(^/perf$|^/perf/(?<id>.+)?|^/perfget/(?<id>.+)?)";
 
         private PerfCounterStore TheDb { get; set; }
 
@@ -24,11 +24,12 @@ namespace CogMon.Agent
             ctx.ResponseContentType = "text/plain";
             if (ctx.UrlVariables.ContainsKey("id") && !string.IsNullOrEmpty(ctx.UrlVariables["id"]))
             {
+                var doGet = ctx.RawUrl.StartsWith("/perfget/");
                 var cid = ctx.UrlVariables["id"];
                 if (string.IsNullOrEmpty(cid)) throw new Exception("counter id missing");
                 var pc = TheDb.TryGetCounter(cid);
                 if (pc == null) throw new Exception("Counter :" + cid);
-                var val = pc.GetCurrentValue(false);
+                var val = pc.GetCurrentValue(doGet);
                 ctx.ResponseContentType = "application/json";
                 var str = JsonConvert.SerializeObject(val);
                 ctx.Output.Write(str);

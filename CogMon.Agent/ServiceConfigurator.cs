@@ -103,11 +103,12 @@ namespace CogMon.Agent
             }
 
             string influx = ConfigurationManager.AppSettings["InfluxDbUrl"];
+            string zabbixSender = ConfigurationManager.AppSettings["ZabbixSenderPath"];
             if (!string.IsNullOrEmpty(influx))
             {
                 log.Info("Configuring influx recipient {0}", influx);
                 _wc.Register(Component.For<ITimeSeriesDatabase>().ImplementedBy<Influx>()
-                    .LifeStyle.Singleton
+                    .LifeStyle.Singleton.Named("InfluxSender")
                     .DependsOn(new
                     {
                         ServiceUrl = influx,
@@ -123,9 +124,20 @@ namespace CogMon.Agent
             {
                 log.Info("Configuring cogmon recipient {0}", cogurl);
                 _wc.Register(Component.For<ITimeSeriesDatabase>().ImplementedBy<CogmonDataService>().LifeStyle.Singleton
+                    .Named("CogmonSender")
                     .DependsOn(new
                     {
 
+                    }));
+            }
+            else if (!string.IsNullOrEmpty(zabbixSender))
+            {
+                log.Info("Configuring zabbix recipient {0}", zabbixSender);
+                _wc.Register(Component.For<ITimeSeriesDatabase>().ImplementedBy<ZabbixSenderService>().LifeStyle.Singleton.Named("ZabbixSender")
+                    .DependsOn(new
+                    {
+                        ZabbixSenderPath = zabbixSender.Replace("${basedir}", AppDomain.CurrentDomain.BaseDirectory),
+                        ZabbixSenderCommandLine = ConfigurationManager.AppSettings["ZabbixSenderCommandLine"]
                     }));
             }
             else

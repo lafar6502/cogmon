@@ -45,6 +45,12 @@ namespace CogMon.Agent.PerfMon
             return pc.GetCurrentValue(true);
         }
 
+        public PerfCounterStats GetPerfCounterValues(string id, bool reset)
+        {
+            var pc = GetCachedCounter(id);
+            return pc.GetCurrentValue(reset);
+        }
+
         public IList<string> GetPerfCounterNames()
         {
             return new List<string>(_counters.Keys);
