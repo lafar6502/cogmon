@@ -21,6 +21,7 @@ namespace CogMon.Agent
 
         public void HandleRequest(IRequestContext ctx)
         {
+            
             ctx.ResponseContentType = "text/plain";
             if (ctx.UrlVariables.ContainsKey("id") && !string.IsNullOrEmpty(ctx.UrlVariables["id"]))
             {
@@ -39,11 +40,16 @@ namespace CogMon.Agent
                 var dss = TheDb.GetPerfCounterNames();
                 ctx.ResponseContentType = "text/html";
                 ctx.Output.WriteLine("<html><body>");
-                foreach(var ds in dss)
+                ctx.Output.WriteLine("<ol>");
+                foreach(var ds in dss.OrderBy(x => x))
                 {
-                    ctx.Output.WriteLine("<a href=\"{0}\">{1}</a>", ds, ds);
-                    ctx.Output.WriteLine("<br/>");
+                    ctx.Output.WriteLine("<li>");
+                    ctx.Output.WriteLine("<a href=\"perfget/{0}\">[get] {1}</a> <br/>", Uri.EscapeUriString(ds), ds);
+                    
+                    ctx.Output.WriteLine("<a href=\"perf/{0}\">[get/reset] {1}</a>", Uri.EscapeUriString(ds), ds);
+                    ctx.Output.WriteLine("</li>");
                 }
+                ctx.Output.WriteLine("</ol>");
                 ctx.Output.WriteLine("</body></html>");
             }
         }
