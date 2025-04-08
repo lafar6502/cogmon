@@ -18,6 +18,26 @@ namespace CogMon.Agent
     {
 
         public PerfMon.PerfCounterStore Counters { get; set; }
+        
+        /// <summary>
+        /// reset by default
+        /// </summary>
+        /// <param name="pcid"></param>
+        /// <returns></returns>
+        private PerfCounterStats GetPerfCounterValues(string pcid)
+        {
+            var reset = true;
+            if (pcid.StartsWith("+"))
+            {
+                reset = false;
+                pcid = pcid.Substring(1);
+            }
+            else if (pcid.StartsWith("!"))
+            {
+                pcid = pcid.Substring(1);
+            }
+            return Counters.GetPerfCounterValues(pcid, reset);
+        }
 
         protected override void Run()
         {
@@ -28,7 +48,7 @@ namespace CogMon.Agent
             if (Variables == null || Variables.Length == 0)
             {
                 if (string.IsNullOrEmpty(ScriptName)) throw new Exception("ScriptName parameter should contain perf counter Id if you are not using Variables");
-                var pv = Counters.GetPerfCounterValuesAndReset(this.ScriptName);
+                var pv = GetPerfCounterValues(this.ScriptName);
                 dr.Data = new double[] { pv.Count, pv.Sum, pv.Min, pv.Max, pv.Median, pv.Perc90, pv.Perc95, pv.Perc98, pv.Avg, pv.Freq };
             }
             else
@@ -36,7 +56,7 @@ namespace CogMon.Agent
                 if (VariableRegex == null || VariableRegex.Length == 0)
                 {
                     string pcid = this.ScriptName;
-                    var pv = Counters.GetPerfCounterValuesAndReset(pcid);
+                    var pv = GetPerfCounterValues(this.ScriptName);
                     dr.DataMap = new Dictionary<string, double>();
                     for (int i = 0; i < Variables.Length; i++)
                     {
@@ -62,7 +82,7 @@ namespace CogMon.Agent
                         if (cid == null) throw new Exception("Counter name missing - either put it in ScriptName field or in the VariableRegex like 'CounterName/Field'");
                         if (!d.TryGetValue(cid, out pv))
                         {
-                            pv = Counters.GetPerfCounterValuesAndReset(cid);
+                            pv = GetPerfCounterValues(cid);
                             d[cid] = pv;
                         }
                         string cv = idx < 0 ? vn : vn.Substring(idx + 1);

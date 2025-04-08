@@ -19,11 +19,13 @@ namespace CogMon.Agent.PerfMon
         /// Max number of events the counter will hold
         /// before auto-resetting
         /// </summary>
-        public int MaxUpdates
+        public virtual int MaxUpdates
         {
             get { return _data.Capacity; }
             set { if (value != _data.Capacity) _data = new ConcurrentCircularBuffer<int>(value); }
         }
+
+        public int MaxSampleAgeSec { get; set; } = 300;
 
         public ConcurrentCircularBuffer<int> _data = new ConcurrentCircularBuffer<int>(500);
         private DateTime _lastReset;
@@ -43,7 +45,7 @@ namespace CogMon.Agent.PerfMon
         /// 
         /// </summary>
         /// <param name="val"></param>
-        public void Update(int val)
+        public virtual void Update(int val)
         {
             _data.Enqueue(val);
             _lastUpdate = DateTime.Now;
@@ -61,12 +63,12 @@ namespace CogMon.Agent.PerfMon
         /// </summary>
         /// <param name="reset"></param>
         /// <returns></returns>
-        public PerfCounterStats GetCurrentValue(bool reset)
+        public virtual PerfCounterStats GetCurrentValue(bool reset)
         {
             return GetValues(reset);
         }
 
-        protected PerfCounterStats GetValues(bool reset)
+        protected virtual PerfCounterStats GetValues(bool reset)
         {
             PerfCounterStats pv = new PerfCounterStats
             {
@@ -109,30 +111,6 @@ namespace CogMon.Agent.PerfMon
         }
 
         
-        /// <summary>
-        /// Resets the counter
-        /// </summary>
-        protected PerfCounterStats GetValuesAndReset()
-        {
-
-            PerfCounterStats pv = new PerfCounterStats
-            {
-                Id = this.Id,
-                Sum = Interlocked.Exchange(ref _sum, 0),
-                Count = Interlocked.Exchange(ref _count, 0),
-                Min = Interlocked.Exchange(ref _min, Int32.MaxValue),
-                Max = Interlocked.Exchange(ref _max, Int32.MinValue)
-            };
-            pv.Avg = pv.Count == 0 ? 0 : pv.Sum / pv.Count;
-            pv.StartTime = this._lastReset;
-            pv.EndTime = DateTime.Now;
-            var df = (pv.EndTime - pv.StartTime).TotalSeconds;
-            pv.Freq = pv.Count == 0 ? 0.0 : df / pv.Count;
-
-            return pv;
-
-            
-        }
 
 
     }

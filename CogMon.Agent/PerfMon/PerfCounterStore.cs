@@ -16,6 +16,13 @@ namespace CogMon.Agent.PerfMon
         private ConcurrentDictionary<string, PerfCounter> _counters = new ConcurrentDictionary<string, PerfCounter>();
         private Logger log = LogManager.GetCurrentClassLogger();
 
+        public int MaxSamples { get; set; } = 500;
+        /// <summary>
+        /// 5 minute agg interval by default
+        /// TODO this is not working!
+        /// </summary>
+        public int DataWindowSec { get; set; } = 300;
+
         public void UpdateCounter(string id, string clientAddress, int val)
         {
             string key = string.IsNullOrEmpty(clientAddress) ? id : string.Format("{0}/{1}", id, clientAddress);
@@ -30,7 +37,7 @@ namespace CogMon.Agent.PerfMon
 
         private PerfCounter GetCachedCounter(string key)
         {
-            return _counters.GetOrAdd(key, x => new PerfCounter { Id = x });
+            return _counters.GetOrAdd(key, x => new PerfCounter2(MaxSamples) { Id = x, MaxSampleAgeSec = DataWindowSec });
         }
 
         public PerfCounter TryGetCounter(string key)

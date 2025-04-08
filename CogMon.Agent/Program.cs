@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CogMon.Agent.PerfMon;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace CogMon.Agent
                 //NLog.Config.SimpleConfigurator.ConfigureForConsoleLogging(NLog.LogLevel.Debug);
                 if (args[0] == "-debug")
                 {
+                    TestPC2();
                     Debug(args);
                 }
                 else if (args[0] == "-testTask")
@@ -55,6 +57,32 @@ namespace CogMon.Agent
 				new Service1() 
 			};
             ServiceBase.Run(ServicesToRun);
+        }
+
+        static void TestPC2()
+        {
+            var pc2 = new PerfCounter2();
+            pc2.MaxUpdates = 10;
+            pc2.MaxSampleAgeSec = 300;
+
+            var r0 = pc2.GetCurrentValue(true);
+            if (r0.Count > 0) throw new Exception();
+
+            pc2.Update(10);
+            pc2.Update(20);
+            pc2.Update(30);
+            pc2.Update(40);
+
+            var rt = pc2.GetCurrentValue(true);
+            if (rt.Count != 4) throw new Exception();
+            if (rt.Sum != 100) throw new Exception();
+            if (rt.Median != 30) throw new Exception();
+
+            for(var i=1; i<=15;i++)
+            {
+                pc2.Update(i);
+            }
+            var rt2 = pc2.GetCurrentValue(true); 
         }
 
         static void ListPerfCounterCategories()
