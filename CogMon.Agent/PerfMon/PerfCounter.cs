@@ -11,7 +11,7 @@ namespace CogMon.Agent.PerfMon
     /// <summary>
     /// Single performance counter instance.
     /// </summary>
-    public class PerfCounter
+    public abstract class PerfCounterBase
     {
 
         public string Id { get; set; }
@@ -19,43 +19,19 @@ namespace CogMon.Agent.PerfMon
         /// Max number of events the counter will hold
         /// before auto-resetting
         /// </summary>
-        public virtual int MaxUpdates
-        {
-            get { return _data.Capacity; }
-            set { if (value != _data.Capacity) _data = new ConcurrentCircularBuffer<int>(value); }
-        }
+        
+        public abstract int MaxUpdates { get; set; }
 
-        public int MaxSampleAgeSec { get; set; } = 300;
+        public virtual int MaxSampleAgeSec { get; set; } = 300;
 
-        public ConcurrentCircularBuffer<int> _data = new ConcurrentCircularBuffer<int>(500);
-        private DateTime _lastReset;
-        private DateTime _lastUpdate;
-        private int _count;
-        private long _sum;
-        private int _max;
-        private int _min;
+        
+        protected DateTime _lastReset;
+        protected DateTime _lastUpdate;
 
-        public PerfCounter()
-        {
-            _lastReset = DateTime.Now;
-            _lastUpdate = DateTime.Now;
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="val"></param>
-        public virtual void Update(int val)
-        {
-            _data.Enqueue(val);
-            _lastUpdate = DateTime.Now;
-            Interlocked.Increment(ref _count);
-            Interlocked.Add(ref _sum, val);
-            var m = _max;
-            if (val > m) Interlocked.CompareExchange(ref _max, val, m);
-            m = _min;
-            if (val < m) Interlocked.CompareExchange(ref _min, val, m);
-        }
+        public abstract void Update(int val);
+
+        public virtual DateTime LastUpdate => _lastUpdate;
 
         
         /// <summary>
@@ -68,7 +44,54 @@ namespace CogMon.Agent.PerfMon
             return GetValues(reset);
         }
 
-        protected virtual PerfCounterStats GetValues(bool reset)
+        protected abstract PerfCounterStats GetValues(bool reset);
+
+
+        public abstract int LastValue { get; }
+        
+
+
+    }
+
+    public class PerfCounter : PerfCounterBase
+    {
+        public ConcurrentCircularBuffer<int> _data = new ConcurrentCircularBuffer<int>(500);
+        private int _count;
+        private long _sum;
+        private int _max;
+        private int _min;
+        private int _last;
+
+        public PerfCounter()
+        {
+            _lastReset = DateTime.Now;
+            _lastUpdate = DateTime.Now;
+        }
+
+        public override int MaxUpdates
+        {
+            get { return _data.Capacity; }
+            set { if (value != _data.Capacity) _data = new ConcurrentCircularBuffer<int>(value); }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        public override void Update(int val)
+        {
+            _last = val;
+            _lastUpdate = DateTime.Now;
+            _data.Enqueue(val);
+            Interlocked.Increment(ref _count);
+            Interlocked.Add(ref _sum, val);
+            var m = _max;
+            if (val > m) Interlocked.CompareExchange(ref _max, val, m);
+            m = _min;
+            if (val < m) Interlocked.CompareExchange(ref _min, val, m);
+        }
+
+        protected override PerfCounterStats GetValues(bool reset)
         {
             PerfCounterStats pv = new PerfCounterStats
             {
@@ -104,14 +127,12 @@ namespace CogMon.Agent.PerfMon
             }
             else
             {
-                pv.Avg = (double) pv.Sum / pv.Count;
+                pv.Avg = (double)pv.Sum / pv.Count;
                 pv.Freq = (double)pv.Count / (pv.EndTime - pv.StartTime).TotalSeconds;
             }
             return pv;
         }
 
-        
-
-
+        public override int LastValue => _last;
     }
 }

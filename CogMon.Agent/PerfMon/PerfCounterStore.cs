@@ -13,7 +13,7 @@ namespace CogMon.Agent.PerfMon
     /// </summary>
     public class PerfCounterStore
     {
-        private ConcurrentDictionary<string, PerfCounter> _counters = new ConcurrentDictionary<string, PerfCounter>();
+        private ConcurrentDictionary<string, PerfCounterBase> _counters = new ConcurrentDictionary<string, PerfCounterBase>();
         private Logger log = LogManager.GetCurrentClassLogger();
 
         public int MaxSamples { get; set; } = 500;
@@ -35,14 +35,14 @@ namespace CogMon.Agent.PerfMon
             }
         }
 
-        private PerfCounter GetCachedCounter(string key)
+        private PerfCounterBase GetCachedCounter(string key)
         {
             return _counters.GetOrAdd(key, x => new PerfCounter2(MaxSamples) { Id = x, MaxSampleAgeSec = DataWindowSec });
         }
 
-        public PerfCounter TryGetCounter(string key)
+        public PerfCounterBase TryGetCounter(string key)
         {
-            PerfCounter pc;
+            PerfCounterBase pc;
             return _counters.TryGetValue(key, out pc) ? pc : null;
         }
 

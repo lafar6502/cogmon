@@ -30,7 +30,7 @@ namespace CogMon.Agent
                 if (string.IsNullOrEmpty(cid)) throw new Exception("counter id missing");
                 var pc = TheDb.TryGetCounter(cid);
                 if (pc == null) throw new Exception("Counter :" + cid);
-                var val = pc.GetCurrentValue(doGet);
+                var val = pc.GetCurrentValue(!doGet);
                 ctx.ResponseContentType = "application/json";
                 var str = JsonConvert.SerializeObject(val);
                 ctx.Output.Write(str);
@@ -43,10 +43,13 @@ namespace CogMon.Agent
                 ctx.Output.WriteLine("<ol>");
                 foreach(var ds in dss.OrderBy(x => x))
                 {
-                    ctx.Output.WriteLine("<li>");
-                    ctx.Output.WriteLine("<a href=\"perfget/{0}\">[get] {1}</a> <br/>", Uri.EscapeUriString(ds), ds);
+                    PerfCounterBase pb = TheDb.TryGetCounter(ds);
+                    if (pb == null) continue;
                     
-                    ctx.Output.WriteLine("<a href=\"perf/{0}\">[get/reset] {1}</a>", Uri.EscapeUriString(ds), ds);
+                    ctx.Output.WriteLine("<li>");
+                    ctx.Output.WriteLine("<a href=\"/perfget/{0}\">[get] {1}  </a> <span style='padding-left:15px;'>[<b>{2}</b>  {3:MM-dd HH:mm:ss}]</span> <br/>", Uri.EscapeUriString(ds), ds, pb.LastValue, pb.LastUpdate);
+                    
+                    ctx.Output.WriteLine("<a href=\"/perf/{0}\">[get/reset]</a>", Uri.EscapeUriString(ds), ds);
                     ctx.Output.WriteLine("</li>");
                 }
                 ctx.Output.WriteLine("</ol>");

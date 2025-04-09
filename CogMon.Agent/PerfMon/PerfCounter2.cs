@@ -13,7 +13,7 @@ namespace CogMon.Agent.PerfMon
     /// <summary>
     /// Single performance counter instance.
     /// </summary>
-    public class PerfCounter2 : PerfCounter
+    public class PerfCounter2 : PerfCounterBase
     {
         
         struct VRecord
@@ -35,13 +35,15 @@ namespace CogMon.Agent.PerfMon
             }
         }
 
+        public override int LastValue => _data[mod(_head, _data.Length)].Value;
+
         public PerfCounter2(int capacity)
         {
+            _lastReset = DateTime.Now;
             _data = new VRecord[capacity];
         }
-        public PerfCounter2()
+        public PerfCounter2() : this(500)
         {
-            _data = new VRecord[500];
         }
 
         private static readonly DateTime StartTime = new DateTime(2010, 1, 1);
@@ -60,6 +62,7 @@ namespace CogMon.Agent.PerfMon
 
         public override void Update(int val)
         {
+            _lastUpdate = DateTime.Now;
             var nhd = Interlocked.Increment(ref _head);
             nhd = mod(nhd, _data.Length);
             _data[nhd].Value = val;
@@ -75,6 +78,7 @@ namespace CogMon.Agent.PerfMon
             {
                 _data = new VRecord[buf.Length];
                 _head = -1;
+                _lastReset = DateTime.Now;
             }
             var ret = new List<VRecord>(buf.Length);
 
@@ -104,14 +108,18 @@ namespace CogMon.Agent.PerfMon
                 return 1;
             else return 0;
         }
-        public override PerfCounterStats GetCurrentValue(bool reset)
+        protected override PerfCounterStats GetValues(bool reset)
         {
             var buf = GetData(reset);
-             ;
+            
             var ret = new PerfCounterStats
             {
                 Id = this.Id,
-                Count = 0
+                Count = 0,
+                EndTime = DateTime.Now,
+                StartTime = DateTime.Now.AddSeconds(-MaxSampleAgeSec),
+                Avg = double.NaN,
+                Freq = double.NaN
             };
             if (buf.Count == 0) return ret;
             //we go backwards

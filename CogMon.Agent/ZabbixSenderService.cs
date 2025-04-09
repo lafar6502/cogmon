@@ -62,6 +62,10 @@ namespace CogMon.Agent
                 if (string.IsNullOrEmpty(dr.Series)) throw new Exception("No series/hostname in data");
                 foreach(var kv in dr.DataMap)
                 {
+                    if (double.IsNaN(kv.Value))
+                    {
+                        continue; //skip NaN - missing data
+                    }
                     output.WriteLine("{0} {1} {2}", EscapeZabbixString(dr.Series), EscapeZabbixString(kv.Key), kv.Value);
                 }
             }
