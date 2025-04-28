@@ -52,16 +52,21 @@ namespace CogMon.Lib.DataSeries
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int Count { get; set; }
-        public int Min { get; set; }
-        public int Max { get; set; }
+        public int? Min { get; set; }
+        public int? Max { get; set; }
         
         public long Sum { get; set; }
 
-        public int Median { get; set; }
-        public int Perc98 { get; set; }
-        public int Perc95 { get; set; }
-        public int Perc90 { get; set; }
+        public int? Median { get; set; }
+        public int? Perc98 { get; set; }
+        public int? Perc95 { get; set; }
+        public int? Perc90 { get; set; }
         public double Freq { get; set; }
         public double Avg { get; set; }
+
+        /// <summary>
+        /// incrementing counter since previous read (always resets on read)
+        /// </summary>
+        public int IncrCount { get; set; }
     }
 }

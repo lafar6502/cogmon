@@ -50,15 +50,18 @@ namespace CogMon.Agent
             {
                 if (string.IsNullOrEmpty(ScriptName)) throw new Exception("ScriptName parameter should contain perf counter Id if you are not using Variables");
                 var pv = GetPerfCounterValues(this.ScriptName);
-                if (pv.Count == 0)
-                {
-                    dr.Data = new double[] { 0, 0, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, 0 };
-                }
-                else
-                {
-                    dr.Data = new double[] { pv.Count, pv.Sum, pv.Min, pv.Max, pv.Median, pv.Perc90, pv.Perc95, pv.Perc98, pv.Avg, pv.Freq };
-                }
-                    
+                dr.DataMap = new Dictionary<string, double>();
+                dr.DataMap[this.ScriptName + "_Count"] = pv.Count;
+                dr.DataMap[this.ScriptName + "_Avg"] = pv.Avg;
+                dr.DataMap[this.ScriptName + "_Freq"] = pv.Freq;
+                dr.DataMap[this.ScriptName + "_Sum"] = pv.Sum;
+
+                if (pv.Min.HasValue) dr.DataMap[this.ScriptName + "_Min"] = pv.Min.Value;
+                if (pv.Max.HasValue) dr.DataMap[this.ScriptName + "_Max"] = pv.Max.Value;
+                if (pv.Median.HasValue) dr.DataMap[this.ScriptName + "_Median"] = pv.Median.Value;
+                if (pv.Perc90.HasValue) dr.DataMap[this.ScriptName + "_Perc90"] = pv.Perc90.Value;
+                if (pv.Perc95.HasValue) dr.DataMap[this.ScriptName + "_Perc95"] = pv.Perc95.Value;
+                if (pv.Perc98.HasValue) dr.DataMap[this.ScriptName + "_Perc98"] = pv.Perc98.Value;    
             }
             else
             {
@@ -70,15 +73,14 @@ namespace CogMon.Agent
                     for (int i = 0; i < Variables.Length; i++)
                     {
                         var pi = pv.GetType().GetProperty(Variables[i]);
-                        if (pi == null) throw new Exception("Invalid variable: " + Variables[i]);
-                        if (pv.Count == 0 && Variables[i] != "Count" && Variables[i] != "Sum" && Variables[i] != "Freq")
+                        if (pi == null)
                         {
-                            dr.DataMap[Variables[i]] = double.NaN;
+                            log.Warn("Invalid variable: {0}/{1} in job {2}", Variables[i], i, this.Id);
+                            continue;
                         }
-                        else
-                        {
-                            dr.DataMap[Variables[i]] = Convert.ToDouble(pi.GetValue(pv, null));
-                        }
+                        var val = pi.GetValue(pv, null);
+                        if (val == null) continue;
+                        dr.DataMap[Variables[i]] = Convert.ToDouble(val);
                     }
                 }
                 else if (VariableRegex.Length != Variables.Length)
@@ -103,15 +105,17 @@ namespace CogMon.Agent
                         }
                         string cv = idx < 0 ? vn : vn.Substring(idx + 1);
                         var pi = typeof(PerfCounterStats).GetProperty(cv);
-                        if (pi == null) throw new Exception("Invalid perf counter statistic: " + vn);
-                        if (pv.Count == 0 && cv != "Count" && cv != "Sum" && cv != "Freq")
+                        if (pi == null)
                         {
-                            dr.DataMap[Variables[i]] = double.NaN;
+                            log.Warn("Invalid variableregex: {0}/{1} in job {2}", vn, i, this.Id);
+                            continue;
                         }
-                        else
+                        var val = pi.GetValue(pv, null);
+                        if (val != null)
                         {
-                            dr.DataMap[Variables[i]] = Convert.ToDouble(pi.GetValue(pv, null));
+                            dr.DataMap[Variables[i]] = Convert.ToDouble(val);
                         }
+                        
                     }
                 }
             }

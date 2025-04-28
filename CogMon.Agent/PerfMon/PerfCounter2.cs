@@ -15,7 +15,8 @@ namespace CogMon.Agent.PerfMon
     /// </summary>
     public class PerfCounter2 : PerfCounterBase
     {
-        
+        //resetting counter
+        private int _incrCount; 
         struct VRecord
         {
             public int Time { get; set; }
@@ -63,6 +64,7 @@ namespace CogMon.Agent.PerfMon
         public override void Update(int val)
         {
             _lastUpdate = DateTime.Now;
+            Interlocked.Increment(ref _incrCount);
             var nhd = Interlocked.Increment(ref _head);
             nhd = mod(nhd, _data.Length);
             _data[nhd].Value = val;
@@ -111,16 +113,18 @@ namespace CogMon.Agent.PerfMon
         protected override PerfCounterStats GetValues(bool reset)
         {
             var buf = GetData(reset);
-            
             var ret = new PerfCounterStats
             {
                 Id = this.Id,
                 Count = 0,
                 EndTime = DateTime.Now,
                 StartTime = DateTime.Now.AddSeconds(-MaxSampleAgeSec),
-                Avg = double.NaN,
-                Freq = double.NaN
+                Avg = 0,
+                Sum = 0,
+                Freq = 0,
+                IncrCount = Interlocked.Exchange(ref _incrCount, 0)
             };
+            
             if (buf.Count == 0) return ret;
             //we go backwards
             var bf = buf[0];
@@ -142,11 +146,7 @@ namespace CogMon.Agent.PerfMon
             ret.Perc90 = buf[(int)((buf.Count - 1) * 0.90)].Value;
             ret.Perc95 = buf[(int)((buf.Count - 1) * 0.95)].Value;
             ret.Perc98 = buf[(int)((buf.Count - 1) * 0.98)].Value;
-            if (ret.EndTime != ret.StartTime)
-            {
-                ret.Freq = (double)ret.Count / (ret.EndTime - ret.StartTime).TotalSeconds;
-            }
-            
+            ret.Freq = (double) buf.Count / MaxSampleAgeSec;
             return ret;
         }
 

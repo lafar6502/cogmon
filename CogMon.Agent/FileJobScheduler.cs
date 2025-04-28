@@ -35,16 +35,25 @@ namespace CogMon.Agent
             SchedulerGroup = Environment.MachineName;
         }
 
-        internal class SchedTask
+        public class SchedTaskBase
         {
             public string Id { get; set; }
             public DateTime LoadDate = DateTime.Now;
             public DateTime NextTrigger;
+            public DateTime LastRun { get; set; }
+            public string StatusInfo { get; set; }
+            public bool IsLastRunSuccess { get; set; }
+        }
+        internal class SchedTask : SchedTaskBase
+        {
             public ScheduledTask TaskData { get; set; }
         }
 
         private List<SchedTask> _tasks = new List<SchedTask>();
 
+        
+
+        public IEnumerable<SchedTaskBase> Tasks => _tasks;
         public bool IsRunning
         {
             get { return _scheduler != null; }
@@ -68,12 +77,18 @@ namespace CogMon.Agent
             DateTime dt = DateTime.Now;
             try
             {
+                tsk.LastRun = dt;
+                tsk.StatusInfo = "running";
                 tsk.NextTrigger = DateTime.Now.AddSeconds(tsk.TaskData.IntervalSeconds);
                 
                 ExecuteTask(tsk);
+                tsk.IsLastRunSuccess = true;
+                tsk.StatusInfo = null;
             }
             catch (Exception ex)
             {
+                tsk.IsLastRunSuccess = false;
+                tsk.StatusInfo = ex.Message;
                 log.Error("Error running task {0}: {1}", tsk.Id, ex);
                 ReportTaskFailed(tsk.Id, ex);
             }
@@ -90,6 +105,7 @@ namespace CogMon.Agent
         internal void ReportTaskFailed(string id, Exception ex)
         {
             log.Error("Task {0} failed: {1}", id, ex);
+            
         }
 
         internal void ExecuteTask(SchedTask t)

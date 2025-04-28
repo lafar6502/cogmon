@@ -195,7 +195,7 @@ namespace CogMon.Services.SCall
             {
                 if (string.IsNullOrEmpty(job.ScriptName)) throw new Exception("ScriptName parameter should contain perf counter Id if you are not using Variables");
                 var pv = PerfCounters.GetCurrentStats(job.ScriptName, true);
-                dr.Data = new double[] { pv.Count, pv.Sum, pv.Min, pv.Max, pv.Median, pv.Perc90, pv.Perc95, pv.Perc98, pv.Avg, pv.Freq };
+                dr.Data = new double[] { pv.Count, pv.Sum, pv.Min.GetValueOrDefault(), pv.Max.GetValueOrDefault(), pv.Median.GetValueOrDefault(), pv.Perc90.GetValueOrDefault(), pv.Perc95.GetValueOrDefault(), pv.Perc98.GetValueOrDefault(), pv.Avg, pv.Freq };
             }
             else
             {
@@ -207,8 +207,16 @@ namespace CogMon.Services.SCall
                     for (int i = 0; i < job.VariableNames.Length; i++)
                     {
                         var pi = pv.GetType().GetProperty(job.VariableNames[i]);
-                        if (pi == null) throw new Exception("Invalid variable: " + job.VariableNames[i]);
-                        dr.DataMap[job.VariableNames[i]] = Convert.ToDouble(pi.GetValue(pv, null));
+                        if (pi == null)
+                        {
+                            log.Warn("Invalid variablename: {0}/{1} in job {2}", pv, i, message.JobId);
+                            continue;
+                        }
+                        var val = pi.GetValue(pv, null);
+                        if (val != null)
+                        {
+                            dr.DataMap[job.VariableNames[i]] = Convert.ToDouble(val);
+                        }
                     }
                 }
                 else if (job.VariableRetrieveRegex.Length != job.VariableNames.Length)
@@ -232,8 +240,16 @@ namespace CogMon.Services.SCall
                         }
                         string cv = idx < 0 ? vn : vn.Substring(idx + 1);
                         var pi = typeof(PerfCounterStats).GetProperty(cv);
-                        if (pi == null) throw new Exception("Invalid perf counter statistic: " + vn);
-                        dr.DataMap[job.VariableNames[i]] = Convert.ToDouble(pi.GetValue(pv, null));
+                        if (pi == null)
+                        {
+                            log.Warn("Invalid variablename: {0}/{1} in job {2}", cv, i, message.JobId);
+                            continue;
+                        }
+                        var val = pi.GetValue(pv, null);
+                        if (val != null)
+                        {
+                            dr.DataMap[job.VariableNames[i]] = Convert.ToDouble(val);
+                        }
                     }
                 }
             }

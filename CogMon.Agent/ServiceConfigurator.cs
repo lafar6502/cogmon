@@ -175,6 +175,8 @@ namespace CogMon.Agent
                 .ImplementedBy<LocalDataSourceServlet>().LifeStyle.Singleton);
             _wc.Register(Component.For<IServlet>()
                 .ImplementedBy<PerfCountersServlet>().LifeStyle.Singleton);
+            _wc.Register(Component.For<IServlet>()
+                .ImplementedBy<JobStatusServlet>().LifeStyle.Singleton);
             return this;
         }
     }

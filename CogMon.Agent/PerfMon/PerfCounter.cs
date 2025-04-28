@@ -57,6 +57,7 @@ namespace CogMon.Agent.PerfMon
     {
         public ConcurrentCircularBuffer<int> _data = new ConcurrentCircularBuffer<int>(500);
         private int _count;
+        private int _incrCount = 0;
         private long _sum;
         private int _max;
         private int _min;
@@ -84,6 +85,7 @@ namespace CogMon.Agent.PerfMon
             _lastUpdate = DateTime.Now;
             _data.Enqueue(val);
             Interlocked.Increment(ref _count);
+            Interlocked.Increment(ref _incrCount);
             Interlocked.Add(ref _sum, val);
             var m = _max;
             if (val > m) Interlocked.CompareExchange(ref _max, val, m);
@@ -98,6 +100,7 @@ namespace CogMon.Agent.PerfMon
                 Id = this.Id,
                 Sum = Interlocked.Exchange(ref _sum, reset ? 0L : _sum),
                 Count = Interlocked.Exchange(ref _count, reset ? 0 : _count),
+                IncrCount = Interlocked.Exchange(ref _incrCount, 0),
                 Min = Interlocked.Exchange(ref _min, reset ? Int32.MaxValue : _min),
                 Max = Interlocked.Exchange(ref _max, reset ? Int32.MinValue : _max),
                 StartTime = _lastReset,
