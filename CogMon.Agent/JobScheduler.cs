@@ -181,7 +181,7 @@ namespace CogMon.Agent
                 };
                 lst.Add(pt);
             }
-            log.Debug("Updated job list: {0} jobs", lst.Count);
+            log.Debug("Updated job list: {0} jobs: {1}", lst.Count, string.Join(", ", lst.Select(x => x.Id)));
             _tasks = lst;
         }
     

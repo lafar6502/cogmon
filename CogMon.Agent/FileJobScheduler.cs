@@ -223,7 +223,7 @@ namespace CogMon.Agent
                 }
                 lst.Add(ct);
             }
-            log.Debug("Updated job list: {0} jobs", lst.Count);
+            log.Debug("Updated job list: {0} jobs: {1}", lst.Count, string.Join(",", lst.Select(x => x.Id)));
             _tasks = lst;
         }
     

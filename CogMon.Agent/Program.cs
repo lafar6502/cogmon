@@ -59,6 +59,12 @@ namespace CogMon.Agent
             ServiceBase.Run(ServicesToRun);
         }
 
+        static void TestRunProcPowershell()
+        {
+            // Get-Process -IncludeUserName -Name w3wp | Select-Object Name,CPU,UserName,WorkingSet | ConvertTo-Json
+            
+        }
+
         static void TestPC2()
         {
             var pc2 = new PerfCounter2();

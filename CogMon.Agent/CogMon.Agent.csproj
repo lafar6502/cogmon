@@ -179,6 +179,7 @@
     <Compile Include="PerfMon\PerfCounter2.cs" />
     <Compile Include="PerfMon\UDPPerfmonListener2.cs" />
     <Compile Include="PingTask.cs" />
+    <Compile Include="PowershellTask.cs" />
     <Compile Include="ServerPerfCounterTask.cs" />
     <Compile Include="InlineScriptTask.cs" />
     <Compile Include="LogGrepTask.cs" />
@@ -227,6 +228,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="CogMon.Agent_TemporaryKey.pfx" />
+    <None Include="JOBS\mq_monitor.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="JOBS\uniwww3_AppErrors.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

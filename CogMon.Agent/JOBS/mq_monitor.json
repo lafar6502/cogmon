@@ -1,0 +1,12 @@
+﻿{
+  "Active" : true,
+  "IntervalSeconds" : 30,
+  "QueryMethod" : "SqlSelect",
+  "ScriptName" : "    select count(*) as in_queue from mq_configurator with(nolock) where subqueue='I'",
+  "Arguments" : "configurator",
+  "Variables" : ["in_queue"],
+  "DataSeries": "MQ",
+  "Options" : { },
+  "Group" : "COGITPC",
+  "Description" : "SQL queue len"
+}
