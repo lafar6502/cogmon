@@ -206,6 +206,8 @@ namespace CogMon.Agent
                             continue; //skip jobs with wrong group
                         };
                     }
+                    var negInterval = jd.IntervalSeconds < 0;
+                    if (negInterval) jd.IntervalSeconds = -jd.IntervalSeconds;
                     if (ct != null)
                     {
                         ct.TaskData = jd;
@@ -217,7 +219,7 @@ namespace CogMon.Agent
                             TaskData = jd,
                             Id = jd.Id,
                             LoadDate = DateTime.Now,
-                            NextTrigger = DateTime.Now.AddSeconds(jd.IntervalSeconds)
+                            NextTrigger = negInterval ? DateTime.Now : DateTime.Now.AddSeconds(jd.IntervalSeconds)
                         };
                     }
                 }

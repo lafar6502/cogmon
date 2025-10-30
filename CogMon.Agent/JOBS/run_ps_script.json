@@ -1,0 +1,16 @@
+﻿{
+  "Active": true,
+  "Arguments": "-File ${BaseDir}\\JOBS\\report_w3wp_status_to_zabbix.ps1",
+  "DataSource": "MachinePerf",
+  "DataSeries": null,
+  "ErrorInfo": null,
+  "Group": "COGITPC",
+  "IntervalSeconds": -60,
+
+  "Options": {
+
+  },
+  "QueryMethod": "SystemCommand",
+  "ScriptName": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+
+}    

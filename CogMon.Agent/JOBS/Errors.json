@@ -4,7 +4,7 @@
   "DataSource": "co_apphealth",
   "DataSeries": "uniwww1",
   "ErrorInfo": null,
-  "Group": "COGITPC",
+  "Group": "--COGITPC",
   "IntervalSeconds": 15,
   "Options": {},
   "QueryMethod": "AgentPerfCnt",

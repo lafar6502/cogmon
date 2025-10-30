@@ -3,7 +3,7 @@
   "Arguments" : null,
   "DataSource" : "MachinePerf",
   "ErrorInfo" : null,
-  "Group" : "COGITPC",
+  "Group" : "--COGITPC",
   "IntervalSeconds" : 30,
 
   "Options": {

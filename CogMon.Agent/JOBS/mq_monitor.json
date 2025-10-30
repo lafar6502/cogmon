@@ -7,6 +7,6 @@
   "Variables" : ["in_queue"],
   "DataSeries": "MQ",
   "Options" : { },
-  "Group" : "COGITPC",
+  "Group" : "--COGITPC",
   "Description" : "SQL queue len"
 }
