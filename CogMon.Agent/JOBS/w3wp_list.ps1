@@ -1,0 +1,1 @@
+Get-Process -IncludeUserName -Name w3wp | Select-Object Name,CPU,UserName,WorkingSet | ConvertTo-Json
