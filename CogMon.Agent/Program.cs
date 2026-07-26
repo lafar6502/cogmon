@@ -1,8 +1,10 @@
 ﻿using CogMon.Agent.PerfMon;
 using System;
 using System.Collections.Generic;
+using System.Configuration.Install;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.ServiceProcess;
 using System.Text;
 
@@ -42,6 +44,18 @@ namespace CogMon.Agent
                 else if (args[0] == "-listPerfCounterCategories")
                 {
                     ListPerfCounterCategories();
+                }
+                else if (args.Contains("--install"))
+                {
+                    Console.WriteLine("Installing..");
+                    ManagedInstallerClass.InstallHelper(new string[] { Assembly.GetExecutingAssembly().Location });
+                    return;
+                }
+                else if (args.Contains("--uninstall"))
+                {
+                    Console.WriteLine("Uninstalling..");
+                    ManagedInstallerClass.InstallHelper(new string[] { "/u", Assembly.GetExecutingAssembly().Location });
+                    return;
                 }
                 else
                 {
