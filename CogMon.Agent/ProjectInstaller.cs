@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration.Install;
 using System.Linq;
-
+using System.Configuration;
 
 namespace CogMon.Agent
 {
@@ -14,6 +14,11 @@ namespace CogMon.Agent
         public ProjectInstaller()
         {
             InitializeComponent();
+            if (ConfigurationManager.AppSettings["ServiceName"] != null)
+            {
+                serviceInstaller1.ServiceName = ConfigurationManager.AppSettings["ServiceName"];
+                serviceInstaller1.DisplayName = "CogMon agent " + ConfigurationManager.AppSettings["ServiceName"];
+            }
         }
     }
 }
